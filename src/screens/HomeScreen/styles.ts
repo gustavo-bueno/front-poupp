@@ -184,4 +184,33 @@ export const Chart = styled.View`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: row;
+    margin-left: ${metrics.base * -7}px;
+`
+
+export const Labels = styled.View`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+`
+
+export const Label = styled.View`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`
+
+export const Marker = styled.View`
+    width: ${metrics.base * 4}px;
+    height: ${metrics.base * 4}px;
+    margin-right: ${metrics.base * 2}px;
+    margin-top: ${metrics.base * 1}px;
+    border-radius: ${metrics.base * 2}px;
+    background-color: ${(props: props) => props.theme.color};
+`
+
+export const LabelText = styled.Text`
+    font-size: ${metrics.base * 4}px;
+    font-family: ${fontFamily.regular};
+    color: ${colors.text};
 `

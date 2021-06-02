@@ -1,5 +1,5 @@
 import React from 'react'
-import { colors, fontFamily, metrics } from '../../styles'
+import { colors, metrics } from '../../styles'
 import {
     HomeContainer,
     HeaderContent,
@@ -22,12 +22,15 @@ import {
     OptionsContainer,
     OptionsTitle,
     OptionsList,
-    Chart
+    Chart,
+    Labels, 
+    Label,
+    Marker,
+    LabelText
 } from './styles'
 
-import {
-    PieChart
-} from 'react-native-chart-kit'
+import { PieChart } from 'react-native-svg-charts'
+import 'react-native-svg'
 
 import { MaterialIcons } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons'; 
@@ -39,15 +42,29 @@ import OptionCard from '../../components/OptionCard'
 
 const HomeScreen: React.FC = () => {
 
-    const chartConfig = {
-        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    }
-
     const data = [
-        { name: 'Alimentação', value: 300, color: 'rgba(131, 167, 234, 1)', legendFontColor: colors.text, legendFontSize: metrics.base * 3.5 },
-        { name: 'Trasporte', value: 45, color: '#F00', legendFontColor: colors.text, legendFontSize: metrics.base * 3.5 },
-        { name: 'Contas', value: 650, color: '#ff5', legendFontColor: colors.text, legendFontSize: metrics.base * 3.5 }
-      ]
+        {
+            name: 'Alimentação',
+            key: 1,
+            value: 100,
+            svg: { fill: '#04B889' },
+            arc: {cornerRadius: 4}
+        },
+        {
+            name: 'Transporte',
+            key: 2,
+            value: 35,
+            svg: { fill: '#00E6B0' },
+            arc: {cornerRadius: 4}
+        },
+        {
+            name: 'Luz',
+            key: 3,
+            value: 10,
+            svg: { fill: '#33404F' },
+            arc: {cornerRadius: 4}
+        }
+    ]
 
     return (
         <HomeContainer>
@@ -81,15 +98,22 @@ const HomeScreen: React.FC = () => {
                     </Resume>
                 </ResumeContainer>
                 <Chart>
-                    <PieChart 
+                    <PieChart
+                        style={{ height: metrics.base * 50, width: metrics.base * 50 }}
+                        outerRadius={'70%'}
+                        innerRadius={30}
                         data={data}
-                        width={metrics.base * 80}
-                        height={metrics.base * 40}
-                        chartConfig={chartConfig}
-                        accessor="value"
-                        backgroundColor="transparent"
-                        paddingLeft="0"
                     />
+                    <Labels>
+                        {
+                            data.map(data => (
+                                <Label key={data.key}>
+                                    <Marker theme={{color: data.svg.fill}}/>
+                                    <LabelText>{data.name}</LabelText>
+                                </Label>
+                            ))
+                        }
+                    </Labels>
                 </Chart>
                 <RecentsContainer>
                     <RecentsTitle>Recentes</RecentsTitle>

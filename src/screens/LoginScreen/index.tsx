@@ -1,0 +1,80 @@
+import React, { useRef } from 'react';
+import { KeyboardAvoidingView, Platform, View } from 'react-native';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
+
+import Wave from '../../../assets/background.svg';
+import LoginVector from '../../../assets/signin.svg';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
+import { metrics } from '../../styles';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Container } from '../../components/Container';
+import {
+  FormContainer,
+  Header,
+  SignUpButton,
+  ForgotPasswordButton,
+  Title,
+  SignInButton,
+} from './styles';
+
+const LoginScreen: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
+
+  const handleSubmit = async (data: Object) => {
+    formRef.current?.setErrors({});
+    try {
+      const schema = Yup.object().shape({
+        email: Yup.string().email().required('O campo e-mail é obrigatório.'),
+        password: Yup.string()
+          .min(8, 'A senha deve ter 8 caracteres')
+          .required('O campo senha é obrigatório.'),
+      });
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+    } catch (error) {
+      const validationErrors: Record<string, any> = {};
+      if (error instanceof Yup.ValidationError) {
+        error.inner.forEach((error) => {
+          validationErrors[error.path!] = error.message;
+        });
+        formRef.current?.setErrors(validationErrors);
+      }
+    }
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <Wave
+        width={metrics.wp(100)}
+        style={{ position: 'absolute', top: 0, zIndex: 0 }}
+      />
+      <Container style={{ justifyContent: 'space-between' }}>
+        <Header>
+          <SignUpButton />
+          <LoginVector
+            style={{ alignSelf: 'flex-end' }}
+            width={metrics.wp(65)}
+            height={metrics.hp(35)}
+          />
+        </Header>
+        <FormContainer>
+          <KeyboardAvoidingView behavior="padding">
+            <Title>Entrar</Title>
+            <Form ref={formRef} onSubmit={handleSubmit}>
+              <Input name="email" placeholder="Email" />
+              <Input name="password" placeholder="Senha" />
+              <SignInButton onPress={() => formRef.current?.submitForm()} />
+            </Form>
+          </KeyboardAvoidingView>
+          <ForgotPasswordButton />
+        </FormContainer>
+      </Container>
+    </SafeAreaView>
+  );
+};
+
+export default LoginScreen;

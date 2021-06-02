@@ -5,32 +5,30 @@ import { fontSize, colors } from '../../styles';
 
 interface ICustomText extends TextProps {
   color?: string;
-  fontWeight?: string;
-  bold?: boolean;
+  fontWeight?: 'bold' | 'medium';
 }
 
 const getColor = ({ color = 'black' }: ICustomText) => {
   return colors[color] || color;
 };
 
-const fontFamily = ({ bold = true }: ICustomText) => {
-  if (bold) return 'Nunito-Bold';
+const fontFamily = ({ fontWeight }: ICustomText) => {
+  if (fontWeight == 'bold') return 'Ubuntu_700Bold';
+  if (fontWeight == 'medium') return 'Ubuntu_500Medium';
 
-  return 'Nunito';
+  return 'Ubuntu_400Regular';
 };
 
 export const H0 = styled.Text<ICustomText>`
   font-size: ${`${fontSize.h0}px`};
   font-family: ${fontFamily};
   color: ${getColor};
-  font-weight: ${({ fontWeight }) => fontWeight || 'normal'};
 `;
 
 export const H1 = styled.Text<ICustomText>`
   font-size: ${`${fontSize.h1}px`};
   font-family: ${fontFamily};
   color: ${getColor};
-  font-weight: ${({ fontWeight }) => fontWeight || 'normal'};
 `;
 export const H2 = styled.Text<ICustomText>`
   font-size: ${`${fontSize.h2}px`};
