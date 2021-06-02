@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { KeyboardAvoidingView, SafeAreaView, View } from 'react-native';
 
 import * as Yup from 'yup';
@@ -11,8 +11,10 @@ import { FormHandles } from '@unform/core';
 import { Title } from '../LoginScreen/styles';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import { UserContext } from '../../contexts/user';
 
 const SignUpScreen: React.FC = () => {
+  const { setUser } = useContext(UserContext);
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = async (data: any) => {
@@ -28,6 +30,7 @@ const SignUpScreen: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
+      setUser(true);
     } catch (error) {
       const validationErrors: Record<string, any> = {};
       if (error instanceof Yup.ValidationError) {

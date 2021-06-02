@@ -12,8 +12,11 @@ import {
   SignUpButton,
   Title,
 } from './styles';
+import { useNavigation } from '@react-navigation/core';
+import { ROUTES } from '../../constants/routes';
 
 const PresentationScreen: React.FC = () => {
+  const { navigate } = useNavigation();
   return (
     <View style={{ position: 'relative', flex: 1 }}>
       <Wave
@@ -29,8 +32,8 @@ const PresentationScreen: React.FC = () => {
           </Title>
         </Header>
         <ButtonsContainer>
-          <Button title="Entrar" />
-          <SignUpButton />
+          <Button title="Entrar" onPress={() => navigate(ROUTES.LOGIN)} />
+          <SignUpButton onPress={() => navigate(ROUTES.SIGNUP)} />
         </ButtonsContainer>
       </Container>
     </View>

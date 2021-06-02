@@ -1,12 +1,11 @@
-import React, { useRef } from 'react';
-import { KeyboardAvoidingView, Platform, View } from 'react-native';
+import React, { useContext, useRef } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
 import Wave from '../../../assets/background.svg';
 import LoginVector from '../../../assets/signin.svg';
-import Button from '../../components/Button';
 import Input from '../../components/Input';
 import { metrics } from '../../styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,8 +18,10 @@ import {
   Title,
   SignInButton,
 } from './styles';
+import { UserContext } from '../../contexts/user';
 
 const LoginScreen: React.FC = () => {
+  const { setUser } = useContext(UserContext);
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = async (data: Object) => {
@@ -35,6 +36,7 @@ const LoginScreen: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
+      setUser(true);
     } catch (error) {
       const validationErrors: Record<string, any> = {};
       if (error instanceof Yup.ValidationError) {
