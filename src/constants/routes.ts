@@ -3,4 +3,7 @@ export const ROUTES = {
   SIGNUP: 'signUpScreen',
   PRESENTATION: 'presentationScreen',
   HOME: 'homeScreen',
+  TRANSACTIONS: 'transictionScreen',
+  USER: 'userScreen',
+  CARD: 'cardScreen'
 };

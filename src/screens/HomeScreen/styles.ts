@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { colors, fontFamily, metrics } from '../../styles';
-import { RectButton } from 'react-native-gesture-handler';
+import Ripple from 'react-native-material-ripple'
 
 interface props {
   theme: {
@@ -29,6 +29,7 @@ export const Username = styled.Text`
   font-size: ${metrics.base * 6}px;
   font-family: ${fontFamily.medium};
   color: white;
+  margin-top: ${metrics.base * 2}px;
 `;
 
 export const TotalContent = styled.View`
@@ -59,15 +60,15 @@ export const MainContent = styled.View`
   justify-content: center;
   background-color: ${colors.background};
   width: 100%;
-  border-top-right-radius: ${metrics.base * 8}px;
-  border-top-left-radius: ${metrics.base * 8}px;
+  border-top-right-radius: ${metrics.base * 12.5}px;
+  border-top-left-radius: ${metrics.base * 12.5}px;
   margin-top: ${metrics.base * 10}px;
   padding-bottom: ${metrics.base * 5}px;
 `;
 
 export const ResumeContainer = styled.View`
   width: 90%;
-  height: ${metrics.base * 14}px;
+  height: ${metrics.hp(8)}px;
   border-radius: ${metrics.base * 4}px;
   background-color: white;
   margin-top: ${metrics.base * 10}px;
@@ -107,13 +108,13 @@ export const ResumeContent = styled.View`
 `;
 
 export const ResumeValue = styled.Text`
-  font-size: ${metrics.base * 5}px;
+  font-size: ${metrics.base * 4.5}px;
   font-family: ${fontFamily.medium};
   color: ${colors.text};
 `;
 
 export const ResumeType = styled.Text`
-  font-size: ${metrics.base * 4}px;
+  font-size: ${metrics.base * 3.5}px;
   font-family: ${fontFamily.regular};
   color: ${colors.text};
 `;
@@ -130,13 +131,13 @@ export const RecentsTitle = styled.Text`
   margin-left: 8%;
   width: 100%;
   text-align: left;
-  font-size: ${metrics.base * 5}px;
+  font-size: ${metrics.base * 5.5}px;
   font-family: ${fontFamily.medium};
   margin-bottom: ${metrics.base * 3}px;
   color: ${colors.text};
 `;
 
-export const SeeMoreButton = styled(RectButton)`
+export const SeeMoreButton = styled(Ripple)`
   padding: ${metrics.base * 2}px;
   background: transparent;
   margin-top: ${metrics.base * 1}px;
@@ -148,7 +149,7 @@ export const SeeMoreButton = styled(RectButton)`
 
 export const SeeMoreText = styled.Text`
   font-size: ${metrics.base * 4}px;
-  font-family: ${fontFamily.medium};
+  font-family: ${fontFamily.regular};
   color: ${colors.text};
 `;
 
@@ -165,7 +166,7 @@ export const OptionsTitle = styled.Text`
   margin-left: 8%;
   width: 100%;
   text-align: left;
-  font-size: ${metrics.base * 5}px;
+  font-size: ${metrics.base * 5.5}px;
   font-family: ${fontFamily.medium};
   margin-bottom: ${metrics.base * 3}px;
   color: ${colors.text};
@@ -212,6 +213,6 @@ export const Marker = styled.View`
 
 export const LabelText = styled.Text`
   font-size: ${metrics.base * 4}px;
-  font-family: ${fontFamily.regular};
+  font-family: ${fontFamily.medium};
   color: ${colors.text};
 `;
