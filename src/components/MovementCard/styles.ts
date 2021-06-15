@@ -9,7 +9,7 @@ interface props {
 }
 
 export const CardConatiner = styled.View`
-    height: ${metrics.base * 14}px;
+    height: ${metrics.base * 13}px;
     width: 100%;
     border-radius: ${metrics.base * 4}px;
     display: flex;
@@ -29,16 +29,8 @@ export const TitleContainer = styled.View`
     justify-content: center;
 `
 
-export const ColoredBar = styled.View`
-    height: ${metrics.base * 4}px;
-    width: ${metrics.base * 1}px;
-    border-radius: ${metrics.base * 1}px;
-    margin-right: ${metrics.base * 1}px;
-    background-color: ${(props: props) => props.theme.color};
-`
-
 export const Title = styled.Text`
-    font-size: ${metrics.base * 5}px;
+    font-size: ${metrics.base * 4}px;
     font-family: ${fontFamily.medium};
     color: ${(props: props) => props.theme.color};
 `
@@ -51,13 +43,14 @@ export const ValueContainer = styled.View`
 `
 
 export const ValueDescription = styled.Text`
-    font-size: ${metrics.base * 5}px;
+    font-size: ${metrics.base * 4}px;
     font-family: ${fontFamily.medium};
     color: ${(props: props) => props.theme.color};
+    margin-right: ${metrics.base * 1}px;
 `
 
 export const Value = styled.Text`
-    font-size: ${metrics.base * 5}px;
+    font-size: ${metrics.base * 4}px;
     font-family: ${fontFamily.medium};
     color: ${colors.text};
 `

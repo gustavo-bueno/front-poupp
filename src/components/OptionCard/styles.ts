@@ -1,10 +1,10 @@
-import { RectButton } from 'react-native-gesture-handler'
+import Ripple from 'react-native-material-ripple'
 import styled from 'styled-components/native'
 import { colors, fontFamily, metrics } from '../../styles'
 
-export const OptionContainer = styled(RectButton)`
-    height: ${metrics.base * 28}px;
-    width: ${metrics.base * 24}px;
+export const OptionContainer = styled(Ripple)`
+    height: ${metrics.wp(28)}px;
+    width: ${metrics.hp(15)}px;
     border-radius: ${metrics.base * 4}px;
     display: flex;
     flex-direction: column;
@@ -24,5 +24,5 @@ export const OptionIcon = styled.View`
 export const OptionTitle = styled.Text`
     font-size: ${metrics.base * 4}px;
     color: ${colors.text};
-    font-family: ${fontFamily.regular};
+    font-family: ${fontFamily.medium};
 `

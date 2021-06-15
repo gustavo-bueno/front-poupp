@@ -5,13 +5,10 @@ import {
     OptionTitle
 } from './styles'
 
-interface props {
-    title: string,
-    icon: JSX.Element
-}
+import { IProps } from './IProps'
 
-const OptionCard = ({title, icon}: props) => (
-    <OptionContainer>
+const OptionCard = ({title, icon, ...rest}: IProps) => (
+    <OptionContainer {...rest}>
         <OptionIcon>{icon}</OptionIcon>
         <OptionTitle>{title}</OptionTitle>
     </OptionContainer>

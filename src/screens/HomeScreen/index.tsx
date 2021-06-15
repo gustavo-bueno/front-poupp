@@ -29,6 +29,8 @@ import {
   LabelText,
 } from './styles';
 
+import NumberToMoney from '../../functions/NumberToMoney'
+
 import { PieChart } from 'react-native-svg-charts';
 import 'react-native-svg';
 
@@ -39,9 +41,11 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import MovementCard from '../../components/MovementCard';
 import OptionCard from '../../components/OptionCard';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native';
+
 
 const HomeScreen: React.FC = () => {
+
   const data = [
     {
       name: 'Alimentação',
@@ -72,7 +76,7 @@ const HomeScreen: React.FC = () => {
         <HeaderContent>
           <Username>Olá, Wilian</Username>
           <TotalContent>
-            <Total>R$ 20.749</Total>
+            <Total>R$ {NumberToMoney(20749)}</Total>
             <TotalLabel>Balanço Mensal</TotalLabel>
           </TotalContent>
         </HeaderContent>
@@ -87,7 +91,7 @@ const HomeScreen: React.FC = () => {
                 />
               </ResumeIndicator>
               <ResumeContent>
-                <ResumeValue>R$ 1.950,00</ResumeValue>
+                <ResumeValue>R$ {NumberToMoney(1950)}</ResumeValue>
                 <ResumeType>Entradas</ResumeType>
               </ResumeContent>
             </Resume>
@@ -101,7 +105,7 @@ const HomeScreen: React.FC = () => {
                 />
               </ResumeIndicator>
               <ResumeContent>
-                <ResumeValue>R$ 1.950,00</ResumeValue>
+                <ResumeValue>R$ {NumberToMoney(1950)}</ResumeValue>
                 <ResumeType>Saídas</ResumeType>
               </ResumeContent>
             </Resume>

@@ -1,11 +1,14 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import HomeScreen from '../../screens/HomeScreen';
-import { colors, metrics } from '../../styles';
 import { AddButton } from './styles';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { colors, metrics } from '../../styles';
+
+import HomeScreen from '../../screens/HomeScreen';
+import TransictionsScreen from '../../screens/TransictionsScrenn';
+import UserScreen from '../../screens/UserScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,7 +36,7 @@ const NavBar: React.FC = () => {
                 return (
                   <Feather name="user" size={metrics.base * 7} color={color} />
                 );
-              case 'Movements':
+              case 'Transictions':
                 return (
                   <AntDesign
                     name="retweet"
@@ -56,7 +59,7 @@ const NavBar: React.FC = () => {
         }}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Movements" component={HomeScreen} />
+        <Tab.Screen name="Transictions" component={TransictionsScreen} />
         <Tab.Screen
           name="Add"
           component={HomeScreen}
@@ -69,7 +72,7 @@ const NavBar: React.FC = () => {
           })}
         />
         <Tab.Screen name="Chart" component={HomeScreen} />
-        <Tab.Screen name="User" component={HomeScreen} />
+        <Tab.Screen name="User" component={UserScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

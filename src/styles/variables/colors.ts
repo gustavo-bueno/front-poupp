@@ -6,5 +6,7 @@ export default <Record<string, string>>{
   text: '#33404F',
   red: '#DE4C3C',
   background: '#F0EDED',
-  white: '#fff'
+  white: '#fff',
+  lightBlue: '#517094',
+  blue: '#394E68'
 };
