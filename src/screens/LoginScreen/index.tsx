@@ -28,7 +28,9 @@ const LoginScreen: React.FC = () => {
     formRef.current?.setErrors({});
     try {
       const schema = Yup.object().shape({
-        email: Yup.string().email().required('O campo e-mail é obrigatório.'),
+        email: Yup.string()
+          .email('Digite um email válido')
+          .required('O campo e-mail é obrigatório.'),
         password: Yup.string()
           .min(8, 'A senha deve ter 8 caracteres')
           .required('O campo senha é obrigatório.'),
@@ -49,10 +51,10 @@ const LoginScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
       <Wave
         width={metrics.wp(100)}
-        style={{ position: 'absolute', top: 0, zIndex: 0 }}
+        style={{ position: 'absolute', top: -metrics.hp(7), zIndex: 0 }}
       />
       <Container style={{ justifyContent: 'space-between' }}>
         <Header>
@@ -66,7 +68,15 @@ const LoginScreen: React.FC = () => {
         <FormContainer>
           <KeyboardAvoidingView behavior="padding">
             <Title>Entrar</Title>
-            <Form ref={formRef} onSubmit={handleSubmit}>
+            <Form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              style={{
+                backgroundColor: '#FFF',
+                borderTopRightRadius: 8,
+                borderTopLeftRadius: 8,
+              }}
+            >
               <Input name="email" placeholder="Email" />
               <Input name="password" placeholder="Senha" />
               <SignInButton onPress={() => formRef.current?.submitForm()} />

@@ -26,7 +26,7 @@ export const SignUpButton = styled(Button).attrs({
 `;
 
 export const FormContainer = styled.View`
-  height: 50%;
+  height: 60%;
 `;
 
 export const ForgotPasswordButton = styled(Button).attrs({
@@ -50,12 +50,12 @@ export const Title = styled(H0).attrs({
   color: 'text',
 })`
   font-size: 32px;
-  margin-bottom: ${metrics.base * 3}px;
+  margin-bottom: ${metrics.base * 2}px;
 `;
 
 export const SignInButton = styled(Button).attrs({
   title: 'Entrar',
 })`
-  margin-top: ${metrics.base * 6}px;
-  margin-bottom: ${metrics.base}px;
+  margin-top: ${metrics.base * 4}px;
+  margin-bottom: ${metrics.base / 2}px;
 `;

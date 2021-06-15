@@ -50,11 +50,7 @@ const Input: React.FC<IProps> = ({ name, style, ...rest }: IProps) => {
         {...rest}
       />
 
-      {error && (
-        <H2 color="red" style={{ marginBottom: metrics.base }}>
-          {error}
-        </H2>
-      )}
+      {error && <H2 color="red">{error}</H2>}
     </>
   );
 };

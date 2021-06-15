@@ -6,8 +6,18 @@ import { colors, metrics } from '../../styles';
 import { AddButton } from './styles';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import AddMovimentationScreen from '../../screens/AddMovimentationScreen';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Tab = createBottomTabNavigator();
+
+const Stack = createStackNavigator();
+
+// const StackNavigation = () => (
+//   <Stack.Navigator>
+//     <Stack.Screen name="AddMovimentation" component={AddMovimentationScreen} />
+//   </Stack.Navigator>
+// );
 
 const NavBar: React.FC = () => {
   return (
@@ -59,7 +69,7 @@ const NavBar: React.FC = () => {
         <Tab.Screen name="Movements" component={HomeScreen} />
         <Tab.Screen
           name="Add"
-          component={HomeScreen}
+          component={AddMovimentationScreen}
           options={() => ({
             tabBarIcon: () => (
               <AddButton>

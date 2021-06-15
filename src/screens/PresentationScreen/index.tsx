@@ -18,10 +18,10 @@ import { ROUTES } from '../../constants/routes';
 const PresentationScreen: React.FC = () => {
   const { navigate } = useNavigation();
   return (
-    <View style={{ position: 'relative', flex: 1 }}>
+    <View style={{ position: 'relative', flex: 1, backgroundColor: '#FFF' }}>
       <Wave
         width={metrics.wp(100)}
-        style={{ position: 'absolute', top: 0, zIndex: 0 }}
+        style={{ position: 'absolute', top: -metrics.hp(7), zIndex: 0 }}
       />
       <Container>
         <Header>

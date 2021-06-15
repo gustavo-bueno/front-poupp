@@ -1,5 +1,6 @@
-import React, { useContext, useRef } from 'react';
-import { KeyboardAvoidingView, SafeAreaView, View } from 'react-native';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Platform } from 'react-native';
+import { KeyboardAvoidingView, Keyboard, View } from 'react-native';
 
 import * as Yup from 'yup';
 import SignUpVector from '../../../assets/signup.svg';
@@ -14,6 +15,7 @@ import Button from '../../components/Button';
 import { UserContext } from '../../contexts/user';
 
 const SignUpScreen: React.FC = () => {
+  const [margin, setMargin] = useState(metrics.base * 4);
   const { setUser } = useContext(UserContext);
   const formRef = useRef<FormHandles>(null);
 
@@ -42,46 +44,65 @@ const SignUpScreen: React.FC = () => {
     }
   };
 
+  const keyboardDidShow = () => {
+    setMargin(metrics.base * 50);
+  };
+  const keyboard = Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: '#FFF' }}>
       <Wave
         width={metrics.wp(100)}
-        style={{ position: 'absolute', top: 0, zIndex: 0 }}
+        style={{ position: 'absolute', top: -metrics.hp(7), zIndex: 0 }}
       />
       <View
         style={{
-          justifyContent: 'space-between',
           flex: 1,
+          justifyContent: 'space-between',
         }}
       >
         <SignUpVector
-          style={{ alignSelf: 'flex-end', marginTop: metrics.base * 12 }}
+          style={{
+            alignSelf: 'flex-end',
+            marginTop: metrics.base * 12,
+            marginBottom: metrics.base,
+          }}
           width={metrics.wp(60)}
           height={metrics.hp(30)}
         />
-        <Container style={{ height: '58%' }}>
-          <KeyboardAvoidingView behavior="padding">
+        <Container style={{ height: metrics.hp(57) }}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+          >
             <Title>Cadastre-se</Title>
-            <Form ref={formRef} onSubmit={handleSubmit}>
+            <Form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              style={{
+                backgroundColor: '#FFF',
+                borderTopRightRadius: 8,
+                borderTopLeftRadius: 8,
+              }}
+            >
               <Input name="name" placeholder="Nome" />
               <Input name="email" placeholder="Email" />
               <Input name="password" placeholder="Senha" />
               <Button
-                style={{ marginVertical: metrics.base * 4 }}
+                style={{ marginTop: metrics.base * 4, marginBottom: margin }}
                 title="Cadastre"
                 onPress={() => formRef.current?.submitForm()}
               />
             </Form>
+            <Button
+              type="link"
+              title="Já possui uma conta?"
+              titleWeight="bold"
+              style={{ alignSelf: 'center' }}
+            />
           </KeyboardAvoidingView>
-          <Button
-            type="link"
-            title="Já possui uma conta?"
-            titleWeight="bold"
-            style={{ alignSelf: 'center' }}
-          />
         </Container>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
