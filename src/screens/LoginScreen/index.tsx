@@ -1,15 +1,12 @@
 import React, { useContext, useRef } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
-import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
-import Wave from '../../../assets/background.svg';
 import LoginVector from '../../../assets/signin.svg';
 import Input from '../../components/Input';
 import { metrics } from '../../styles';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Container } from '../../components/Container';
+import { Container as ContentContainer } from '../../components/Container';
 import {
   FormContainer,
   Header,
@@ -17,8 +14,11 @@ import {
   ForgotPasswordButton,
   Title,
   SignInButton,
+  Container,
+  Form,
 } from './styles';
 import { UserContext } from '../../contexts/user';
+import { Wave } from '../../components/Wave';
 
 const LoginScreen: React.FC = () => {
   const { setUser } = useContext(UserContext);
@@ -51,12 +51,9 @@ const LoginScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
-      <Wave
-        width={metrics.wp(100)}
-        style={{ position: 'absolute', top: -metrics.hp(7), zIndex: 0 }}
-      />
-      <Container style={{ justifyContent: 'space-between' }}>
+    <Container>
+      <Wave />
+      <ContentContainer style={{ justifyContent: 'space-between' }}>
         <Header>
           <SignUpButton />
           <LoginVector
@@ -68,15 +65,7 @@ const LoginScreen: React.FC = () => {
         <FormContainer>
           <KeyboardAvoidingView behavior="padding">
             <Title>Entrar</Title>
-            <Form
-              ref={formRef}
-              onSubmit={handleSubmit}
-              style={{
-                backgroundColor: '#FFF',
-                borderTopRightRadius: 8,
-                borderTopLeftRadius: 8,
-              }}
-            >
+            <Form ref={formRef} onSubmit={handleSubmit}>
               <Input name="email" placeholder="Email" />
               <Input name="password" placeholder="Senha" />
               <SignInButton onPress={() => formRef.current?.submitForm()} />
@@ -84,8 +73,8 @@ const LoginScreen: React.FC = () => {
           </KeyboardAvoidingView>
           <ForgotPasswordButton />
         </FormContainer>
-      </Container>
-    </SafeAreaView>
+      </ContentContainer>
+    </Container>
   );
 };
 

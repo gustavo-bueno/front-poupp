@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { Form as Unform } from '@unform/mobile';
 
 import Button from '../../components/Button';
 import { H0 } from '../../components/Text';
@@ -58,4 +59,15 @@ export const SignInButton = styled(Button).attrs({
 })`
   margin-top: ${metrics.base * 4}px;
   margin-bottom: ${metrics.base / 2}px;
+`;
+
+export const Container = styled.SafeAreaView`
+  flex: 1;
+  background-color: ${colors.primary};
+`;
+
+export const Form = styled(Unform)`
+  background-color: ${colors.white};
+  border-top-right-radius: ${metrics.borderRadius}px;
+  border-top-left-radius: ${metrics.borderRadius}px;
 `;
