@@ -29,7 +29,7 @@ import {
   LabelText,
 } from './styles';
 
-import NumberToMoney from '../../functions/NumberToMoney'
+import NumberToMoney from '../../functions/NumberToMoney';
 
 import { PieChart } from 'react-native-svg-charts';
 import 'react-native-svg';
@@ -42,10 +42,9 @@ import { FontAwesome } from '@expo/vector-icons';
 import MovementCard from '../../components/MovementCard';
 import OptionCard from '../../components/OptionCard';
 import { SafeAreaView } from 'react-native';
-
+import { ROUTES } from '../../constants/routes';
 
 const HomeScreen: React.FC = () => {
-
   const data = [
     {
       name: 'Alimentação',
@@ -139,6 +138,7 @@ const HomeScreen: React.FC = () => {
             <OptionsList>
               <OptionCard
                 title="Contas"
+                route=""
                 icon={
                   <FontAwesome
                     name="bank"
@@ -148,6 +148,7 @@ const HomeScreen: React.FC = () => {
                 }
               />
               <OptionCard
+                route={ROUTES.CARD}
                 title="Cartões"
                 icon={
                   <AntDesign
@@ -158,6 +159,7 @@ const HomeScreen: React.FC = () => {
                 }
               />
               <OptionCard
+                route=""
                 title="Metas"
                 icon={
                   <Feather

@@ -17,7 +17,7 @@ import {
   TextAreaInput,
 } from './styles';
 import CategoriesList from '../../components/CategoriesList';
-import { colors, metrics } from '../../styles';
+import { metrics } from '../../styles';
 
 const options = [
   {

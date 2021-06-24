@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
-import NavBar from '../components/NavBar';
 import { UserContext } from '../contexts/user';
 import Authentication from './authentication';
+import Home from './home';
 
 const Routes: React.FC = () => {
   const { user } = useContext(UserContext);
-  return user ? <NavBar /> : <Authentication />;
+  if (user) {
+    return <Home />;
+  }
+  return <Authentication />;
 };
 
 export default Routes;

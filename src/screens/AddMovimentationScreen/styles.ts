@@ -38,7 +38,7 @@ export const MovimentationInfosContainer = styled(Container)`
   border-top-left-radius: ${metrics.base * 8}px;
   background-color: ${colors.background};
   padding-top: ${metrics.base * 4}px;
-  padding-bottom: ${metrics.hp(29)}px;
+  padding-bottom: ${metrics.hp(35)}px;
 `;
 
 export const SecondaryTitle = styled(H2).attrs({
