@@ -17,9 +17,7 @@ const MovementCard = ({ entries = false, title, value }: IProps) => {
   return (
     <CardConatiner>
       <TitleContainer>
-        <Title theme={{ color: entries ? colors.green : colors.red }}>
-          {title}
-        </Title>
+        <Title>{title}</Title>
       </TitleContainer>
       <ValueContainer>
         <ValueDescription

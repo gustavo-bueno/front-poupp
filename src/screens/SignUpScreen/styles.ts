@@ -8,8 +8,8 @@ export const SignUpVector = styled(RegisterVector).attrs({
   height: metrics.hp(30),
 })`
   align-self: flex-end;
-  margin-top: ${metrics.base * 12}px;
-  margin-bottom: ${metrics.base}px;
+  margin-top: ${metrics.base * 10}px;
+  margin-bottom: ${metrics.base * 5}px;
 `;
 
 export const Container = styled.View`

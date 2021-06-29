@@ -47,11 +47,14 @@ const SignUpScreen: React.FC = () => {
       <Wave />
       <Content>
         <SignUpVector />
-        <FormContainer style={{ height: metrics.hp(57) }}>
+        <ScrollView
+          style={{ height: metrics.hp(57) }}
+          showsVerticalScrollIndicator={false}
+        >
           <KeyboardAvoidingView
             behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
           >
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <FormContainer>
               <Title>Cadastre-se</Title>
               <Form ref={formRef} onSubmit={handleSubmit}>
                 <Input name="name" placeholder="Nome" />
@@ -67,11 +70,11 @@ const SignUpScreen: React.FC = () => {
                 type="link"
                 title="Já possui uma conta?"
                 titleWeight="bold"
-                style={{ alignSelf: 'center' }}
+                style={{ alignSelf: 'center', marginTop: metrics.base }}
               />
-            </ScrollView>
+            </FormContainer>
           </KeyboardAvoidingView>
-        </FormContainer>
+        </ScrollView>
       </Content>
     </Container>
   );

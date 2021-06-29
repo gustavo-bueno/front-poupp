@@ -17,11 +17,13 @@ const PouppTeachScreen: React.FC = () => {
         </H0>
       </TitleContainer>
       <Container>
-        <Title>Segue aí umas informações bem importantes! :)</Title>
+        <Title fontWeight="bold" color="text">
+          Segue aí umas informações bem importantes! :)
+        </Title>
         <ScrollView
           horizontal
           style={{ maxHeight: '25%' }}
-          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
         >
           <PostCard
             title="O que é reserva de emergência e por que ela é tão importante?"
@@ -38,6 +40,7 @@ const PouppTeachScreen: React.FC = () => {
         </ScrollView>
         <PaddingContainer>
           <H1
+            fontWeight="bold"
             style={{
               marginVertical: metrics.base * 4,
             }}

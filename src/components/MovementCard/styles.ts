@@ -32,7 +32,7 @@ export const TitleContainer = styled.View`
 export const Title = styled.Text`
   font-size: ${metrics.base * 4}px;
   font-family: ${fontFamily.medium};
-  color: ${(props: props) => props.theme.color};
+  color: ${colors.text};
 `;
 
 export const ValueContainer = styled.View`

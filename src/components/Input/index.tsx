@@ -1,13 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ColorValue, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 import { useField } from '@unform/core';
 import { CustomInput } from './styles';
 import { IProps } from './IProps';
 import { colors, metrics } from '../../styles';
 import { H2 } from '../Text';
+import InputMask from './InputMask';
 // import { Container } from './styles';
 
-const Input: React.FC<IProps> = ({ name, style, ...rest }: IProps) => {
+const Input: React.FC<IProps> = ({
+  name,
+  style,
+  mask,
+  options,
+  type = 'custom',
+  ...rest
+}: IProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<any>(TextInput);
@@ -21,6 +29,30 @@ const Input: React.FC<IProps> = ({ name, style, ...rest }: IProps) => {
       path: 'value',
     });
   }, [fieldName, registerField]);
+
+  if (mask) {
+    return (
+      <InputMask
+        name={name}
+        options={options}
+        style={[
+          {
+            borderColor: error
+              ? colors.error
+              : isFocused
+              ? colors.primary
+              : colors.grey,
+            marginVertical: metrics.base * 2,
+          },
+          style,
+        ]}
+        type={type}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        {...rest}
+      />
+    );
+  }
 
   return (
     <>

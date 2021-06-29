@@ -8,5 +8,5 @@ export default <Record<string, string>>{
   background: '#F0EDED',
   white: '#fff',
   lightBlue: '#517094',
-  blue: '#394E68'
+  blue: '#394E68',
 };

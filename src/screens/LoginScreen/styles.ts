@@ -63,7 +63,7 @@ export const SignInButton = styled(Button).attrs({
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  background-color: ${colors.primary};
+  background-color: ${colors.white};
 `;
 
 export const Form = styled(Unform)`

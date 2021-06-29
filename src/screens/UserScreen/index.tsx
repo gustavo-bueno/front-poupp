@@ -43,7 +43,10 @@ const UserScreen: React.FC = () => {
           >
             <ButtonText>Poupp Educa</ButtonText>
           </Button>
-          <Button theme={{ type: 'normal' }}>
+          <Button
+            onPress={() => navigate(ROUTES.EXTRA_INCOME)}
+            theme={{ type: 'normal' }}
+          >
             <ButtonText>Renda extra</ButtonText>
           </Button>
         </ButtonsContainer>
