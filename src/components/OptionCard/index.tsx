@@ -6,9 +6,10 @@ import {
 } from './styles'
 
 import { IProps } from './IProps'
+import { metrics } from '../../styles'
 
 const OptionCard = ({title, icon, ...rest}: IProps) => (
-    <OptionContainer {...rest}>
+    <OptionContainer rippleContainerBorderRadius={metrics.base * 4}  {...rest}>
         <OptionIcon>{icon}</OptionIcon>
         <OptionTitle>{title}</OptionTitle>
     </OptionContainer>

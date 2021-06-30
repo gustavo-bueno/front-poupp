@@ -76,7 +76,7 @@ const TransictionsScreen: React.FC = () => {
                     horizontal
                     keyExtractor={(year, index) => index.toString()}
                     renderItem={({item}) => (
-                        <Year theme={activeYear === item.year ? {color: colors.darkBlue} : {color: colors.white}} onPress={() => setActiveYear(item.year)}>
+                        <Year theme={activeYear === item.year ? {color: colors.darkBlue} : {color: colors.white}} onPress={() => setActiveYear(item.year)} rippleContainerBorderRadius={metrics.base * 2.5}>
                             <YearText theme={activeYear === item.year ? {color: colors.white} : {color: colors.text}}>
                                 {item.year}
                             </YearText>
@@ -84,13 +84,13 @@ const TransictionsScreen: React.FC = () => {
                     )}
                 />
                 <MonthContainer>
-                    <ChangeButton>
+                    <ChangeButton rippleContainerBorderRadius={metrics.base * 6}>
                         <MaterialIcons name="keyboard-arrow-left" size={metrics.base * 9} color={colors.darkBlue} />
                     </ChangeButton>
                     <Month>
                         <MonthText>Janeiro</MonthText>
                     </Month>
-                    <ChangeButton>
+                    <ChangeButton rippleContainerBorderRadius={metrics.base * 6}>
                         <MaterialIcons name="keyboard-arrow-right" size={metrics.base * 9} color={colors.darkBlue} />
                     </ChangeButton>
                 </MonthContainer>

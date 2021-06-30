@@ -10,6 +10,7 @@ import HomeScreen from '../../screens/HomeScreen';
 import TransictionsScreen from '../../screens/TransictionsScrenn';
 import UserScreen from '../../screens/UserScreen';
 import AddMovimentationScreen from '../../screens/AddMovimentationScreen';
+import ChartSreen from '../../screens/ChartScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -66,13 +67,13 @@ const NavBar: React.FC = () => {
           component={AddMovimentationScreen}
           options={() => ({
             tabBarIcon: () => (
-              <AddButton>
+              <AddButton rippleContainerBorderRadius={metrics.base * 4}>
                 <FontAwesome name="plus" size={metrics.base * 4} color="#fff" />
               </AddButton>
             ),
           })}
         />
-        <Tab.Screen name="Chart" component={HomeScreen} />
+        <Tab.Screen name="Chart" component={ChartSreen} />
         <Tab.Screen name="User" component={UserScreen} />
       </Tab.Navigator>
     </NavigationContainer>
