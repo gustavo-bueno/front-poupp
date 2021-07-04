@@ -40,3 +40,9 @@ export const Title = styled(H0).attrs({
   font-size: 36px;
   margin-bottom: ${metrics.base * 2}px;
 `;
+
+export const Container = styled.View`
+  position: relative;
+  flex: 1;
+  background-color: ${colors.white};
+`;

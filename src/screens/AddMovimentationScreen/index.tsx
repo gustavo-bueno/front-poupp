@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import Ripple from 'react-native-material-ripple';
-import { FlatList, SafeAreaView, ScrollView, View } from 'react-native';
-
+import { FlatList } from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
 import { FontAwesome5, AntDesign, Entypo } from '@expo/vector-icons';
 
 import { H0, H2 } from '../../components/Text';
 import {
   ConfirmButton,
+  Container,
   CustomScrollView,
   InputContainer,
   MovimentationInfosContainer,
   OptionContainer,
   OptionsContainer,
-  ProvisoryCollapsible,
   SecondaryTitle,
   TextAreaInput,
 } from './styles';
 import CategoriesList from '../../components/CategoriesList';
 import { colors, metrics } from '../../styles';
+import CollapsibleList from '../../components/CollapsibleList';
 
 const options = [
   {
@@ -34,11 +35,41 @@ const options = [
   },
 ];
 
+const paymentMethodData = [
+  {
+    name: 'Carteira',
+  },
+  {
+    name: 'Conta itáu',
+  },
+];
+
+const frequencyData = [
+  {
+    name: 'Uma vez',
+  },
+  {
+    name: 'Duas vezes',
+  },
+  {
+    name: 'Três vezes',
+  },
+  {
+    name: 'Infinito',
+  },
+];
+
 const AddMovimentationScreen: React.FC = () => {
+  const [value, setValue] = useState<string | undefined>('0000');
+  const [maskedValue, setMaskedValue] = useState<string | undefined>('000');
+  const [paymentMethod, setPaymentMethod] = useState<string>('');
+  const [frequency, setFrequency] = useState<string>('');
   const [movimentationType, setMovimentationType] = useState({
     id: '1',
     name: 'Entradas',
   });
+
+  console.log(value);
 
   const time = Date.now();
 
@@ -67,15 +98,29 @@ const AddMovimentationScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView
-      style={{ height: '100%', width: '100%', position: 'relative' }}
-    >
+    <Container>
       <CustomScrollView>
         <InputContainer>
           <MovimentationIcon />
-          <H0 color="white" fontWeight="bold" style={{ fontSize: 40 }}>
-            R$0,00
-          </H0>
+          <TextInputMask
+            type="money"
+            keyboardType="numeric"
+            value={maskedValue}
+            style={{
+              fontSize: 40,
+              fontFamily: 'Ubuntu_700Bold',
+              color: colors.white,
+              backgroundColor: colors.green,
+              width: '85%',
+              flexWrap: 'wrap',
+              textAlign: 'right',
+            }}
+            includeRawValueInChangeText
+            onChangeText={(text, rawValue) => {
+              setValue(rawValue);
+              setMaskedValue(text);
+            }}
+          />
         </InputContainer>
         <MovimentationInfosContainer>
           <H2 fontWeight="medium" style={{ textAlign: 'center' }}>
@@ -98,15 +143,19 @@ const AddMovimentationScreen: React.FC = () => {
           <SecondaryTitle>Descrição:</SecondaryTitle>
           <TextAreaInput />
           <SecondaryTitle>Pagar com:</SecondaryTitle>
-          <ProvisoryCollapsible>
-            <H2>Carteira</H2>
-            <Entypo name="chevron-down" size={24} color="grey" />
-          </ProvisoryCollapsible>
+          <CollapsibleList
+            onPressItem={(selectedPaymentMethod) =>
+              setPaymentMethod(selectedPaymentMethod)
+            }
+            data={paymentMethodData}
+            collapsibleTitle="Forma de pagamento"
+          />
           <SecondaryTitle>Acontece quantas vezes?</SecondaryTitle>
-          <ProvisoryCollapsible>
-            <H2>Uma vez</H2>
-            <Entypo name="chevron-down" size={24} color="grey" />
-          </ProvisoryCollapsible>
+          <CollapsibleList
+            data={frequencyData}
+            collapsibleTitle="Frequência"
+            onPressItem={(selectedFrequency) => setFrequency(selectedFrequency)}
+          />
         </MovimentationInfosContainer>
       </CustomScrollView>
       <ConfirmButton>
@@ -120,7 +169,7 @@ const AddMovimentationScreen: React.FC = () => {
           }}
         />
       </ConfirmButton>
-    </SafeAreaView>
+    </Container>
   );
 };
 

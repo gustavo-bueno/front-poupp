@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
-    TransactionsContainer,
-    MainContent,
-    HeaderContent,
-    Title,
-    Filter,
-    Year,
-    YearText,
-    MonthContainer,
-    Month,
-    MonthText,
-    ChangeButton,
-    DayTransactions,
-    DayTransactionsTitle
-} from './styles'
+  TransactionsContainer,
+  MainContent,
+  HeaderContent,
+  Title,
+  Filter,
+  Year,
+  YearText,
+  MonthContainer,
+  Month,
+  MonthText,
+  ChangeButton,
+  DayTransactions,
+  DayTransactionsTitle,
+} from './styles';
 
 import { FlatList, SafeAreaView } from 'react-native';
 
@@ -22,22 +22,21 @@ import { colors, metrics } from '../../styles';
 import MovementCard from '../../components/MovementCard';
 
 const TransictionsScreen: React.FC = () => {
+  const data = [
+    {
+      year: '2019',
+    },
+    {
+      year: '2020',
+    },
+    {
+      year: '2021',
+    },
+  ];
 
-    const data = [
-        {
-            year: '2019',
-        },
-        {
-            year: '2020',
-        },
-        {
-            year: '2021',
-        }
-    ]
+  const [activeYear, setActiveYear] = useState<String>(data[0].year);
 
-    const [activeYear, setActiveYear] = useState<String>(data[0].year)
-
-    return (
+  return (
     <SafeAreaView>
         <TransactionsContainer showsVerticalScrollIndicator={false}>
             <HeaderContent>
@@ -97,7 +96,7 @@ const TransictionsScreen: React.FC = () => {
             </Filter>
         </TransactionsContainer>
     </SafeAreaView>
-    )
-}
+  );
+};
 
-export default TransictionsScreen
+export default TransictionsScreen;
