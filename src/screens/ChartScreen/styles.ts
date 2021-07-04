@@ -71,9 +71,7 @@ export const TabsContainer = styled.View`
   flex-direction: row;
 `
 
-export const Tab = styled(Ripple).attrs({
-  rippleContainerBorderRadius: metrics.base * 4
-})`
+export const Tab = styled(Ripple)`
   flex: 1;
   background: transparent;
   display: flex;
@@ -104,7 +102,7 @@ export const FilterContainer = styled.View`
   justify-content: space-between;
   width: 80%;
   margin-top: ${metrics.base * 4}px;
-  margin-bottom: ${metrics.base * 2}px;
+  margin-bottom: ${metrics.base * 4}px;
 `
 
 export const TotalFiltred = styled.Text`
@@ -113,22 +111,38 @@ export const TotalFiltred = styled.Text`
   font-size: ${metrics.base * 5}px;
 `
 
-export const ColapsableList = styled.TextInput`
-  width: ${metrics.base * 35}px;
-  height: ${metrics.hp(5)}px;
+export const ProvisoryCollapsible = styled.View`
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
   background-color: ${colors.white};
-  border-radius: ${metrics.base * 3}px;
-`
+  padding: ${metrics.base * 2}px;
+  border-radius: ${metrics.borderRadius}px;
+`;
 
 export const CategoriesList = styled.View`
   display: flex;
   flex-direction: column;
-  gap: ${metrics.base * 2}px;
   width: 90%;
+  margin-top: ${metrics.base * 4}px;
+`
+
+export const ChartContent = styled.View`
+  flex: 1;
+  margin-left: ${metrics.base * 2.5}px;
+`
+
+export const ChartContainer = styled.View`
+  height: ${metrics.base * 50}px;
+  padding: ${metrics.base * 5}px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: ${metrics.hp(5)}px;
 `
 
 export const CategoriesTitle = styled.Text`
   color: ${colors.text};
   font-family: ${fontFamily.medium};
   font-size: ${metrics.base * 5}px;
+  margin-bottom: ${metrics.base * 4}px;
 `

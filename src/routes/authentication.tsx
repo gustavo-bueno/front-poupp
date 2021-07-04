@@ -13,7 +13,7 @@ import SingUpScreen from '../screens/SignUpScreen';
 import { colors } from '../styles';
 import { ROUTES } from '../constants/routes';
 
-export default function Authentication() {
+const Authentication = () => {
   return (
     <NavigationContainer>
       <Navigator
@@ -32,3 +32,6 @@ export default function Authentication() {
     </NavigationContainer>
   );
 }
+
+
+export default Authentication
