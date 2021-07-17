@@ -19,8 +19,8 @@ export const TransactionsContainer = styled.ScrollView`
 
 export const HeaderContent = styled.View`
   width: 100%;
-  padding: ${metrics.base * 3}px;
   height: ${metrics.hp(14)}px;
+  padding: ${metrics.base * 3}px;
   margin-top: ${metrics.base * 2}px;
   display: flex;
   justify-content: space-between;

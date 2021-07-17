@@ -10,6 +10,7 @@ import HomeScreen from '../../screens/HomeScreen';
 import TransictionsScreen from '../../screens/TransictionsScrenn';
 import UserScreen from '../../screens/UserScreen';
 import AddMovimentationScreen from '../../screens/AddMovimentationScreen';
+import ChartSreen from '../../screens/ChartScreen';
 import { ROUTES } from '../../constants/routes';
 
 const Tab = createBottomTabNavigator();
