@@ -43,32 +43,34 @@ import MovementCard from '../../components/MovementCard';
 import OptionCard from '../../components/OptionCard';
 import { SafeAreaView } from 'react-native';
 import { ROUTES } from '../../constants/routes';
+import { useNavigation } from '@react-navigation/native';
+
+const data = [
+  {
+    name: 'Alimentação',
+    key: 1,
+    value: 100,
+    svg: { fill: '#04B889' },
+    arc: { cornerRadius: 4 },
+  },
+  {
+    name: 'Transporte',
+    key: 2,
+    value: 35,
+    svg: { fill: '#00E6B0' },
+    arc: { cornerRadius: 4 },
+  },
+  {
+    name: 'Luz',
+    key: 3,
+    value: 10,
+    svg: { fill: '#33404F' },
+    arc: { cornerRadius: 4 },
+  },
+];
 
 const HomeScreen: React.FC = () => {
-  const data = [
-    {
-      name: 'Alimentação',
-      key: 1,
-      value: 100,
-      svg: { fill: '#04B889' },
-      arc: { cornerRadius: 4 },
-    },
-    {
-      name: 'Transporte',
-      key: 2,
-      value: 35,
-      svg: { fill: '#00E6B0' },
-      arc: { cornerRadius: 4 },
-    },
-    {
-      name: 'Luz',
-      key: 3,
-      value: 10,
-      svg: { fill: '#33404F' },
-      arc: { cornerRadius: 4 },
-    },
-  ];
-
+  const { navigate } = useNavigation();
   return (
     <SafeAreaView>
       <HomeContainer showsVerticalScrollIndicator={false}>
@@ -129,7 +131,7 @@ const HomeScreen: React.FC = () => {
             <RecentsTitle>Recentes</RecentsTitle>
             <MovementCard title="Salário" value={1000} entries={true} />
             <MovementCard title="Conta de luz" value={1000} entries={false} />
-            <SeeMoreButton>
+            <SeeMoreButton onPress={() => navigate(ROUTES.TRANSACTIONS)}>
               <SeeMoreText>Ver mais +</SeeMoreText>
             </SeeMoreButton>
           </RecentsContainer>

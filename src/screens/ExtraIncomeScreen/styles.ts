@@ -38,3 +38,16 @@ export const NoGoalsContainer = styled.View`
   padding-left: ${metrics.base * 2}px;
   padding-right: ${metrics.base * 2}px;
 `;
+
+export const ProgressBar = styled.View`
+  width: 100%;
+  background-color: ${colors.gray};
+  height: 10px;
+  border-radius: ${metrics.borderRadius}px;
+`;
+
+export const Progress = styled.View`
+  background-color: ${colors.green};
+  height: 10px;
+  border-radius: ${metrics.borderRadius}px;
+`;

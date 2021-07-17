@@ -67,7 +67,11 @@ const LoginScreen: React.FC = () => {
             <Title>Entrar</Title>
             <Form ref={formRef} onSubmit={handleSubmit}>
               <Input name="email" placeholder="Email" />
-              <Input name="password" placeholder="Senha" />
+              <Input
+                secureTextEntry={true}
+                name="password"
+                placeholder="Senha"
+              />
               <SignInButton onPress={() => formRef.current?.submitForm()} />
             </Form>
           </KeyboardAvoidingView>

@@ -8,14 +8,48 @@ import {
   Container,
   NoGoalsContainer,
   NoGoalsContent,
+  Progress,
+  ProgressBar,
   Title,
   TitleContainer,
 } from './styles';
 import Button from '../../components/Button';
+import PostCard from '../../components/PostCard';
 
-const data: any[] = [];
+const data: any[] = [
+  {
+    totalValue: 200000,
+    percentage: 70,
+  },
+];
 
-const renderItem = ({ item }: any) => <View></View>;
+const renderItem = ({ item }: any) => (
+  <PostCard
+    content={
+      <View style={{ paddingHorizontal: metrics.base * 2.5 }}>
+        <H1 style={{ fontSize: 28 }} color="text">
+          R${item.totalValue}
+        </H1>
+        <ProgressBar>
+          <Progress style={{ width: `${item.percentage}%` }} />
+        </ProgressBar>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+          }}
+        >
+          <H2 color="text">
+            R${item.totalValue * (item.percentage / 100)} arrecadado
+          </H2>
+          <H2 color="text">{item.percentage}% concluído</H2>
+        </View>
+      </View>
+    }
+    image="https://images.pexels.com/photos/3883509/pexels-photo-3883509.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+  />
+);
 
 const ExtraIncomeScreen: React.FC = () => {
   return (
@@ -33,15 +67,26 @@ const ExtraIncomeScreen: React.FC = () => {
             <NoGoalsContent>
               <H2>Você ainda não possui metas :(</H2>
             </NoGoalsContent>
-            <Button
-              style={{ marginTop: metrics.base * 2 }}
-              title="Adicionar meta"
-            />
           </NoGoalsContainer>
         ) : (
-          <FlatList data={data} renderItem={renderItem} />
+          <FlatList
+            style={{
+              maxHeight: metrics.hp(25),
+            }}
+            contentContainerStyle={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            data={data}
+            horizontal
+            renderItem={renderItem}
+          />
         )}
         <PaddingContainer>
+          <Button
+            style={{ marginTop: metrics.base * 2 }}
+            title="Adicionar meta"
+          />
           <H1
             fontWeight="bold"
             style={{

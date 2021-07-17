@@ -21,7 +21,12 @@ export const CollapsibleList: React.FC<IProps> = ({
   const [collapsibled, setCollapsed] = useState(true);
 
   const renderItem = ({ item }: { item: { name: string; id: string } }) => (
-    <Ripple onPress={() => onPressItem(item)}>
+    <Ripple
+      onPress={() => {
+        onPressItem(item);
+        setCollapsed(true);
+      }}
+    >
       <ItemContainer>
         <H2>{item.name}</H2>
       </ItemContainer>

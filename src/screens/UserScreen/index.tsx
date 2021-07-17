@@ -14,8 +14,11 @@ import { FontAwesome } from '@expo/vector-icons';
 import { colors, metrics } from '../../styles';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants/routes';
+import { useContext } from 'react';
+import { UserContext } from '../../contexts/user';
 
 const UserScreen: React.FC = () => {
+  const { setUser } = useContext(UserContext);
   const { navigate } = useNavigation();
   return (
     <UserContainer>
@@ -51,7 +54,7 @@ const UserScreen: React.FC = () => {
           </Button>
         </ButtonsContainer>
         <ButtonsContainer>
-          <Button theme={{ type: 'bottom' }}>
+          <Button onPress={() => setUser(false)} theme={{ type: 'bottom' }}>
             <ButtonText>Sair</ButtonText>
           </Button>
         </ButtonsContainer>

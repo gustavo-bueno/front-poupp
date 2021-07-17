@@ -38,7 +38,7 @@ const NavBar: React.FC = () => {
               return (
                 <Feather name="user" size={metrics.base * 7} color={color} />
               );
-            case 'Transictions':
+            case ROUTES.TRANSACTIONS:
               return (
                 <AntDesign
                   name="retweet"
@@ -61,7 +61,7 @@ const NavBar: React.FC = () => {
       }}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Transictions" component={TransictionsScreen} />
+      <Tab.Screen name={ROUTES.TRANSACTIONS} component={TransictionsScreen} />
       <Tab.Screen
         name="Add"
         component={AddMovimentationScreen}

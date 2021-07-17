@@ -62,8 +62,10 @@ const frequencyData = [
 const AddMovimentationScreen: React.FC = () => {
   const [value, setValue] = useState<string | undefined>('0000');
   const [maskedValue, setMaskedValue] = useState<string | undefined>('000');
-  const [paymentMethod, setPaymentMethod] = useState<string>('');
-  const [frequency, setFrequency] = useState<string>('');
+  const [paymentMethod, setPaymentMethod] = useState<string>(
+    paymentMethodData[0].name
+  );
+  const [frequency, setFrequency] = useState<string>(frequencyData[0].name);
   const [movimentationType, setMovimentationType] = useState({
     id: '1',
     name: 'Entradas',
@@ -81,6 +83,7 @@ const AddMovimentationScreen: React.FC = () => {
     if (movimentationType.id === '2') {
       return <FontAwesome5 name="long-arrow-alt-down" size={40} color="red" />;
     }
+
     return <FontAwesome5 name="long-arrow-alt-up" size={40} color="green" />;
   };
 
@@ -90,7 +93,9 @@ const AddMovimentationScreen: React.FC = () => {
         style={{ marginLeft: metrics.base * 5 }}
         onPress={() => setMovimentationType(item)}
       >
-        <OptionContainer active={movimentationType == item ? true : false}>
+        <OptionContainer
+          active={movimentationType.id == item.id ? true : false}
+        >
           <H2>{item.name}</H2>
         </OptionContainer>
       </Ripple>
@@ -145,16 +150,18 @@ const AddMovimentationScreen: React.FC = () => {
           <SecondaryTitle>Pagar com:</SecondaryTitle>
           <CollapsibleList
             onPressItem={(selectedPaymentMethod) =>
-              setPaymentMethod(selectedPaymentMethod)
+              setPaymentMethod(selectedPaymentMethod.name)
             }
             data={paymentMethodData}
-            collapsibleTitle="Forma de pagamento"
+            collapsibleTitle={paymentMethod}
           />
           <SecondaryTitle>Acontece quantas vezes?</SecondaryTitle>
           <CollapsibleList
             data={frequencyData}
-            collapsibleTitle="Frequência"
-            onPressItem={(selectedFrequency) => setFrequency(selectedFrequency)}
+            collapsibleTitle={frequency}
+            onPressItem={(selectedFrequency) =>
+              setFrequency(selectedFrequency.name)
+            }
           />
         </MovimentationInfosContainer>
       </CustomScrollView>

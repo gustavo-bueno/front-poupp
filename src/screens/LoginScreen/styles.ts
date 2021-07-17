@@ -24,6 +24,7 @@ export const SignUpButton = styled(Button).attrs({
   align-self: flex-end;
   padding-top: ${metrics.base}px;
   padding-bottom: ${metrics.base}px;
+  margin-top: ${metrics.base * 4}px;
 `;
 
 export const FormContainer = styled.View`
