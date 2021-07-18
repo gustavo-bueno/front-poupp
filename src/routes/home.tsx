@@ -30,7 +30,7 @@ export default function Home() {
           options={
             {
               // headerShown: true,
-              // title: '',
+              // title: '',67y
               // headerStyle: {
               //   height: metrics.hp(7),
               //   backgroundColor: colors.green,

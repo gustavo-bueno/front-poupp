@@ -1,4 +1,4 @@
-import styled from 'styled-components/native'
+import styled from 'styled-components/native';
 import { colors, fontFamily, metrics } from '../../styles';
 import Ripple from 'react-native-material-ripple';
 
@@ -22,32 +22,32 @@ export const Header = styled.View`
   justify-content: center;
   padding: ${metrics.base * 3}px;
   margin-top: ${metrics.base * 2}px;
-`
+`;
 
 export const Title = styled.Text`
   color: ${colors.white};
   font-family: ${fontFamily.medium};
   font-size: ${metrics.base * 6}px;
   margin-top: ${metrics.base * 2}px;
-`
+`;
 
 export const BalanceContainer = styled.View`
   margin-top: ${metrics.hp(3)}px;
   margin-bottom: ${metrics.hp(3)}px;
-`
+`;
 
 export const Total = styled.Text`
   font-size: ${metrics.base * 10}px;
   font-family: ${fontFamily.bold};
   color: #fff;
   margin-bottom: ${metrics.base / 2}px;
-`
+`;
 
 export const Label = styled.Text`
   font-size: ${metrics.base * 4}px;
   font-family: ${fontFamily.regular};
   color: white;
-`
+`;
 
 export const MainContent = styled.View`
   display: flex;
@@ -60,7 +60,7 @@ export const MainContent = styled.View`
   border-top-left-radius: ${metrics.base * 12.5}px;
   padding-top: ${metrics.base * 7.5}px;
   padding-bottom: ${metrics.base * 5}px;
-`
+`;
 
 export const TabsContainer = styled.View`
   width: 90%;
@@ -69,7 +69,7 @@ export const TabsContainer = styled.View`
   border-radius: ${metrics.base * 4}px;
   display: flex;
   flex-direction: row;
-`
+`;
 
 export const Tab = styled(Ripple)`
   flex: 1;
@@ -78,14 +78,14 @@ export const Tab = styled(Ripple)`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
 export const TabText = styled.Text`
   color: ${colors.text};
   font-family: ${fontFamily.medium};
   font-size: ${metrics.base * 5}px;
   margin-top: ${metrics.hp(2)}px;
-`
+`;
 
 export const TabIndicatior = styled.View`
   background-color: ${(props: props) => props.theme.color};
@@ -93,7 +93,7 @@ export const TabIndicatior = styled.View`
   width: 70%;
   height: ${metrics.base * 1}px;
   border-top-left-radius: ${metrics.base * 2}px;
-`
+`;
 
 export const FilterContainer = styled.View`
   display: flex;
@@ -103,13 +103,13 @@ export const FilterContainer = styled.View`
   width: 80%;
   margin-top: ${metrics.base * 4}px;
   margin-bottom: ${metrics.base * 4}px;
-`
+`;
 
 export const TotalFiltred = styled.Text`
   color: ${colors.text};
   font-family: ${fontFamily.medium};
   font-size: ${metrics.base * 5}px;
-`
+`;
 
 export const ProvisoryCollapsible = styled.View`
   justify-content: space-between;
@@ -125,12 +125,13 @@ export const CategoriesList = styled.View`
   flex-direction: column;
   width: 90%;
   margin-top: ${metrics.base * 4}px;
-`
+`;
 
 export const ChartContent = styled.View`
   flex: 1;
   margin-left: ${metrics.base * 2.5}px;
-`
+  width: 100%;
+`;
 
 export const ChartContainer = styled.View`
   height: ${metrics.base * 50}px;
@@ -138,11 +139,12 @@ export const ChartContainer = styled.View`
   display: flex;
   flex-direction: row;
   margin-bottom: ${metrics.hp(5)}px;
-`
+  width: 100%;
+`;
 
 export const CategoriesTitle = styled.Text`
   color: ${colors.text};
   font-family: ${fontFamily.medium};
   font-size: ${metrics.base * 5}px;
   margin-bottom: ${metrics.base * 4}px;
-`
+`;

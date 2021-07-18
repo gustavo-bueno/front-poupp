@@ -12,6 +12,7 @@ import UserScreen from '../../screens/UserScreen';
 import AddMovimentationScreen from '../../screens/AddMovimentationScreen';
 import ChartSreen from '../../screens/ChartScreen';
 import { ROUTES } from '../../constants/routes';
+import ChartScreen from '../../screens/ChartScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -74,7 +75,7 @@ const NavBar: React.FC = () => {
           ),
         })}
       />
-      <Tab.Screen name="Chart" component={HomeScreen} />
+      <Tab.Screen name="Chart" component={ChartScreen} />
       <Tab.Screen name="User" component={UserScreen} />
     </Tab.Navigator>
   );

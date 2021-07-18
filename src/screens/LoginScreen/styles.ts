@@ -6,7 +6,6 @@ import { H0 } from '../../components/Text';
 import { colors, metrics } from '../../styles';
 
 export const Header = styled.View`
-  justify-content: space-between;
   height: 44%;
 `;
 
@@ -24,7 +23,8 @@ export const SignUpButton = styled(Button).attrs({
   align-self: flex-end;
   padding-top: ${metrics.base}px;
   padding-bottom: ${metrics.base}px;
-  margin-top: ${metrics.base * 4}px;
+  margin-top: ${metrics.base * 6}px;
+  margin-bottom: ${metrics.base * 4}px;
 `;
 
 export const FormContainer = styled.View`
@@ -68,7 +68,6 @@ export const Container = styled.SafeAreaView`
 `;
 
 export const Form = styled(Unform)`
-  background-color: ${colors.white};
   border-top-right-radius: ${metrics.borderRadius}px;
   border-top-left-radius: ${metrics.borderRadius}px;
 `;

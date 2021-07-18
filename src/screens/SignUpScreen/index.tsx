@@ -1,21 +1,26 @@
 import React, { useContext, useRef } from 'react';
 import { Platform, ScrollView } from 'react-native';
-import { KeyboardAvoidingView, View } from 'react-native';
-
+import { KeyboardAvoidingView } from 'react-native';
+import Animated from 'react-native-reanimated';
 import * as Yup from 'yup';
+import { FormHandles } from '@unform/core';
+
 import { metrics } from '../../styles';
 import { Container as FormContainer } from '../../components/Container';
-import { FormHandles } from '@unform/core';
 import { Title } from '../LoginScreen/styles';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { UserContext } from '../../contexts/user';
 import { Container, SignUpVector, Form, Content } from './styles';
 import { Wave } from '../../components/Wave';
+import Animation from '../../utils/animation';
+import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../../constants/routes';
 
 const SignUpScreen: React.FC = () => {
   const { setUser } = useContext(UserContext);
   const formRef = useRef<FormHandles>(null);
+  const { navigate } = useNavigation();
 
   const handleSubmit = async (data: any) => {
     formRef.current?.setErrors({});
@@ -46,32 +51,43 @@ const SignUpScreen: React.FC = () => {
     <Container>
       <Wave />
       <Content>
-        <SignUpVector />
-        <ScrollView
-          style={{ height: metrics.hp(57) }}
-          showsVerticalScrollIndicator={false}
+        <Animated.View
+          style={[
+            Animation().svgViewStyle,
+            {
+              alignSelf: 'flex-end',
+              marginBottom: metrics.base * 8,
+            },
+          ]}
         >
-          <KeyboardAvoidingView
-            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-          >
+          <SignUpVector />
+        </Animated.View>
+        <ScrollView style={{ flex: 1 }}>
+          <KeyboardAvoidingView>
             <FormContainer>
-              <Title>Cadastre-se</Title>
-              <Form ref={formRef} onSubmit={handleSubmit}>
-                <Input name="name" placeholder="Nome" />
-                <Input name="email" placeholder="Email" />
-                <Input name="password" placeholder="Senha" />
+              <Animated.View style={Animation().yAnimationStyle}>
+                <Title>Criar conta</Title>
+                <Form ref={formRef} onSubmit={handleSubmit}>
+                  <Input name="name" placeholder="Nome" />
+                  <Input name="email" placeholder="Email" />
+                  <Input name="password" placeholder="Senha" />
+                  <Button
+                    style={{ marginTop: metrics.base * 4 }}
+                    title="Criar conta"
+                    onPress={() => formRef.current?.submitForm()}
+                  />
+                </Form>
                 <Button
-                  style={{ marginTop: metrics.base * 4 }}
-                  title="Cadastre"
-                  onPress={() => formRef.current?.submitForm()}
+                  onPress={() => navigate(ROUTES.LOGIN)}
+                  type="link"
+                  title="Já possui uma conta?"
+                  titleWeight="bold"
+                  style={{
+                    alignSelf: 'center',
+                    marginVertical: metrics.base * 2,
+                  }}
                 />
-              </Form>
-              <Button
-                type="link"
-                title="Já possui uma conta?"
-                titleWeight="bold"
-                style={{ alignSelf: 'center', marginTop: metrics.base }}
-              />
+              </Animated.View>
             </FormContainer>
           </KeyboardAvoidingView>
         </ScrollView>

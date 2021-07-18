@@ -1,4 +1,4 @@
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle } from 'react-native';
 import { RippleProps } from 'react-native-material-ripple';
 
 export interface IProps extends RippleProps {
