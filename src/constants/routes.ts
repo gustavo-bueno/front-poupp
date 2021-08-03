@@ -9,4 +9,5 @@ export const ROUTES = {
   CARD: 'cardScreen',
   POUPP_TEACH: 'pouppTeachScreen',
   EXTRA_INCOME: 'extraIncomeScreen',
+  POST_DETAIL: 'postDetailScreen',
 };

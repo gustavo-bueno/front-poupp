@@ -13,7 +13,6 @@ export const UserContainer = styled.SafeAreaView`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   background-color: ${colors.green};
 `;
@@ -50,7 +49,7 @@ export const MainContent = styled.View`
   align-items: center;
   justify-content: space-between;
   background-color: ${colors.background};
-  height: ${metrics.hp(60)}px;
+  height: ${metrics.hp(67)}px;
   width: 100%;
   border-top-right-radius: ${metrics.base * 12.5}px;
   border-top-left-radius: ${metrics.base * 12.5}px;
@@ -83,8 +82,8 @@ export const Button = styled(Ripple)`
 `;
 
 export const ButtonText = styled.Text`
-    font-size: ${metrics.base * 5}px;
-    font-family: ${fontFamily.regular};
-    color: ${colors.text}
-    margin-left: ${metrics.base * 15}px;
+  font-size: ${metrics.base * 5}px;
+  font-family: ${fontFamily.regular};
+  color: ${colors.text};
+  margin-left: ${metrics.base * 15}px;
 `;

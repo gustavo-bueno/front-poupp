@@ -46,8 +46,8 @@ const ChartSreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('incomes');
 
   const data2 = [
-    50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80, 50, 10, 40,
-    95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80,
+    0, 10, 40, 95, 40, 24, 85, 91, 35, 53, 53, 24, 50, 20, 80, 50, 10, 40, 95,
+    4, 24, 85, 91, 35, 53, 53, 24, 50, 20, 80,
   ];
 
   const data = [
@@ -73,7 +73,7 @@ const ChartSreen: React.FC = () => {
     fill: colors.text,
     fontFamily: fontFamily.regular,
   };
-  const verticalContentInset = { top: 10, bottom: 10 };
+  const verticalContentInset = { top: 17, bottom: 10 };
   const xAxisHeight = 30;
 
   return (
@@ -123,40 +123,45 @@ const ChartSreen: React.FC = () => {
               data={data2}
               style={{
                 height: metrics.base * 45,
-                marginTop: metrics.base * 2.5,
                 width: metrics.base * 5,
               }}
               contentInset={verticalContentInset}
               svg={axesSvg}
             />
-            <ChartContent>
-              <LineChart
-                style={{ height: metrics.base * 50, marginLeft: 5 }}
-                data={data2}
-                contentInset={{
-                  top: metrics.base * 5,
-                  bottom: metrics.base * 5,
-                }}
-                curve={shape.curveNatural}
-                svg={{
-                  strokeWidth: 2,
-                  stroke: 'url(#gradient)',
-                }}
-              >
-                <Grid />
-                <Gradient />
-              </LineChart>
-              <XAxis
-                style={{
-                  marginHorizontal: -10,
-                  height: xAxisHeight,
-                }}
-                data={data2}
-                formatLabel={(index) => index}
-                contentInset={{ left: 10, right: 10 }}
-                svg={axesSvg}
-              />
-            </ChartContent>
+            <ScrollView
+              horizontal
+              contentContainerStyle={{ paddingRight: 16 }}
+              showsHorizontalScrollIndicator={false}
+            >
+              <ChartContent>
+                <LineChart
+                  style={{ height: metrics.base * 50, flex: 1 }}
+                  data={data2}
+                  contentInset={{
+                    top: metrics.base * 5,
+                    bottom: metrics.base * 5,
+                  }}
+                  curve={shape.curveNatural}
+                  svg={{
+                    strokeWidth: 2,
+                    stroke: 'url(#gradient)',
+                  }}
+                >
+                  <Grid />
+                  <Gradient />
+                </LineChart>
+                <XAxis
+                  style={{
+                    height: xAxisHeight,
+                    width: '100%',
+                  }}
+                  data={data2}
+                  formatLabel={(index) => index}
+                  contentInset={{ left: 10, right: 10 }}
+                  svg={axesSvg}
+                />
+              </ChartContent>
+            </ScrollView>
           </ChartContainer>
           <CategoriesList>
             <CategoriesTitle>Categorias</CategoriesTitle>

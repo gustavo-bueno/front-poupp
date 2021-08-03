@@ -56,6 +56,7 @@ export const MainContent = styled.View`
   justify-content: center;
   background-color: ${colors.background};
   width: 100%;
+  height: ${metrics.hp(80)}px;
   border-top-right-radius: ${metrics.base * 12.5}px;
   border-top-left-radius: ${metrics.base * 12.5}px;
   padding-top: ${metrics.base * 7.5}px;
@@ -130,15 +131,14 @@ export const CategoriesList = styled.View`
 export const ChartContent = styled.View`
   flex: 1;
   margin-left: ${metrics.base * 2.5}px;
-  width: 100%;
+  width: ${metrics.wp(100)}px;
 `;
 
 export const ChartContainer = styled.View`
-  height: ${metrics.base * 50}px;
-  padding: ${metrics.base * 5}px;
+  height: ${metrics.hp(27)}px;
+  padding-left: ${metrics.base * 2}px;
   display: flex;
   flex-direction: row;
-  margin-bottom: ${metrics.hp(5)}px;
   width: 100%;
 `;
 

@@ -8,13 +8,12 @@ import {
   Container,
   NoGoalsContainer,
   NoGoalsContent,
-  Progress,
-  ProgressBar,
   Title,
   TitleContainer,
 } from './styles';
 import Button from '../../components/Button';
 import PostCard from '../../components/PostCard';
+import { ProgressBar } from '../../components/ProgressBar';
 
 const data: any[] = [
   {
@@ -30,9 +29,7 @@ const renderItem = ({ item }: any) => (
         <H1 style={{ fontSize: 28 }} color="text">
           R${item.totalValue}
         </H1>
-        <ProgressBar>
-          <Progress style={{ width: `${item.percentage}%` }} />
-        </ProgressBar>
+        <ProgressBar progress={0.6} />
         <View
           style={{
             alignItems: 'center',

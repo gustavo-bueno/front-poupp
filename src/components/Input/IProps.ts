@@ -10,4 +10,5 @@ export interface IProps extends TextInputProps {
   style?: StyleProp<TextStyle>;
   options?: TextInputMaskOptionProp;
   type?: TextInputMaskTypeProp;
+  showPasswordButton?: boolean;
 }

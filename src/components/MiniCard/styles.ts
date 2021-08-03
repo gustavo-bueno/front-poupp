@@ -5,7 +5,6 @@ export const MiniCardContainer = styled.View`
   background-color: ${colors.white};
   height: ${metrics.hp(8)}px;
   border-radius: ${metrics.borderRadius}px;
-  margin-bottom: ${metrics.base * 2}px;
   flex-direction: row;
 `;
 

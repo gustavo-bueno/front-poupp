@@ -28,7 +28,7 @@ const Button: React.FC<IProps> = ({
 
   if (type == 'link') {
     return (
-      <Ripple style={style}>
+      <Ripple style={style} {...rest}>
         <H2
           color={backgroundColor}
           fontWeight={titleWeight}

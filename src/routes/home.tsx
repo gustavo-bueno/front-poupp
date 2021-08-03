@@ -11,6 +11,10 @@ import NavBar from '../components/NavBar';
 import AddMovimentationScreen from '../screens/AddMovimentationScreen';
 import PouppTeachScreen from '../screens/PouppTeachScreen';
 import ExtraIncomeScreen from '../screens/ExtraIncomeScreen';
+import PostDetailScreen from '../screens/PostDetailScreen';
+import { TitleContainer } from '../screens/PouppTeachScreen/styles';
+import { H0, H1 } from '../components/Text';
+import { View } from 'react-native';
 
 export default function Home() {
   return (
@@ -42,6 +46,21 @@ export default function Home() {
           component={CardScreen}
         />
         <Screen name={ROUTES.POUPP_TEACH} component={PouppTeachScreen} />
+        <Screen
+          options={{
+            headerShown: true,
+            header: (props) => (
+              <TitleContainer {...props}>
+                <H1 color="white">Poupp</H1>
+                <H0 fontWeight="bold" color="white">
+                  EDUCA
+                </H0>
+              </TitleContainer>
+            ),
+          }}
+          name={ROUTES.POST_DETAIL}
+          component={PostDetailScreen}
+        />
         <Screen name={ROUTES.EXTRA_INCOME} component={ExtraIncomeScreen} />
       </Navigator>
     </NavigationContainer>
