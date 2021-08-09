@@ -7,6 +7,5 @@ export const CardPostContainer = styled.View`
   height: ${metrics.hp(25)}px;
   width: ${metrics.wp(80)}px;
   flex-wrap: wrap;
-  margin-left: ${metrics.base * 4}px;
   border-radius: ${metrics.borderRadius}px;
 `;

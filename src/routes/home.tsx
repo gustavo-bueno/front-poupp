@@ -2,19 +2,18 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-const { Navigator, Screen } = createStackNavigator();
-
 import CardScreen from '../screens/CardScreen';
-import { colors, metrics } from '../styles';
-import { ROUTES } from '../constants/routes';
 import NavBar from '../components/NavBar';
 import AddMovimentationScreen from '../screens/AddMovimentationScreen';
 import PouppTeachScreen from '../screens/PouppTeachScreen';
 import ExtraIncomeScreen from '../screens/ExtraIncomeScreen';
 import PostDetailScreen from '../screens/PostDetailScreen';
-import { TitleContainer } from '../screens/PouppTeachScreen/styles';
-import { H0, H1 } from '../components/Text';
-import { View } from 'react-native';
+import { ROUTES } from '../constants/routes';
+
+import Header from '../components/Header';
+import { colors } from '../styles';
+
+const { Navigator, Screen } = createStackNavigator();
 
 export default function Home() {
   return (
@@ -45,23 +44,36 @@ export default function Home() {
           name={ROUTES.CARD}
           component={CardScreen}
         />
-        <Screen name={ROUTES.POUPP_TEACH} component={PouppTeachScreen} />
         <Screen
           options={{
             headerShown: true,
             header: (props) => (
-              <TitleContainer {...props}>
-                <H1 color="white">Poupp</H1>
-                <H0 fontWeight="bold" color="white">
-                  EDUCA
-                </H0>
-              </TitleContainer>
+              <Header title="Poupp" subtitle="educa" {...props} />
+            ),
+          }}
+          name={ROUTES.POUPP_TEACH}
+          component={PouppTeachScreen}
+        />
+        <Screen
+          options={{
+            headerShown: true,
+            header: (props) => (
+              <Header title="Poupp" subtitle="educa" {...props} />
             ),
           }}
           name={ROUTES.POST_DETAIL}
           component={PostDetailScreen}
         />
-        <Screen name={ROUTES.EXTRA_INCOME} component={ExtraIncomeScreen} />
+        <Screen
+          options={{
+            headerShown: true,
+            header: (props) => (
+              <Header title="Bora de" subtitle="renda extra" {...props} />
+            ),
+          }}
+          name={ROUTES.EXTRA_INCOME}
+          component={ExtraIncomeScreen}
+        />
       </Navigator>
     </NavigationContainer>
   );

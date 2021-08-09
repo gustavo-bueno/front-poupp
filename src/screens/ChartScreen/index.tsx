@@ -47,7 +47,7 @@ const ChartSreen: React.FC = () => {
 
   const data2 = [
     0, 10, 40, 95, 40, 24, 85, 91, 35, 53, 53, 24, 50, 20, 80, 50, 10, 40, 95,
-    4, 24, 85, 91, 35, 53, 53, 24, 50, 20, 80,
+    0, 24, 85, 91, 35, 53, 53, 24, 50, 20, 80,
   ];
 
   const data = [
@@ -73,6 +73,7 @@ const ChartSreen: React.FC = () => {
     fill: colors.text,
     fontFamily: fontFamily.regular,
   };
+
   const verticalContentInset = { top: 17, bottom: 10 };
   const xAxisHeight = 30;
 
@@ -135,7 +136,7 @@ const ChartSreen: React.FC = () => {
             >
               <ChartContent>
                 <LineChart
-                  style={{ height: metrics.base * 50, flex: 1 }}
+                  style={{ height: metrics.base * 45, flex: 1 }}
                   data={data2}
                   contentInset={{
                     top: metrics.base * 5,
@@ -152,12 +153,14 @@ const ChartSreen: React.FC = () => {
                 </LineChart>
                 <XAxis
                   style={{
-                    height: xAxisHeight,
+                    flex: 1,
+                    maxHeight: xAxisHeight,
                     width: '100%',
                   }}
+                  spacingInner={0.01}
                   data={data2}
-                  formatLabel={(index) => index}
-                  contentInset={{ left: 10, right: 10 }}
+                  formatLabel={(_, index) => index}
+                  contentInset={{ left: 8, right: 8 }}
                   svg={axesSvg}
                 />
               </ChartContent>

@@ -7,7 +7,7 @@ import PostCard from '../../components/PostCard';
 import { H0, H1 } from '../../components/Text';
 import { Container as PaddingContainer } from '../../components/Container';
 import { colors, metrics } from '../../styles';
-import { CardsContainer, Container, Title, TitleContainer } from './styles';
+import { CardsContainer, Container, Title } from './styles';
 import { useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
@@ -44,6 +44,7 @@ const ITEM_SIZE = metrics.wp(80);
 
 const PouppTeachScreen: React.FC = () => {
   const { navigate } = useNavigation();
+
   const scrollX = useRef(new Animated.Value(0)).current;
 
   const renderItem = ({ item, index }: any) => {
@@ -54,18 +55,21 @@ const PouppTeachScreen: React.FC = () => {
     ];
     const translateY = scrollX.interpolate({
       inputRange,
-      outputRange: [0, -15, 0],
+      outputRange: [0, -8, 0],
     });
     return (
       <Animated.View
         style={{
+          marginTop: metrics.base * 2,
+          marginHorizontal: metrics.base * 1.5,
           width: ITEM_SIZE,
           transform: [{ translateY }],
-          marginTop: metrics.base * 4.5,
-          marginRight: metrics.base * 3,
         }}
       >
-        <Ripple onPress={() => navigate(ROUTES.POST_DETAIL, { post: item })}>
+        <Ripple
+          rippleContainerBorderRadius={metrics.borderRadius}
+          onPress={() => navigate(ROUTES.POST_DETAIL, { post: item })}
+        >
           <PostCard title={item.title} image={item.image} />
         </Ripple>
       </Animated.View>
@@ -74,12 +78,6 @@ const PouppTeachScreen: React.FC = () => {
 
   return (
     <View style={{ backgroundColor: colors.green }}>
-      <TitleContainer>
-        <H1 color="white">Poupp</H1>
-        <H0 fontWeight="bold" color="white">
-          EDUCA
-        </H0>
-      </TitleContainer>
       <Container>
         <Title fontWeight="bold" color="text">
           Segue aí umas informações bem importantes! :)
@@ -91,7 +89,9 @@ const PouppTeachScreen: React.FC = () => {
             decelerationRate={0}
             snapToInterval={ITEM_SIZE}
             bounces={false}
-            contentContainerStyle={{ alignSelf: 'center' }}
+            contentContainerStyle={{
+              alignSelf: 'center',
+            }}
             onScroll={Animated.event(
               [{ nativeEvent: { contentOffset: { x: scrollX } } }],
               {

@@ -8,7 +8,7 @@ interface ICustomText extends TextProps {
   fontWeight?: 'bold' | 'medium';
 }
 
-const getColor = ({ color = 'black' }: ICustomText) => {
+const getColor = ({ color = 'text' }: ICustomText) => {
   return colors[color] || color;
 };
 
