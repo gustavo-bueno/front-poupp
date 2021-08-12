@@ -1,10 +1,12 @@
 import React from 'react';
 import Ripple from 'react-native-material-ripple';
 
-import { colors } from '../../styles';
+import { Entypo } from '@expo/vector-icons';
+
 import { H2, H1 } from '../Text';
 import { IProps } from './IProps';
-import { CustomButton } from './styles';
+import { colors, metrics } from '../../styles';
+import { CustomButton, RoundedButton } from './styles';
 
 const Button: React.FC<IProps> = ({
   title,
@@ -12,6 +14,7 @@ const Button: React.FC<IProps> = ({
   style,
   titleWeight,
   titleStyle,
+  children,
   ...rest
 }: IProps) => {
   let backgroundColor = colors.green;
@@ -37,6 +40,16 @@ const Button: React.FC<IProps> = ({
           {title}
         </H2>
       </Ripple>
+    );
+  }
+
+  if (type == 'rounded') {
+    return (
+      <RoundedButton>
+        {children ?? (
+          <Entypo name="plus" size={metrics.base * 12} color="white" />
+        )}
+      </RoundedButton>
     );
   }
 

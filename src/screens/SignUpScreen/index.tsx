@@ -13,9 +13,9 @@ import Button from '../../components/Button';
 import { UserContext } from '../../contexts/user';
 import { Container, SignUpVector, Form, Content } from './styles';
 import { Wave } from '../../components/Wave';
-import Animation from '../../utils/animation';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants/routes';
+import useAnimation from '../../hooks/useAnimation';
 
 const SignUpScreen: React.FC = () => {
   const { setUser } = useContext(UserContext);
@@ -47,13 +47,15 @@ const SignUpScreen: React.FC = () => {
     }
   };
 
+  const { svgViewStyle, yAnimationStyle } = useAnimation();
+
   return (
     <Container>
       <Wave />
       <Content>
         <Animated.View
           style={[
-            Animation().svgViewStyle,
+            svgViewStyle,
             {
               alignSelf: 'flex-end',
               marginBottom: metrics.base * 8,
@@ -62,10 +64,10 @@ const SignUpScreen: React.FC = () => {
         >
           <SignUpVector />
         </Animated.View>
-        <ScrollView style={{ flex: 1 }}>
-          <KeyboardAvoidingView>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+          <KeyboardAvoidingView behavior="padding">
             <FormContainer>
-              <Animated.View style={Animation().yAnimationStyle}>
+              <Animated.View style={yAnimationStyle}>
                 <Title>Criar conta</Title>
                 <Form ref={formRef} onSubmit={handleSubmit}>
                   <Input name="name" placeholder="Nome" />
@@ -84,7 +86,7 @@ const SignUpScreen: React.FC = () => {
                   titleWeight="bold"
                   style={{
                     alignSelf: 'center',
-                    marginVertical: metrics.base * 2,
+                    marginVertical: metrics.base * 4,
                   }}
                 />
               </Animated.View>

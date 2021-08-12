@@ -6,9 +6,14 @@ import { H2 } from '../Text';
 import { IProps } from './IProps';
 import { CardPostContainer } from './styles';
 
-const PostCard: React.FC<IProps> = ({ title, image, content }: IProps) => {
+const PostCard: React.FC<IProps> = ({
+  title,
+  image,
+  content,
+  style,
+}: IProps) => {
   return (
-    <CardPostContainer>
+    <CardPostContainer style={style}>
       <Image
         resizeMode="cover"
         style={{ width: '100%', height: '60%', borderRadius: 8 }}

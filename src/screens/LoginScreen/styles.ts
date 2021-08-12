@@ -28,7 +28,7 @@ export const SignUpButton = styled(Button).attrs({
 `;
 
 export const FormContainer = styled.View`
-  height: 60%;
+  height: 65%;
 `;
 
 export const ForgotPasswordButton = styled(Button).attrs({

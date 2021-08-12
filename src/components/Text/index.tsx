@@ -47,3 +47,9 @@ export const H4 = styled.Text<ICustomText>`
   font-family: ${fontFamily};
   color: ${getColor};
 `;
+
+export const H5 = styled.Text<ICustomText>`
+  font-size: ${`${fontSize.h5}px`};
+  font-family: ${fontFamily};
+  color: ${getColor};
+`;

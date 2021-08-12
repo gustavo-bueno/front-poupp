@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Animated, View } from 'react-native';
-
-import MiniCard from '../../components/MiniCard';
-import PostCard from '../../components/PostCard';
-
-import { H0, H1 } from '../../components/Text';
-import { Container as PaddingContainer } from '../../components/Container';
-import { colors, metrics } from '../../styles';
-import { CardsContainer, Container, Title } from './styles';
-import { useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
+
 import { ROUTES } from '../../constants/routes';
+import MiniCard from '../../components/MiniCard';
+import PostCard from '../../components/PostCard';
+import { H0, H1 } from '../../components/Text';
+import { Container as PaddingContainer } from '../../components/Container';
+import { BorderRadiusContainer } from '../../components/BorderRadiusContainer';
+import { colors, metrics } from '../../styles';
+import { CardsContainer, Title } from './styles';
 
 const data = [
   {
@@ -78,7 +77,7 @@ const PouppTeachScreen: React.FC = () => {
 
   return (
     <View style={{ backgroundColor: colors.green }}>
-      <Container>
+      <BorderRadiusContainer>
         <Title fontWeight="bold" color="text">
           Segue aí umas informações bem importantes! :)
         </Title>
@@ -123,7 +122,7 @@ const PouppTeachScreen: React.FC = () => {
             image="https://yt3.ggpht.com/ytc/AAUvwngNoWKOTh_VCS89ORIZb9gdAQMZvyocgjXhGQx91Q=s900-c-k-c0x00ffffff-no-rj"
           />
         </PaddingContainer>
-      </Container>
+      </BorderRadiusContainer>
     </View>
   );
 };

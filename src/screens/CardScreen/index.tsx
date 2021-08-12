@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { FlatList, SafeAreaView, View, Animated } from 'react-native';
+import { FlatList, Animated } from 'react-native';
 import {
   CardContainer,
   Container,
@@ -9,7 +9,7 @@ import {
 } from './styles';
 
 import MovementCard from '../../components/MovementCard';
-import Card from '../../components/Card';
+import CreditCard from '../../components/CreditCard';
 import { metrics } from '../../styles';
 
 const data = [
@@ -90,7 +90,7 @@ const CardScreen: React.FC = () => {
     return (
       <Animated.View style={{ width: ITEM_SIZE, transform: [{ translateY }] }}>
         <CardContainer>
-          <Card
+          <CreditCard
             username={item.name}
             day={item.expirationDay}
             balance={item.value}

@@ -10,4 +10,6 @@ export const ROUTES = {
   POUPP_TEACH: 'pouppTeachScreen',
   EXTRA_INCOME: 'extraIncomeScreen',
   POST_DETAIL: 'postDetailScreen',
+  GOALS_LIST: 'goalsListScreen',
+  GOAL_DETAIL: 'goalDetailScreen',
 };

@@ -6,9 +6,9 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
-import { metrics } from '../../styles';
+import { metrics } from '../styles';
 
-const Animation = () => {
+const useAnimation = () => {
   const positionY = useSharedValue(300);
   const opacity = useSharedValue(0);
   const width = useSharedValue(metrics.wp(65));
@@ -59,4 +59,4 @@ const Animation = () => {
   };
 };
 
-export default Animation;
+export default useAnimation;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
 
 import { categoryTypes } from '../../constants/categoriesTypes';
 import { ICategory } from '../../models/category.model';
@@ -19,7 +19,7 @@ const CategoriesList: React.FC<IProps> = ({ ...rest }: IProps) => {
         <CategoryIconContainer color={item.color}>
           {item.icon}
         </CategoryIconContainer>
-        <H3 style={{ textAlign: 'center', width: metrics.wp(22.5) }}>
+        <H3 style={{ textAlign: 'center', width: metrics.wp(20.55) }}>
           {item.name}
         </H3>
       </CategoryItemContainer>

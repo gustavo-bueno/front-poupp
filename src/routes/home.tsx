@@ -12,6 +12,8 @@ import { ROUTES } from '../constants/routes';
 
 import Header from '../components/Header';
 import { colors } from '../styles';
+import GoalsListScreen from '../screens/GoalsListScreen';
+import GoalDetailScreen from '../screens/GoalDetailScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -29,21 +31,7 @@ export default function Home() {
           name={ROUTES.ADD_TRANSACTION}
           component={AddMovimentationScreen}
         />
-        <Screen
-          options={
-            {
-              // headerShown: true,
-              // title: '',67y
-              // headerStyle: {
-              //   height: metrics.hp(7),
-              //   backgroundColor: colors.green,
-              // },
-              // headerTransparent: true,
-            }
-          }
-          name={ROUTES.CARD}
-          component={CardScreen}
-        />
+        <Screen name={ROUTES.CARD} component={CardScreen} />
         <Screen
           options={{
             headerShown: true,
@@ -68,11 +56,31 @@ export default function Home() {
           options={{
             headerShown: true,
             header: (props) => (
-              <Header title="Bora de" subtitle="renda extra" {...props} />
+              <Header title="Bora de" subtitle="renda extra?" {...props} />
             ),
           }}
           name={ROUTES.EXTRA_INCOME}
           component={ExtraIncomeScreen}
+        />
+        <Screen
+          options={{
+            headerShown: true,
+            header: (props) => (
+              <Header title="Minhas" subtitle="metas" {...props} />
+            ),
+          }}
+          name={ROUTES.GOALS_LIST}
+          component={GoalsListScreen}
+        />
+        <Screen
+          options={{
+            headerShown: true,
+            header: (props) => (
+              <Header title="Detalhes da" subtitle="meta" {...props} />
+            ),
+          }}
+          name={ROUTES.GOAL_DETAIL}
+          component={GoalDetailScreen}
         />
       </Navigator>
     </NavigationContainer>

@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
@@ -20,15 +20,17 @@ import {
 } from './styles';
 import { UserContext } from '../../contexts/user';
 import { Wave } from '../../components/Wave';
-import Animation from '../../utils/animation';
 import { ROUTES } from '../../constants/routes';
+import useAnimation from '../../hooks/useAnimation';
+import { ScrollView } from 'react-native-gesture-handler';
+import { metrics } from '../../styles';
 
 const LoginScreen: React.FC = () => {
   const { setUser } = useContext(UserContext);
   const formRef = useRef<FormHandles>(null);
   const { navigate } = useNavigation();
 
-  const { svgViewStyle, yAnimationStyle } = Animation();
+  const { svgViewStyle, yAnimationStyle } = useAnimation();
 
   const handleSubmit = async (data: Object) => {
     formRef.current?.setErrors({});
@@ -59,8 +61,8 @@ const LoginScreen: React.FC = () => {
   return (
     <Container>
       <Wave />
-      <ContentContainer style={{ justifyContent: 'space-between' }}>
-        <Header>
+      <View style={{ flex: 1 }}>
+        <ContentContainer>
           <SignUpButton
             onPress={() => {
               navigate(ROUTES.SIGNUP);
@@ -69,25 +71,27 @@ const LoginScreen: React.FC = () => {
           <Animated.View style={[svgViewStyle, { alignSelf: 'flex-end' }]}>
             <LoginVector width="100%" height="100%" />
           </Animated.View>
-        </Header>
-        <FormContainer>
-          <Animated.View style={yAnimationStyle}>
-            <KeyboardAvoidingView behavior="padding">
-              <Title>Entrar</Title>
-              <Form ref={formRef} onSubmit={handleSubmit}>
-                <Input name="email" placeholder="Email" />
-                <Input
-                  secureTextEntry={true}
-                  name="password"
-                  placeholder="Senha"
-                />
-                <SignInButton onPress={() => formRef.current?.submitForm()} />
-              </Form>
-            </KeyboardAvoidingView>
-            <ForgotPasswordButton />
-          </Animated.View>
-        </FormContainer>
-      </ContentContainer>
+        </ContentContainer>
+        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+          <KeyboardAvoidingView behavior="padding">
+            <ContentContainer>
+              <Animated.View style={yAnimationStyle}>
+                <Title>Entrar</Title>
+                <Form ref={formRef} onSubmit={handleSubmit}>
+                  <Input name="email" placeholder="Email" />
+                  <Input
+                    secureTextEntry={true}
+                    name="password"
+                    placeholder="Senha"
+                  />
+                  <SignInButton onPress={() => formRef.current?.submitForm()} />
+                </Form>
+                <ForgotPasswordButton />
+              </Animated.View>
+            </ContentContainer>
+          </KeyboardAvoidingView>
+        </ScrollView>
+      </View>
     </Container>
   );
 };

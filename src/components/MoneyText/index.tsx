@@ -2,7 +2,7 @@ import React from 'react';
 
 import { IProps } from './IProps';
 import { StyledMoneyText } from './styles';
-import { fontSize as fSize } from '../../styles';
+import { colors, fontSize as fSize } from '../../styles';
 
 const MoneyText = ({
   value,
@@ -25,6 +25,7 @@ const MoneyText = ({
         {
           fontFamily,
           fontSize: fSize[fontSize],
+          color: colors.text,
         },
         style,
       ]}

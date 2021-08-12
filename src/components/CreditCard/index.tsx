@@ -1,5 +1,5 @@
 import React from 'react';
-import NumberToMoney from '../../functions/NumberToMoney';
+
 import {
   CardContainer,
   BlackBar,
@@ -17,7 +17,7 @@ import {
 import { IProps } from './IProps';
 import { TextMask } from 'react-native-masked-text';
 
-const Card: React.FC<IProps> = ({ username, balance, day }: IProps) => {
+const CreditCard: React.FC<IProps> = ({ username, balance, day }: IProps) => {
   return (
     <CardContainer>
       <BlackBar />
@@ -41,4 +41,4 @@ const Card: React.FC<IProps> = ({ username, balance, day }: IProps) => {
   );
 };
 
-export default Card;
+export default CreditCard;

@@ -8,23 +8,24 @@ import { metrics } from '../../styles';
 import { H3 } from '../Text';
 import { MiniCardContainer, MiniCardImage, MiniCardText } from './styles';
 
-const MiniCard = ({ title, image, channelId }: IProps) => {
+const MiniCard = ({ title, image, channelId, onPress }: IProps) => {
+  const redirectToYoutube = () =>
+    Linking.canOpenURL('vnd.youtube://channel/' + channelId).then(
+      (supported) => {
+        if (supported) {
+          return Linking.openURL('vnd.youtube://channel/' + channelId);
+        } else {
+          return Linking.openURL(
+            'https://www.youtube.com/channel/' + channelId
+          );
+        }
+      }
+    );
+
   return (
     <Ripple
       style={{ marginBottom: metrics.base * 2 }}
-      onPress={() =>
-        Linking.canOpenURL('vnd.youtube://channel/' + channelId).then(
-          (supported) => {
-            if (supported) {
-              return Linking.openURL('vnd.youtube://channel/' + channelId);
-            } else {
-              return Linking.openURL(
-                'https://www.youtube.com/channel/' + channelId
-              );
-            }
-          }
-        )
-      }
+      onPress={onPress ?? redirectToYoutube}
       rippleContainerBorderRadius={metrics.borderRadius}
     >
       <MiniCardContainer>

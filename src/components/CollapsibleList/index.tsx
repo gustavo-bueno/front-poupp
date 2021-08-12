@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 
 import { Entypo } from '@expo/vector-icons';
@@ -34,7 +34,7 @@ export const CollapsibleList: React.FC<IProps> = ({
   );
 
   return (
-    <>
+    <View style={{ borderRadius: 16, backgroundColor: '#FFF' }}>
       <CollapsibleHeader onPress={() => setCollapsed((state) => !state)}>
         <H2>{collapsibleTitle}</H2>
         <Entypo
@@ -50,7 +50,7 @@ export const CollapsibleList: React.FC<IProps> = ({
           keyExtractor={(item: { id: string; name: string }) => item.id}
         />
       </CollapsibleContainer>
-    </>
+    </View>
   );
 };
 

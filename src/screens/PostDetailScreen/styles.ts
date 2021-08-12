@@ -2,18 +2,7 @@ import styled from 'styled-components/native';
 import { Image } from 'react-native';
 
 import { colors, metrics } from '../../styles';
-import { H2, H1 } from '../../components/Text';
-
-export const Container = styled.ScrollView`
-  border-top-left-radius: 50px;
-  border-top-right-radius: 50px;
-
-  padding: ${metrics.base * 3}px;
-
-  background-color: ${colors.background};
-  height: 100%;
-  flex: 1;
-`;
+import { H2 } from '../../components/Text';
 
 export const PostImage = styled(Image)`
   width: 100%;

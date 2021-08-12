@@ -161,7 +161,7 @@ const HomeScreen: React.FC = () => {
                 }
               />
               <OptionCard
-                route=""
+                route={ROUTES.GOALS_LIST}
                 title="Metas"
                 icon={
                   <Feather
