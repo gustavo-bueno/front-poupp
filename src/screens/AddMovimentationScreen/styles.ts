@@ -8,7 +8,7 @@ export const InputContainer = styled.View`
   height: 30%;
   background-color: ${colors.green};
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: flex-end;
   padding-left: ${metrics.base * 3}px;
   padding-right: ${metrics.base * 3}px;
@@ -61,20 +61,6 @@ export const TextAreaInput = styled.TextInput.attrs({
   padding: ${metrics.base * 2}px;
 `;
 
-export const ConfirmButton = styled(Ripple).attrs({
-  rippleContainerBorderRadius: metrics.hp(10),
-})`
-  height: ${metrics.wp(20)}px;
-  width: ${metrics.wp(20)}px;
-  background-color: ${colors.green};
-  border-radius: ${metrics.wp(10)}px;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const CustomScrollView = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
 })`
@@ -90,4 +76,34 @@ export const Container = styled.SafeAreaView`
   height: 100%;
   width: 100%;
   position: relative;
+`;
+
+export const FrequencyButton = styled(Ripple).attrs({
+  rippleContainerBorderRadius: metrics.borderRadius / 2,
+})`
+  width: ${metrics.wp(13)}px;
+  height: ${metrics.wp(13)}px;
+
+  border: 1px solid ${colors.gray};
+
+  justify-content: center;
+  align-items: center;
+
+  border-radius: ${metrics.borderRadius / 2}px;
+
+  background-color: ${colors.white};
+`;
+
+export const FrequencyContainer = styled.View`
+  width: ${metrics.wp(13)}px;
+  height: ${metrics.wp(13)}px;
+
+  border: 1px solid ${colors.gray};
+
+  justify-content: center;
+  align-items: center;
+
+  border-radius: ${metrics.borderRadius / 2}px;
+
+  background-color: ${colors.white};
 `;
