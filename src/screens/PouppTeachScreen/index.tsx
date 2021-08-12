@@ -8,7 +8,7 @@ import MiniCard from '../../components/MiniCard';
 import PostCard from '../../components/PostCard';
 import { H0, H1 } from '../../components/Text';
 import { Container as PaddingContainer } from '../../components/Container';
-import { BorderRadiusContainer } from '../../components/BorderRadiusContainer';
+import { BorderRadiusContainer } from '../../components/Container';
 import { colors, metrics } from '../../styles';
 import { CardsContainer, Title } from './styles';
 
