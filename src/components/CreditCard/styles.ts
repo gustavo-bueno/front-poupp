@@ -1,78 +1,35 @@
+import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
-import { colors, fontFamily, metrics } from '../../styles';
+import { metrics } from '../../styles';
 
-export const CardContainer = styled.View`
-  width: ${metrics.wp(80)}px;
-  height: ${metrics.hp(27)}px;
-  background-color: ${colors.lightBlue};
-  border-radius: ${metrics.base * 5}px;
+interface CardContainerProps {
+  color: string;
+}
+
+export const CardContainer = styled.View<CardContainerProps>`
+  width: ${metrics.wp(90)}px;
+  height: ${metrics.hp(26)}px;
+
+  padding: 0 ${metrics.base * 2}px;
+
+  position: relative;
+
+  border-radius: ${metrics.borderRadius * 2}px;
+
+  background-color: ${(props) => props.color};
+
+  justify-content: flex-start;
 `;
 
-export const BlackBar = styled.View`
-  width: 100%;
-  height: ${metrics.hp(5)}px;
-  margin-top: ${metrics.hp(5)}px;
-  background-color: ${colors.darkBlue};
-`;
-
-export const CardContent = styled.View`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  height: ${metrics.hp(15.5)}px;
-  justify-content: space-around;
-`;
-
-export const WhiteBar = styled.View`
-  width: 80%;
-  height: ${metrics.hp(1.5)}px;
-  background-color: ${colors.background};
-`;
-
-export const Infos = styled.View`
-  width: 90%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const UserContent = styled.View`
-  display: flex;
-  justify-content: center;
-`;
-
-export const Ball = styled.View`
-  width: ${metrics.base * 13}px;
-  height: ${metrics.base * 13}px;
-  border-radius: ${metrics.base * 6.5}px;
-  background-color: ${colors.blue};
-  margin-bottom: ${metrics.base * 2}px;
-  margin-left: ${metrics.base * 2}px;
-`;
-
-export const Username = styled.Text`
-  font-size: ${metrics.base * 4}px;
-  color: ${colors.white};
-  font-family: ${fontFamily.regular};
-`;
-
-export const BalanceContent = styled.View`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-`;
-
-export const BalanceText = styled.Text`
-  font-size: ${metrics.base * 4}px;
-  color: ${colors.white};
-  font-family: ${fontFamily.medium};
-  text-align: center;
-`;
-
-export const Date = styled.Text`
-  font-size: ${metrics.base * 4}px;
-  color: ${colors.white};
-  font-family: ${fontFamily.regular};
-  margin-bottom: ${metrics.base * 4}px;
-`;
+export const styles = StyleSheet.create({
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    width: '100%',
+    height: metrics.hp(26),
+    borderTopLeftRadius: metrics.base * 5,
+    borderBottomLeftRadius: metrics.base * 5,
+  },
+});

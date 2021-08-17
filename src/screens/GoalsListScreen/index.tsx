@@ -2,6 +2,8 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
+import * as Animatable from 'react-native-animatable';
+import Animated from 'react-native-reanimated';
 
 import { IGoal } from '../../models/goal.model';
 
@@ -9,7 +11,6 @@ import Car from '../../../assets/images/car.svg';
 import Plane from '../../../assets/images/plane.svg';
 import House from '../../../assets/images/house.svg';
 import Pig from '../../../assets/images/pig.svg';
-import Button from '../../components/Button';
 import { BorderRadiusContainer } from '../../components/Container';
 import CardItem from '../../components/CardItem';
 import { ProgressBar } from '../../components/ProgressBar';
@@ -18,6 +19,8 @@ import { H2, H5 } from '../../components/Text';
 import { Container, styles } from './styles';
 import { metrics } from '../../styles';
 import { ROUTES } from '../../constants/routes';
+import useAnimation from '../../hooks/useAnimation';
+import Button from '../../components/Button';
 
 const images = {
   'car': Car,
@@ -57,8 +60,11 @@ const data: IGoal[] = [
   },
 ];
 
+const List = Animatable.createAnimatableComponent(FlatList);
+
 const GoalsListScreen = () => {
   const { navigate } = useNavigation();
+  const { opacityStyle } = useAnimation();
 
   const renderItem = ({ item }: { item: IGoal }) => {
     item.image = images[item.type];
@@ -105,12 +111,16 @@ const GoalsListScreen = () => {
   };
 
   return (
-    <Container>
+    <Container style={{ position: 'relative' }}>
       <BorderRadiusContainer
         style={{ paddingTop: metrics.base * 7, paddingHorizontal: 16 }}
       >
-        <FlatList
-          renderItem={renderItem}
+        <List
+          useNativeDriver
+          animation="bounceInDown"
+          contentInsetAdjustmentBehavior="automatic"
+          duration={1000}
+          renderItem={renderItem as any}
           keyExtractor={(_, idx) => idx.toString()}
           ItemSeparatorComponent={() => (
             <View style={{ marginBottom: metrics.base * 4 }} />
@@ -118,7 +128,11 @@ const GoalsListScreen = () => {
           data={data}
         />
       </BorderRadiusContainer>
-      <Button type="rounded" onPress={() => console.log('boa')} />
+      <Animated.View
+        style={[opacityStyle, { position: 'absolute', bottom: 0, right: 0 }]}
+      >
+        <Button type="rounded" onPress={() => console.log('boa')} />
+      </Animated.View>
     </Container>
   );
 };

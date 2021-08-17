@@ -38,7 +38,7 @@ const GoalDetailScreen = () => {
           paddingTop: metrics.base * 8,
         }}
       >
-        <SpaceBetweenContainer>
+        <SpaceBetweenContainer style={{ maxHeight: metrics.hp(5) }}>
           <MoneyText value={goal.achieved} fontSize="h1" />
           <MoneyText value={goal.goalValue} fontSize="h3" />
         </SpaceBetweenContainer>

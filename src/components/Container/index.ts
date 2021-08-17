@@ -1,16 +1,24 @@
 import styled from 'styled-components/native';
 import { colors, metrics } from '../../styles';
 
+interface SpaceBetweenContainerProps {
+  flexDirection?: 'row' | 'column';
+}
+
 export const Container = styled.View`
   padding-left: ${metrics.base * 5}px;
   padding-right: ${metrics.base * 5}px;
   padding-top: ${metrics.base * 2}px;
 `;
 
-export const SpaceBetweenContainer = styled.View`
-  flex-direction: row;
+export const SpaceBetweenContainer = styled.View<SpaceBetweenContainerProps>`
+  flex-direction: ${(props) => props.flexDirection ?? 'row'};
   justify-content: space-between;
   align-items: center;
+
+  flex: 1;
+
+  width: 100%;
 `;
 
 export const CenteredContainer = styled.View`

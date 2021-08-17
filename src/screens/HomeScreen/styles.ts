@@ -18,12 +18,11 @@ export const HomeContainer = styled.ScrollView`
 
 export const HeaderContent = styled.View`
   width: 100%;
-  padding: ${metrics.base * 6}px ${metrics.base * 3}px ${metrics.base * 3}px
-    ${metrics.base * 3}px;
-  height: ${metrics.base * 40}px;
+  padding: ${metrics.base * 3}px;
+  height: ${metrics.hp(25)}px;
   margin-top: ${metrics.base * 2}px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 `;
 
 export const Username = styled.Text`
@@ -44,7 +43,6 @@ export const Total = styled.Text`
   font-size: ${metrics.base * 10}px;
   font-family: ${fontFamily.bold};
   color: #fff;
-  margin-bottom: ${metrics.base / 2}px;
 `;
 
 export const TotalLabel = styled.Text`

@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react';
-import { Platform, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native';
 import Animated from 'react-native-reanimated';
 import * as Yup from 'yup';

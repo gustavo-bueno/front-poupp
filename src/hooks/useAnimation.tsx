@@ -22,6 +22,8 @@ const useAnimation = () => {
     };
   });
 
+  const opacityStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
+
   const yAnimationStyle = useAnimatedStyle(() => {
     return {
       transform: [{ translateY: positionY.value }],
@@ -56,6 +58,7 @@ const useAnimation = () => {
   return {
     svgViewStyle,
     yAnimationStyle,
+    opacityStyle,
   };
 };
 

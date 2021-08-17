@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import CardScreen from '../screens/CardScreen';
+import CardDetailScreen from '../screens/CardDetailScreen';
 import NavBar from '../components/NavBar';
 import AddMovimentationScreen from '../screens/AddMovimentationScreen';
 import PouppTeachScreen from '../screens/PouppTeachScreen';
@@ -14,6 +14,7 @@ import Header from '../components/Header';
 import { colors } from '../styles';
 import GoalsListScreen from '../screens/GoalsListScreen';
 import GoalDetailScreen from '../screens/GoalDetailScreen';
+import CardListScreen from '../screens/CardListScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -31,7 +32,17 @@ export default function Home() {
           name={ROUTES.ADD_TRANSACTION}
           component={AddMovimentationScreen}
         />
-        <Screen name={ROUTES.CARD} component={CardScreen} />
+        <Screen name={ROUTES.CARD_DETAIL} component={CardDetailScreen} />
+        <Screen
+          options={{
+            headerShown: true,
+            header: (props) => (
+              <Header title="Meus" subtitle="cartões" {...props} />
+            ),
+          }}
+          name={ROUTES.CARD_LIST}
+          component={CardListScreen}
+        />
         <Screen
           options={{
             headerShown: true,

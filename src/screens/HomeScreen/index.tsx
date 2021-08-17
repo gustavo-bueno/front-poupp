@@ -77,8 +77,10 @@ const HomeScreen: React.FC = () => {
       <HomeContainer showsVerticalScrollIndicator={false}>
         <HeaderContent>
           <View>
-            <H1 color="white">Olá,</H1>
-            <H1 fontWeight="bold" color="white">
+            <H1 color="white" style={{ fontSize: 24 }}>
+              Olá,
+            </H1>
+            <H1 style={{ fontSize: 24 }} fontWeight="medium" color="white">
               Wilian
             </H1>
           </View>
@@ -156,7 +158,7 @@ const HomeScreen: React.FC = () => {
                 }
               />
               <OptionCard
-                route={ROUTES.CARD}
+                route={ROUTES.CARD_LIST}
                 title="Cartões"
                 icon={
                   <AntDesign
