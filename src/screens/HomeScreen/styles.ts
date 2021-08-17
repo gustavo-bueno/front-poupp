@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { colors, fontFamily, metrics } from '../../styles';
-import Ripple from 'react-native-material-ripple'
+import Ripple from 'react-native-material-ripple';
 
 interface props {
   theme: {
@@ -18,7 +18,8 @@ export const HomeContainer = styled.ScrollView`
 
 export const HeaderContent = styled.View`
   width: 100%;
-  padding: ${metrics.base * 3}px;
+  padding: ${metrics.base * 6}px ${metrics.base * 3}px ${metrics.base * 3}px
+    ${metrics.base * 3}px;
   height: ${metrics.base * 40}px;
   margin-top: ${metrics.base * 2}px;
   display: flex;
@@ -29,7 +30,6 @@ export const Username = styled.Text`
   font-size: ${metrics.base * 6}px;
   font-family: ${fontFamily.medium};
   color: white;
-  margin-top: ${metrics.base * 2}px;
 `;
 
 export const TotalContent = styled.View`

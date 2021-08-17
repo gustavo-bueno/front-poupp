@@ -41,9 +41,10 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import MovementCard from '../../components/MovementCard';
 import OptionCard from '../../components/OptionCard';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { ROUTES } from '../../constants/routes';
 import { useNavigation } from '@react-navigation/native';
+import { H0, H1 } from '../../components/Text';
 
 const data = [
   {
@@ -75,7 +76,12 @@ const HomeScreen: React.FC = () => {
     <SafeAreaView>
       <HomeContainer showsVerticalScrollIndicator={false}>
         <HeaderContent>
-          <Username>Olá, Wilian</Username>
+          <View>
+            <H1 color="white">Olá,</H1>
+            <H1 fontWeight="bold" color="white">
+              Wilian
+            </H1>
+          </View>
           <TotalContent>
             <Total>R$ {NumberToMoney(20749)}</Total>
             <TotalLabel>Balanço Mensal</TotalLabel>

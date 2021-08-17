@@ -51,16 +51,21 @@ export const Label = styled.Text`
 
 export const MainContent = styled.View`
   display: flex;
+
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   background-color: ${colors.background};
+
   width: 100%;
   height: ${metrics.hp(80)}px;
+
   border-top-right-radius: ${metrics.base * 12.5}px;
   border-top-left-radius: ${metrics.base * 12.5}px;
-  padding-top: ${metrics.base * 7.5}px;
   padding-bottom: ${metrics.base * 5}px;
+
+  position: relative;
 `;
 
 export const TabsContainer = styled.View`

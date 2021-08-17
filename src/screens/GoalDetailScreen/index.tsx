@@ -29,14 +29,7 @@ const GoalDetailScreen = () => {
         <H1 fontWeight="bold" color="white">
           {goal.title}
         </H1>
-        <GoalImage
-          width="100%"
-          height="80%"
-          // height="80%"
-          // width={metrics.wp(85)}
-          // height={metrics.hp(22)}
-          style={styles.svgImage}
-        />
+        <GoalImage width="100%" height="80%" style={styles.svgImage} />
       </FirstInfoContainer>
       <BorderRadiusContainer
         style={{
