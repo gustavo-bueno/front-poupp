@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import { Image, StyleSheet } from 'react-native';
 
 import { colors, metrics } from '../../styles';
 

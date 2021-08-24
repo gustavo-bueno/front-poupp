@@ -6,11 +6,12 @@ import Ripple from 'react-native-material-ripple';
 import { ROUTES } from '../../constants/routes';
 import MiniCard from '../../components/MiniCard';
 import PostCard from '../../components/PostCard';
-import { H0, H1 } from '../../components/Text';
+import { H1 } from '../../components/Text';
 import { Container as PaddingContainer } from '../../components/Container';
 import { BorderRadiusContainer } from '../../components/Container';
+
 import { colors, metrics } from '../../styles';
-import { CardsContainer, Title } from './styles';
+import { CardsContainer, CardContainer, Title } from './styles';
 
 const data = [
   {
@@ -57,10 +58,8 @@ const PouppTeachScreen: React.FC = () => {
       outputRange: [0, -8, 0],
     });
     return (
-      <Animated.View
+      <CardContainer
         style={{
-          marginTop: metrics.base * 2,
-          marginHorizontal: metrics.base * 1.5,
           width: ITEM_SIZE,
           transform: [{ translateY }],
         }}
@@ -71,18 +70,19 @@ const PouppTeachScreen: React.FC = () => {
         >
           <PostCard title={item.title} image={item.image} />
         </Ripple>
-      </Animated.View>
+      </CardContainer>
     );
   };
 
   return (
     <View style={{ backgroundColor: colors.green }}>
-      <BorderRadiusContainer>
+      <BorderRadiusContainer style={{ paddingLeft: 0, paddingRight: 0 }}>
         <Title fontWeight="bold" color="text">
           Segue aí umas informações bem importantes! :)
         </Title>
         <CardsContainer>
           <Animated.FlatList
+            keyExtractor={(_, idx) => idx.toString()}
             renderItem={renderItem}
             data={data}
             decelerationRate={0}

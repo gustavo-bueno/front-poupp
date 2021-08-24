@@ -18,10 +18,12 @@ import {
   styles,
 } from './styles';
 import { SpaceBetweenContainer } from '../../components/Container';
+import goals from '../../icons/goals';
+import { IGoal } from '../../models/goal.model';
 
 const GoalDetailScreen = () => {
-  const { goal } = useRoute()?.params as any;
-  const GoalImage = goal?.image;
+  const { goal } = useRoute()?.params as { goal: IGoal };
+  const GoalImage = goals[goal?.type];
   const remainigValue = goal.goalValue - goal.achieved;
   return (
     <Container>

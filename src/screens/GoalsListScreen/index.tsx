@@ -5,29 +5,24 @@ import Ripple from 'react-native-material-ripple';
 import * as Animatable from 'react-native-animatable';
 import Animated from 'react-native-reanimated';
 
+import useAnimation from '../../hooks/useAnimation';
 import { IGoal } from '../../models/goal.model';
-
-import Car from '../../../assets/images/car.svg';
-import Plane from '../../../assets/images/plane.svg';
-import House from '../../../assets/images/house.svg';
-import Pig from '../../../assets/images/pig.svg';
+import { ROUTES } from '../../constants/routes';
 import { BorderRadiusContainer } from '../../components/Container';
 import CardItem from '../../components/CardItem';
 import { ProgressBar } from '../../components/ProgressBar';
+import Button from '../../components/Button';
 import MoneyText from '../../components/MoneyText';
 import { H2, H5 } from '../../components/Text';
-import { Container, styles } from './styles';
-import { metrics } from '../../styles';
-import { ROUTES } from '../../constants/routes';
-import useAnimation from '../../hooks/useAnimation';
-import Button from '../../components/Button';
 
-const images = {
-  'car': Car,
-  'house': House,
-  'travel': Plane,
-  'other': Pig,
-};
+import { metrics } from '../../styles';
+import {
+  CardItemContent,
+  Container,
+  ProgressTextContainer,
+  styles,
+} from './styles';
+import goals from '../../icons/goals';
 
 const data: IGoal[] = [
   {
@@ -67,9 +62,9 @@ const GoalsListScreen = () => {
   const { opacityStyle } = useAnimation();
 
   const renderItem = ({ item }: { item: IGoal }) => {
-    item.image = images[item.type];
-    const Image = item.image;
+    const Image = goals[item.type];
     const percentage = item.achieved / item.goalValue;
+
     return (
       <Ripple
         rippleContainerBorderRadius={metrics.borderRadius}
@@ -77,32 +72,20 @@ const GoalsListScreen = () => {
       >
         <CardItem
           content={
-            <View
-              style={{
-                flex: 1,
-                maxWidth: metrics.wp(50.5),
-                justifyContent: 'space-evenly',
-              }}
-            >
+            <CardItemContent>
               <H2 fontWeight="bold">{item.title}</H2>
               <MoneyText value={item.goalValue} fontSize="h2" />
               <>
                 <ProgressBar progress={percentage} />
-                <View
-                  style={{
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                  }}
-                >
+                <ProgressTextContainer>
                   <H5 color="text">
                     <MoneyText fontSize="h5" value={item.achieved} />
                     {' arrecadado'}
                   </H5>
                   <H5 color="text">{percentage * 100}% concluído</H5>
-                </View>
+                </ProgressTextContainer>
               </>
-            </View>
+            </CardItemContent>
           }
           svgImage={<Image style={styles.svg} />}
         />

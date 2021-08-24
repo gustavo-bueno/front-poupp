@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import {useNavigation } from '@react-navigation/native';
 import { AddButton } from './styles';
 
 import { AntDesign, FontAwesome, Feather } from '@expo/vector-icons';
@@ -10,7 +10,6 @@ import HomeScreen from '../../screens/HomeScreen';
 import TransictionsScreen from '../../screens/TransictionsScrenn';
 import UserScreen from '../../screens/UserScreen';
 import AddMovimentationScreen from '../../screens/AddMovimentationScreen';
-import ChartSreen from '../../screens/ChartScreen';
 import { ROUTES } from '../../constants/routes';
 import ChartScreen from '../../screens/ChartScreen';
 

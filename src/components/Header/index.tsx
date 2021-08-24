@@ -1,17 +1,29 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+
+import { Entypo } from '@expo/vector-icons';
 
 import { H0, H1 } from '../Text';
 import { IProps } from './IProps';
 
-import { TitleContainer } from './styles';
+import { BackButton, TextContainer, TitleContainer } from './styles';
 
-const Header = ({ title, subtitle, ...rest }: IProps) => {
+const Header = ({ title, subtitle, backButton = true, ...rest }: IProps) => {
+  const { goBack } = useNavigation();
+
   return (
     <TitleContainer {...rest}>
-      <H1 color="white">{title}</H1>
-      <H0 fontWeight="bold" color="white">
-        {subtitle.toUpperCase()}
-      </H0>
+      {backButton && (
+        <BackButton onPress={goBack}>
+          <Entypo name="chevron-left" size={24} color="white" />
+        </BackButton>
+      )}
+      <TextContainer>
+        <H1 color="white">{title}</H1>
+        <H0 fontWeight="bold" color="white">
+          {subtitle.toUpperCase()}
+        </H0>
+      </TextContainer>
     </TitleContainer>
   );
 };
