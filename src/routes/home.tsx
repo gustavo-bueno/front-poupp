@@ -15,6 +15,7 @@ import { colors } from '../styles';
 import GoalsListScreen from '../screens/GoalsListScreen';
 import GoalDetailScreen from '../screens/GoalDetailScreen';
 import CardListScreen from '../screens/CardListScreen';
+import AddCreditCardScreen from '../screens/AddCreditCardScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -24,7 +25,7 @@ export default function Home() {
       <Navigator
         screenOptions={{
           headerShown: false,
-          cardStyle: { backgroundColor: colors.backgroundColor },
+          cardStyle: { backgroundColor: colors.green },
         }}
       >
         <Screen name={ROUTES.HOME} component={NavBar} />
@@ -42,6 +43,16 @@ export default function Home() {
           }}
           name={ROUTES.CARD_LIST}
           component={CardListScreen}
+        />
+        <Screen
+          options={{
+            headerShown: true,
+            header: (props) => (
+              <Header title="Adicionar" subtitle="cartão" {...props} />
+            ),
+          }}
+          name={ROUTES.ADD_CARD}
+          component={AddCreditCardScreen}
         />
         <Screen
           options={{

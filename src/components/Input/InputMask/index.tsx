@@ -1,10 +1,11 @@
 import { useField } from '@unform/core';
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { TextInputMask } from 'react-native-masked-text';
 
-import { metrics } from '../../../styles';
 import { H2 } from '../../Text';
 import { IProps } from './IProps';
+
+import { metrics } from '../../../styles';
+import { CustomMaskedInput } from './styles';
 
 const InputMask = ({ type, style, name, ...rest }: IProps) => {
   const inputRef = useRef<any>(null);
@@ -50,7 +51,7 @@ const InputMask = ({ type, style, name, ...rest }: IProps) => {
 
   return (
     <>
-      <TextInputMask
+      <CustomMaskedInput
         ref={inputRef}
         type={type}
         style={style}

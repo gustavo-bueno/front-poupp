@@ -3,13 +3,11 @@ import React from 'react';
 import { FlatList as List, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Ripple from 'react-native-material-ripple';
-import Animated from 'react-native-reanimated';
 import Button from '../../components/Button';
 
 import { BorderRadiusContainer } from '../../components/Container';
 import CreditCard from '../../components/CreditCard';
 import { ROUTES } from '../../constants/routes';
-import useAnimation from '../../hooks/useAnimation';
 import { colors, metrics } from '../../styles';
 
 const FlatList = Animatable.createAnimatableComponent(List);
@@ -64,7 +62,6 @@ const data = [
 ];
 
 const CardListScreen: React.FC = () => {
-  const { opacityStyle } = useAnimation();
   const { navigate } = useNavigation();
 
   const renderItem = ({ item }: any) => {
@@ -101,11 +98,7 @@ const CardListScreen: React.FC = () => {
           )}
         />
       </BorderRadiusContainer>
-      <Animated.View
-        style={[opacityStyle, { position: 'absolute', bottom: 0, right: 0 }]}
-      >
-        <Button type="rounded" onPress={() => console.log('boa')} />
-      </Animated.View>
+      <Button type="rounded" onPress={() => navigate(ROUTES.ADD_CARD)} />
     </View>
   );
 };

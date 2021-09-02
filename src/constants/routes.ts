@@ -8,6 +8,7 @@ export const ROUTES = {
   USER: 'userScreen',
   CARD_DETAIL: 'cardDetailScreen',
   CARD_LIST: 'cardListScreen',
+  ADD_CARD: 'addCardScreen',
   POUPP_TEACH: 'pouppTeachScreen',
   EXTRA_INCOME: 'extraIncomeScreen',
   POST_DETAIL: 'postDetailScreen',

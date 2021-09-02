@@ -17,11 +17,15 @@ export const RoundedButton = styled(Ripple).attrs({
 })`
   height: ${metrics.wp(20)}px;
   width: ${metrics.wp(20)}px;
+
   background-color: ${colors.green};
   border-radius: ${metrics.wp(10)}px;
+
   position: absolute;
   bottom: 10px;
   right: 10px;
+  z-index: 2;
+
   justify-content: center;
   align-items: center;
 `;
