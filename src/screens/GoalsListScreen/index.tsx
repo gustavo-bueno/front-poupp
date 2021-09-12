@@ -3,9 +3,7 @@ import { View, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
 import * as Animatable from 'react-native-animatable';
-import Animated from 'react-native-reanimated';
 
-import useAnimation from '../../hooks/useAnimation';
 import { IGoal } from '../../models/goal.model';
 import { ROUTES } from '../../constants/routes';
 import { BorderRadiusContainer } from '../../components/Container';
@@ -59,7 +57,6 @@ const List = Animatable.createAnimatableComponent(FlatList);
 
 const GoalsListScreen = () => {
   const { navigate } = useNavigation();
-  const { opacityStyle } = useAnimation();
 
   const renderItem = ({ item }: { item: IGoal }) => {
     const Image = goals[item.type];
@@ -111,11 +108,7 @@ const GoalsListScreen = () => {
           data={data}
         />
       </BorderRadiusContainer>
-      <Animated.View
-        style={[opacityStyle, { position: 'absolute', bottom: 0, right: 0 }]}
-      >
-        <Button type="rounded" onPress={() => console.log('boa')} />
-      </Animated.View>
+      <Button type="rounded" onPress={() => navigate(ROUTES.ADD_GOAL)} />
     </Container>
   );
 };

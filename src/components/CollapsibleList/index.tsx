@@ -16,11 +16,12 @@ import { IProps } from './IProps';
 export const CollapsibleList: React.FC<IProps> = ({
   collapsibleTitle,
   data,
+  itemProp = 'name',
   onPressItem,
 }: IProps) => {
   const [collapsibled, setCollapsed] = useState(true);
 
-  const renderItem = ({ item }: { item: { name: string; id: string } }) => (
+  const renderItem = ({ item }: { item: any }) => (
     <Ripple
       onPress={() => {
         onPressItem(item);
@@ -28,7 +29,7 @@ export const CollapsibleList: React.FC<IProps> = ({
       }}
     >
       <ItemContainer>
-        <H2>{item.name}</H2>
+        <H2>{item[itemProp]}</H2>
       </ItemContainer>
     </Ripple>
   );

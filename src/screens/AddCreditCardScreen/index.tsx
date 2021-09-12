@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -10,13 +11,35 @@ import CollapsibleList from '../../components/CollapsibleList';
 import { SmallInputContainer, SmallInputsContainer } from './styles';
 import { H3 } from '../../components/Text';
 import { metrics } from '../../styles';
+import { ICard } from '../../models/creditCard.model';
+
+const schema = Yup.object().shape({
+  ownerName: Yup.string().required('O campo nome do titular é obrigatório'),
+  expirationDay: Yup.string().required(
+    'O campo dia de vencimento é obrigatório.'
+  ),
+  cardLimit: Yup.number().required('O campo limite do cartão é obrigatório.'),
+});
 
 const AddCreditCardScreen: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const [account, setAccount] = useState({ name: 'Carteira' });
 
-  const handleSubmit = (data: any) => {
+  const handleSubmit = async (data: ICard) => {
     console.log(data, account);
+    try {
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+    } catch (error) {
+      const validationErrors: Record<string, any> = {};
+      if (error instanceof Yup.ValidationError) {
+        error.inner.forEach((error) => {
+          validationErrors[error.path!] = error.message;
+        });
+        formRef.current?.setErrors(validationErrors);
+      }
+    }
   };
 
   const accounts = [{ name: 'Carteira' }, { name: 'Banco do brasil' }];
@@ -47,7 +70,7 @@ const AddCreditCardScreen: React.FC = () => {
               type="money"
               mask
               keyboardType="numeric"
-              name="cardLimit"
+              name="limit"
             />
           </SmallInputContainer>
         </SmallInputsContainer>

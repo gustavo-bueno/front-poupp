@@ -38,20 +38,8 @@ const Input: React.FC<IProps> = ({
       <InputMask
         name={name}
         options={options}
-        style={[
-          {
-            borderColor: error
-              ? colors.error
-              : isFocused
-              ? colors.primary
-              : colors.grey,
-            marginVertical: metrics.base * 2,
-          },
-          style,
-        ]}
+        style={style}
         type={type}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
         {...rest}
       />
     );

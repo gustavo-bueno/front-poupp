@@ -14,4 +14,5 @@ export const ROUTES = {
   POST_DETAIL: 'postDetailScreen',
   GOALS_LIST: 'goalsListScreen',
   GOAL_DETAIL: 'goalDetailScreen',
+  ADD_GOAL: 'addGoalScreen',
 };

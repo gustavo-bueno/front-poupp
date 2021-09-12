@@ -16,6 +16,7 @@ import GoalsListScreen from '../screens/GoalsListScreen';
 import GoalDetailScreen from '../screens/GoalDetailScreen';
 import CardListScreen from '../screens/CardListScreen';
 import AddCreditCardScreen from '../screens/AddCreditCardScreen';
+import AddGoalScreen from '../screens/AddGoalScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -103,6 +104,16 @@ export default function Home() {
           }}
           name={ROUTES.GOAL_DETAIL}
           component={GoalDetailScreen}
+        />
+        <Screen
+          options={{
+            headerShown: true,
+            header: (props) => (
+              <Header title="Adicionar" subtitle="meta" {...props} />
+            ),
+          }}
+          name={ROUTES.ADD_GOAL}
+          component={AddGoalScreen}
         />
       </Navigator>
     </NavigationContainer>
