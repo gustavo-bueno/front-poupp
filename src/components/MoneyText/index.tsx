@@ -4,17 +4,13 @@ import { IProps } from './IProps';
 import { StyledMoneyText } from './styles';
 import { colors, fontSize as fSize } from '../../styles';
 
-const MoneyText = ({
-  value,
-  fontSize,
-  style,
-  bold = false,
-  ...rest
-}: IProps) => {
+const MoneyText = ({ value, fontSize, style, bold, ...rest }: IProps) => {
   let fontFamily = 'Ubuntu_400Regular';
 
-  if (bold) {
+  if (bold === 'bold') {
     fontFamily = 'Ubuntu_700Bold';
+  } else if ((bold = 'medium')) {
+    fontFamily = 'Ubuntu_500Medium';
   }
 
   return (

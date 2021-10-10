@@ -176,7 +176,7 @@ const ChartSreen: React.FC = () => {
           </TabsContainer>
           <FilterContainer>
             <TotalFiltred>
-              <MoneyText bold value={total} fontSize="h1" />
+              <MoneyText bold="bold" value={total} fontSize="h1" />
             </TotalFiltred>
             <ProvisoryCollapsible>
               <H2>Mensal</H2>

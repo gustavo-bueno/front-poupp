@@ -148,7 +148,7 @@ const HomeScreen: React.FC = () => {
             <OptionsList>
               <OptionCard
                 title="Contas"
-                route=""
+                route={ROUTES.ACCOUNT_LIST}
                 icon={
                   <FontAwesome
                     name="bank"

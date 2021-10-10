@@ -7,20 +7,15 @@ import * as Animatable from 'react-native-animatable';
 import { IGoal } from '../../models/goal.model';
 import { ROUTES } from '../../constants/routes';
 import { BorderRadiusContainer } from '../../components/Container';
-import CardItem from '../../components/CardItem';
 import { ProgressBar } from '../../components/ProgressBar';
 import Button from '../../components/Button';
 import MoneyText from '../../components/MoneyText';
-import { H2, H5 } from '../../components/Text';
+import { H5 } from '../../components/Text';
 
 import { metrics } from '../../styles';
-import {
-  CardItemContent,
-  Container,
-  ProgressTextContainer,
-  styles,
-} from './styles';
+import { Container, ProgressTextContainer, styles } from './styles';
 import goals from '../../icons/goals';
+import InfoCardItem from '../../components/InfoCardItem';
 
 const data: IGoal[] = [
   {
@@ -67,24 +62,22 @@ const GoalsListScreen = () => {
         rippleContainerBorderRadius={metrics.borderRadius}
         onPress={() => navigate(ROUTES.GOAL_DETAIL, { goal: item })}
       >
-        <CardItem
-          content={
-            <CardItemContent>
-              <H2 fontWeight="bold">{item.title}</H2>
-              <MoneyText value={item.goalValue} fontSize="h2" />
-              <>
-                <ProgressBar progress={percentage} />
-                <ProgressTextContainer>
-                  <H5 color="text">
-                    <MoneyText fontSize="h5" value={item.achieved} />
-                    {' arrecadado'}
-                  </H5>
-                  <H5 color="text">{percentage * 100}% concluído</H5>
-                </ProgressTextContainer>
-              </>
-            </CardItemContent>
+        <InfoCardItem
+          title={item.title}
+          price={item.goalValue}
+          bottomInfo={
+            <View>
+              <ProgressBar progress={percentage} />
+              <ProgressTextContainer>
+                <H5 color="text">
+                  <MoneyText fontSize="h5" value={item.achieved} />
+                  {' arrecadado'}
+                </H5>
+                <H5 color="text">{percentage * 100}% concluído</H5>
+              </ProgressTextContainer>
+            </View>
           }
-          svgImage={<Image style={styles.svg} />}
+          image={<Image style={styles.svg} />}
         />
       </Ripple>
     );

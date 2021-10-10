@@ -19,6 +19,7 @@ export const ProgressTextContainer = styled.View`
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
+  margin-top: ${metrics.base}px;
 `;
 
 export const styles = StyleSheet.create({
