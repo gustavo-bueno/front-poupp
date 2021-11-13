@@ -8,7 +8,7 @@ import { FormHandles } from '@unform/core';
 import { MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 
 import { BorderRadiusContainer } from '../../components/Container';
-import { IGoal } from '../../models/goal.model';
+import { IGoal } from '../../models/goal';
 import Input from '../../components/Input';
 import CollapsibleList from '../../components/CollapsibleList';
 import { H3 } from '../../components/Text';

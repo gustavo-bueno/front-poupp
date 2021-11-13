@@ -19,7 +19,7 @@ import {
 } from './styles';
 import { SpaceBetweenContainer } from '../../components/Container';
 import goals from '../../icons/goals';
-import { IGoal } from '../../models/goal.model';
+import { IGoal } from '../../models/goal';
 
 const GoalDetailScreen = () => {
   const { goal } = useRoute()?.params as { goal: IGoal };

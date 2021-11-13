@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 
 import { categoryTypes } from '../../constants/categoriesTypes';
-import { ICategory } from '../../models/category.model';
+import { ICategory } from '../../models/category';
 import { metrics } from '../../styles';
 import { H3 } from '../Text';
 import { IProps } from './interfaces';

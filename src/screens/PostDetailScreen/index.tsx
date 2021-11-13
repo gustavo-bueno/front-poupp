@@ -6,9 +6,10 @@ import { H1 } from '../../components/Text';
 import { BorderRadiusContainer } from '../../components/Container';
 import { PostContent, PostImage, ProducedByText } from './styles';
 import { colors, metrics } from '../../styles';
+import { IPost } from '../../models/post';
 
 const PostDetailScreen: React.FC = () => {
-  const { post } = useRoute()?.params as any;
+  const { post } = useRoute()?.params as { post: IPost };
   return (
     <View style={{ flex: 1, backgroundColor: colors.green }}>
       <BorderRadiusContainer>

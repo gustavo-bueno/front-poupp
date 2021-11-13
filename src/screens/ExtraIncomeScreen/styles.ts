@@ -2,7 +2,9 @@ import styled from 'styled-components/native';
 import { H1 } from '../../components/Text';
 import { colors, metrics } from '../../styles';
 
-export const Title = styled(H1)`
+export const Title = styled(H1).attrs({
+  fontWeight: 'bold',
+})`
   margin-top: ${metrics.base * 4}px;
   margin-bottom: ${metrics.base * 4}px;
 `;

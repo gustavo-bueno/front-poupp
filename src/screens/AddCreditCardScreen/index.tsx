@@ -11,7 +11,7 @@ import CollapsibleList from '../../components/CollapsibleList';
 import { SmallInputContainer, SmallInputsContainer } from './styles';
 import { H3 } from '../../components/Text';
 import { metrics } from '../../styles';
-import { ICard } from '../../models/creditCard.model';
+import { ICard } from '../../models/credit-card';
 
 const schema = Yup.object().shape({
   ownerName: Yup.string().required('O campo nome do titular é obrigatório'),

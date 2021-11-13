@@ -16,6 +16,7 @@ import { IProps } from './IProps';
 export const CollapsibleList: React.FC<IProps> = ({
   collapsibleTitle,
   data,
+  style,
   itemProp = 'name',
   onPressItem,
 }: IProps) => {
@@ -35,7 +36,7 @@ export const CollapsibleList: React.FC<IProps> = ({
   );
 
   return (
-    <View style={{ borderRadius: 16, backgroundColor: '#FFF' }}>
+    <View style={[{ borderRadius: 16, backgroundColor: '#FFF' }, style]}>
       <CollapsibleHeader onPress={() => setCollapsed((state) => !state)}>
         <H2>{collapsibleTitle}</H2>
         <Entypo

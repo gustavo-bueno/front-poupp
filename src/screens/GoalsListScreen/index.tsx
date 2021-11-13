@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
 import * as Animatable from 'react-native-animatable';
 
-import { IGoal } from '../../models/goal.model';
+import { IGoal } from '../../models/goal';
 import { ROUTES } from '../../constants/routes';
 import { BorderRadiusContainer } from '../../components/Container';
 import { ProgressBar } from '../../components/ProgressBar';

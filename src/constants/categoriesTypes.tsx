@@ -5,7 +5,7 @@ import {
   MaterialIcons,
   Entypo,
 } from '@expo/vector-icons';
-import { ICategory } from '../models/category.model';
+import { ICategory } from '../models/category';
 import { colors } from '../styles';
 
 export const categoryTypes: ICategory[] = [

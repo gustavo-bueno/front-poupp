@@ -15,22 +15,6 @@ export const InputContainer = styled.View`
   padding-bottom: ${metrics.base * 4}px;
 `;
 
-export const OptionContainer = styled.View<{ active: boolean }>`
-  border-color: ${colors.green};
-  padding-top: ${metrics.base}px;
-  padding-bottom: ${metrics.base}px;
-  border-bottom-width: ${(props) => (props.active ? 3 : 0)}px;
-`;
-
-export const OptionsContainer = styled.View`
-  background-color: ${colors.white};
-  border-radius: ${metrics.borderRadius}px;
-  margin-top: ${metrics.base * 2}px;
-  margin-bottom: ${metrics.base * 2}px;
-  height: ${metrics.hp(7)}px;
-  align-items: center;
-`;
-
 export const MovimentationInfosContainer = styled(UnstyledContainer)`
   width: 100%;
   height: 100%;
@@ -76,6 +60,8 @@ export const Container = styled.SafeAreaView`
   height: 100%;
   width: 100%;
   position: relative;
+
+  background: ${colors.background};
 `;
 
 export const FrequencyButton = styled(Ripple).attrs({
@@ -106,4 +92,8 @@ export const FrequencyContainer = styled.View`
   border-radius: ${metrics.borderRadius / 2}px;
 
   background-color: ${colors.white};
+`;
+
+export const TransactionTypeContainer = styled.View`
+  background-color: ${colors.background};
 `;
