@@ -119,13 +119,6 @@ export default function Home() {
         />
         <Screen
           options={{
-            headerShown: false,
-          }}
-          name={ROUTES.ADD_INCOME}
-          component={SetIncomeScreen}
-        />
-        <Screen
-          options={{
             headerShown: true,
             header: (props) => (
               <Header title="Minhas" subtitle="contas" {...props} />

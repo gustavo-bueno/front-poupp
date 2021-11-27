@@ -18,6 +18,7 @@
     "@types/react-native-svg-charts": "^5.0.7",
     "@unform/core": "^2.1.6",
     "@unform/mobile": "^2.1.6",
+    "axios": "^0.24.0",
     "d3-shape": "^3.0.1",
     "expo": "~41.0.1",
     "expo-app-loading": "^1.0.3",

@@ -35,7 +35,7 @@ const SignUpScreen: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
-      setUser(true);
+      navigate(ROUTES.ADD_INCOME);
     } catch (error) {
       const validationErrors: Record<string, any> = {};
       if (error instanceof Yup.ValidationError) {

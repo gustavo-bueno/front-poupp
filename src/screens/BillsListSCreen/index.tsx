@@ -1,22 +1,23 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { FlatList, View } from 'react-native';
 import Ripple from 'react-native-material-ripple';
-import * as Animatable from 'react-native-animatable';
+import { useNavigation } from '@react-navigation/core';
 
-import { IGoal } from '../../models/goal';
-import { ROUTES } from '../../constants/routes';
+import { Feather } from '@expo/vector-icons';
+
 import { BorderRadiusContainer } from '../../components/Container';
-import { ProgressBar } from '../../components/ProgressBar';
-import Button from '../../components/Button';
-import MoneyText from '../../components/MoneyText';
-import { H5 } from '../../components/Text';
-
-import { metrics } from '../../styles';
-import { Container, styles } from './styles';
-import goals from '../../icons/goals';
 import InfoCardItem from '../../components/InfoCardItem';
+import MoneyText from '../../components/MoneyText';
 import ProgressResume from '../../components/ProgressResume';
+import { H5 } from '../../components/Text';
+import { ROUTES } from '../../constants/routes';
+import { metrics } from '../../styles';
+import { BillsImage } from './styles';
+import { createAnimatableComponent } from 'react-native-animatable';
+import { IGoal } from '../../models/goal';
+import Button from '../../components/Button';
+
+const List = createAnimatableComponent(FlatList);
 
 const data: IGoal[] = [
   {
@@ -49,15 +50,11 @@ const data: IGoal[] = [
   },
 ];
 
-const List = Animatable.createAnimatableComponent(FlatList);
-
-const GoalsListScreen = () => {
+const BillsListScreen: React.FC = () => {
   const { navigate } = useNavigation();
 
   const renderItem = ({ item }: { item: IGoal }) => {
-    const Image = goals[item.type];
     const percentage = item.achieved / item.goalValue;
-
     return (
       <Ripple
         rippleContainerBorderRadius={metrics.borderRadius}
@@ -78,14 +75,18 @@ const GoalsListScreen = () => {
               rightContent={<H5 color="text">{percentage * 100}% concluído</H5>}
             />
           }
-          image={<Image style={styles.svg} />}
+          image={
+            <BillsImage>
+              <Feather name="percent" size={24} color="black" />
+            </BillsImage>
+          }
         />
       </Ripple>
     );
   };
 
   return (
-    <Container style={{ position: 'relative' }}>
+    <View style={{ position: 'relative' }}>
       <BorderRadiusContainer
         style={{ paddingTop: metrics.base * 7, paddingHorizontal: 16 }}
       >
@@ -103,8 +104,8 @@ const GoalsListScreen = () => {
         />
       </BorderRadiusContainer>
       <Button type="rounded" onPress={() => navigate(ROUTES.ADD_GOAL)} />
-    </Container>
+    </View>
   );
 };
 
-export default GoalsListScreen;
+export default BillsListScreen;
