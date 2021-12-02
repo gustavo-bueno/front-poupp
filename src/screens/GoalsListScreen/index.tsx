@@ -64,7 +64,7 @@ const GoalsListScreen = () => {
       >
         <InfoCardItem
           title={item.title}
-          price={item.goalValue}
+          value={item.goalValue}
           bottomInfo={
             <View>
               <ProgressBar progress={percentage} />

@@ -1,24 +1,22 @@
 const NumberToMoney = (value: number) => {
-  const cents = value / 100;
-  const string = cents.toString();
-  let [natural, decimal] = string.split('.');
+  let [natural, decimal] = value.toString().split(".");
 
   let initialDot = natural.length % 3;
 
   if (decimal === undefined) {
-    decimal = '00';
+    decimal = "00";
   }
 
   if (initialDot == 0) {
     initialDot = 3;
   }
 
-  let array = natural.split('');
-  let finalString = '';
+  let array = natural.split("");
+  let finalString = "";
 
   array.forEach((item: string, index: number) => {
     if (index == initialDot) {
-      finalString = finalString + '.';
+      finalString = finalString + ".";
       finalString = finalString + item;
       initialDot += 3;
     } else {
@@ -26,10 +24,10 @@ const NumberToMoney = (value: number) => {
     }
   });
 
-  decimal.split('');
+  decimal.split("");
 
   return (finalString +=
-    ',' + decimal[0] + (decimal[1] === undefined ? '0' : decimal[1]));
+    "," + decimal[0] + (decimal[1] === undefined ? "0" : decimal[1]));
 };
 
 export default NumberToMoney;

@@ -1,6 +1,6 @@
-import styled from 'styled-components/native';
-import { colors, fontFamily, metrics } from '../../styles';
-import Ripple from 'react-native-material-ripple';
+import styled from "styled-components/native";
+import { colors, fontFamily, metrics } from "../../styles";
+import Ripple from "react-native-material-ripple";
 
 interface props {
   theme: {
@@ -10,8 +10,6 @@ interface props {
 
 export const HomeContainer = styled.ScrollView`
   width: 100%;
-  height: 100%;
-  display: flex;
   flex-direction: column;
   background: ${colors.green};
 `;
@@ -52,12 +50,10 @@ export const TotalLabel = styled.Text`
 `;
 
 export const MainContent = styled.View`
-  display: flex;
+  height: auto;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   background-color: ${colors.background};
-  width: 100%;
   border-top-right-radius: ${metrics.base * 12.5}px;
   border-top-left-radius: ${metrics.base * 12.5}px;
   margin-top: ${metrics.base * 10}px;

@@ -26,7 +26,6 @@ const AddCreditCardScreen: React.FC = () => {
   const [account, setAccount] = useState({ name: 'Carteira' });
 
   const handleSubmit = async (data: ICard) => {
-    console.log(data, account);
     try {
       await schema.validate(data, {
         abortEarly: false,

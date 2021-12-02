@@ -14,11 +14,10 @@ import { FontAwesome } from '@expo/vector-icons';
 import { colors, metrics } from '../../styles';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants/routes';
-import { useContext } from 'react';
-import { UserContext } from '../../contexts/user';
+import useUserData from '../../hooks/useUserData';
 
 const UserScreen: React.FC = () => {
-  const { setUser } = useContext(UserContext);
+  const { logout, user } = useUserData()
   const { navigate } = useNavigation();
   return (
     <UserContainer>
@@ -30,7 +29,7 @@ const UserScreen: React.FC = () => {
             color={colors.gray}
           />
         </UserBackground>
-        <Username>Wilian</Username>
+        <Username>{user.user.name}</Username>
       </HeaderContainer>
       <MainContent>
         <ButtonsContainer>
@@ -54,7 +53,7 @@ const UserScreen: React.FC = () => {
           </Button>
         </ButtonsContainer>
         <ButtonsContainer>
-          <Button onPress={() => setUser(false)} theme={{ type: 'bottom' }}>
+          <Button onPress={logout} theme={{ type: 'bottom' }}>
             <ButtonText>Sair</ButtonText>
           </Button>
         </ButtonsContainer>

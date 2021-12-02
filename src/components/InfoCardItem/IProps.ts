@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 export interface IProps {
   title: string;
-  price: number;
+  value: number;
   bottomInfo?: ReactNode;
   image: any;
 }

@@ -1,52 +1,69 @@
-import React, { useContext, useRef } from 'react';
-import { KeyboardAvoidingView, View } from 'react-native';
-import Animated from 'react-native-reanimated';
-import { FormHandles } from '@unform/core';
-import * as Yup from 'yup';
-import { useNavigation } from '@react-navigation/native';
+import React, { useRef } from "react";
+import { KeyboardAvoidingView, View } from "react-native";
+import Animated from "react-native-reanimated";
+import { FormHandles } from "@unform/core";
+import * as Yup from "yup";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import LoginVector from '../../../assets/signin.svg';
-import Input from '../../components/Input';
-import { Container as ContentContainer } from '../../components/Container';
+import LoginVector from "../../../assets/signin.svg";
+import Input from "../../components/Input";
+import { Container as ContentContainer } from "../../components/Container";
 import {
-  FormContainer,
-  Header,
   SignUpButton,
   ForgotPasswordButton,
   Title,
   SignInButton,
   Container,
   Form,
-} from './styles';
-import { UserContext } from '../../contexts/user';
-import { Wave } from '../../components/Wave';
-import { ROUTES } from '../../constants/routes';
-import useAnimation from '../../hooks/useAnimation';
-import { ScrollView } from 'react-native-gesture-handler';
-import { metrics } from '../../styles';
+} from "./styles";
+import { Wave } from "../../components/Wave";
+import { ROUTES } from "../../constants/routes";
+import useAnimation from "../../hooks/useAnimation";
+import { ScrollView } from "react-native-gesture-handler";
+import useUserData from "../../hooks/useUserData";
+import axios, { AxiosResponse } from "axios";
+
+interface SigninData {
+  email: string;
+  password: string;
+}
 
 const LoginScreen: React.FC = () => {
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUserData();
   const formRef = useRef<FormHandles>(null);
   const { navigate } = useNavigation();
 
   const { svgViewStyle, yAnimationStyle } = useAnimation();
 
-  const handleSubmit = async (data: Object) => {
+  const handleSubmit = async (data: SigninData) => {
     formRef.current?.setErrors({});
+
     try {
       const schema = Yup.object().shape({
         email: Yup.string()
-          .email('Digite um email válido')
-          .required('O campo e-mail é obrigatório.'),
+          .email("Digite um email válido")
+          .required("O campo e-mail é obrigatório."),
         password: Yup.string()
-          .min(8, 'A senha deve ter 8 caracteres')
-          .required('O campo senha é obrigatório.'),
+          .min(8, "A senha deve ter 8 caracteres")
+          .required("O campo senha é obrigatório."),
       });
       await schema.validate(data, {
         abortEarly: false,
       });
-      setUser(true);
+
+      axios
+        .post("https://eb4a-2804-4ec-10d8-1500-1840-695a-30e6-7c8b.ngrok.io/signin", data)
+        .then(async (response: AxiosResponse) => {
+          if (response.status === 200) {
+            await AsyncStorage.setItem("POUPP_USER_TOKEN", response.data.token);
+
+            setUser(response.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } catch (error) {
       const validationErrors: Record<string, any> = {};
       if (error instanceof Yup.ValidationError) {
@@ -68,7 +85,7 @@ const LoginScreen: React.FC = () => {
               navigate(ROUTES.SIGNUP);
             }}
           />
-          <Animated.View style={[svgViewStyle, { alignSelf: 'flex-end' }]}>
+          <Animated.View style={[svgViewStyle, { alignSelf: "flex-end" }]}>
             <LoginVector width="100%" height="100%" />
           </Animated.View>
         </ContentContainer>

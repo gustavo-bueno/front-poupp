@@ -1,14 +1,14 @@
 import React from 'react';
 import { IProps } from './IProps';
 import CardItem from '../CardItem';
-import MoneyText from '../MoneyText';
+import NumberToMoney from '../../functions/NumberToMoney';
 import { H2 } from '../Text';
 
 import { CardItemContent } from './styles';
 
 const InfoCardItem: React.FC<IProps> = ({
   title,
-  price,
+  value,
   bottomInfo,
   image,
 }: IProps) => {
@@ -17,7 +17,7 @@ const InfoCardItem: React.FC<IProps> = ({
       content={
         <CardItemContent>
           <H2 fontWeight="bold">{title}</H2>
-          <MoneyText value={price} bold="medium" fontSize="h2" />
+          <H2 fontWeight='medium'>R$ { NumberToMoney(value) } </H2>
           {bottomInfo && bottomInfo}
         </CardItemContent>
       }

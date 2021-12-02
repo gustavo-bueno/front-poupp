@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import { UserContext } from '../contexts/user';
-import Authentication from './authentication';
-import Home from './home';
+import React from "react";
+import Authentication from "./authentication";
+import useUserData from "../hooks/useUserData";
+import Home from "./home";
 
 const Routes: React.FC = () => {
-  const { user } = useContext(UserContext);
-  if (user) {
+  const { user } = useUserData();
+  if (user.token) {
     return <Home />;
   }
   return <Authentication />;
