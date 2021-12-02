@@ -4,8 +4,7 @@ import styled from 'styled-components/native';
 import { colors, metrics } from '../../styles';
 
 export const TitleContainer = styled.View`
-  height: ${metrics.hp(15)}px;
-
+  padding-top: ${metrics.hp(4.5)}px;
   flex-direction: row;
   align-items: flex-end;
 

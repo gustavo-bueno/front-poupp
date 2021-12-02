@@ -31,6 +31,7 @@ interface DayInterface {
 }
 
 const TransictionsScreen: React.FC = () => {
+<<<<<<< HEAD
   const { user } = useUserData();
 
   const [activeYear, setActiveYear] = useState<number>(
@@ -147,6 +148,91 @@ const TransictionsScreen: React.FC = () => {
     }
 
     return days;
+=======
+  const data = [
+    {
+      year: 2019,
+    },
+    {
+      year: 2020,
+    },
+    {
+      year: 2021,
+    },
+  ];
+
+  const months = [
+    {
+      name: 'Janeiro',
+      number: 1,
+    },
+
+    {
+      name: 'Fevereiro',
+      number: 2,
+    },
+    {
+      name: 'Março',
+      number: 3,
+    },
+    {
+      name: 'Abril',
+      number: 4,
+    },
+    {
+      name: 'Maio',
+      number: 5,
+    },
+    {
+      name: 'Junho',
+      number: 6,
+    },
+    {
+      name: 'Julho',
+      number: 7,
+    },
+    {
+      name: 'Agosto',
+      number: 8,
+    },
+    {
+      name: 'Setembro',
+      number: 9,
+    },
+    {
+      name: 'Outubro',
+      number: 10,
+    },
+    {
+      name: 'Novembro',
+      number: 11,
+    },
+    {
+      name: 'Dezembro',
+      number: 12,
+    },
+  ];
+
+  const [activeYear, setActiveYear] = useState<number>(data[0].year);
+  const [activeMonth, setActiveMonth] = useState(months[0]);
+
+  const nextMonth = () => {
+    if (activeMonth.number === 12) {
+      setActiveMonth(months[0]);
+      setActiveYear(activeYear + 1);
+    } else {
+      setActiveMonth((state) => months[state.number]);
+    }
+  };
+
+  const backMonth = () => {
+    if (activeMonth.number === 1) {
+      setActiveMonth(months[11]);
+      setActiveYear((state) => state - 1);
+    } else {
+      setActiveMonth((state) => months[state.number - 2]);
+    }
+>>>>>>> dd69fe7613f3576b8653c6c71006666f8eb315ee
   };
 
   return (
@@ -156,6 +242,7 @@ const TransictionsScreen: React.FC = () => {
           <Title>Transações</Title>
         </HeaderContent>
         <MainContent>
+<<<<<<< HEAD
           {splitDays().map((day, index) => (
             <DayTransactions key={index}>
               <DayTransactionsTitle>{`${new Date(
@@ -177,6 +264,37 @@ const TransictionsScreen: React.FC = () => {
         <Filter>
           <FlatList
             data={getAllYears()}
+=======
+          <DayTransactions>
+            <DayTransactionsTitle>Segunda-feira, 20 Jan</DayTransactionsTitle>
+            <MovementCard title="Salário" value={1000} entries={true} />
+            <MovementCard title="Conta de luz" value={1000} entries={false} />
+          </DayTransactions>
+          <DayTransactions>
+            <DayTransactionsTitle>Segunda-feira, 20 Jan</DayTransactionsTitle>
+            <MovementCard title="Salário" value={1000} entries={true} />
+            <MovementCard title="Conta de luz" value={1000} entries={false} />
+          </DayTransactions>
+          <DayTransactions>
+            <DayTransactionsTitle>Segunda-feira, 20 Jan</DayTransactionsTitle>
+            <MovementCard title="Salário" value={1000} entries={true} />
+            <MovementCard title="Conta de luz" value={1000} entries={false} />
+          </DayTransactions>
+          <DayTransactions>
+            <DayTransactionsTitle>Segunda-feira, 20 Jan</DayTransactionsTitle>
+            <MovementCard title="Salário" value={1000} entries={true} />
+            <MovementCard title="Conta de luz" value={1000} entries={false} />
+          </DayTransactions>
+          <DayTransactions>
+            <DayTransactionsTitle>Segunda-feira, 20 Jan</DayTransactionsTitle>
+            <MovementCard title="Salário" value={1000} entries={true} />
+            <MovementCard title="Conta de luz" value={1000} entries={false} />
+          </DayTransactions>
+        </MainContent>
+        <Filter>
+          <FlatList
+            data={data}
+>>>>>>> dd69fe7613f3576b8653c6c71006666f8eb315ee
             horizontal
             keyExtractor={(year, index) => index.toString()}
             renderItem={({ item }) => (
@@ -203,6 +321,7 @@ const TransictionsScreen: React.FC = () => {
           />
           <MonthContainer>
             <ChangeButton
+<<<<<<< HEAD
               rippleContainerBorderRadius={metrics.base * 6}
               disabled={
                 activeMonth === 0 ||
@@ -210,6 +329,10 @@ const TransictionsScreen: React.FC = () => {
                   activeMonth === new Date(user.user.createdAt).getMonth())
               }
               onPress={() => setActiveMonth(Number(activeMonth) - 1)}
+=======
+              onPress={() => backMonth()}
+              rippleContainerBorderRadius={metrics.base * 6}
+>>>>>>> dd69fe7613f3576b8653c6c71006666f8eb315ee
             >
               <MaterialIcons
                 name="keyboard-arrow-left"
@@ -218,6 +341,7 @@ const TransictionsScreen: React.FC = () => {
               />
             </ChangeButton>
             <Month>
+<<<<<<< HEAD
               <MonthText>{getMonthName(activeMonth)}</MonthText>
             </Month>
             <ChangeButton
@@ -228,6 +352,13 @@ const TransictionsScreen: React.FC = () => {
                   activeYear === new Date(Date.now()).getFullYear())
               }
               onPress={() => setActiveMonth(Number(activeMonth) + 1)}
+=======
+              <MonthText>{activeMonth.name}</MonthText>
+            </Month>
+            <ChangeButton
+              onPress={() => nextMonth()}
+              rippleContainerBorderRadius={metrics.base * 6}
+>>>>>>> dd69fe7613f3576b8653c6c71006666f8eb315ee
             >
               <MaterialIcons
                 name="keyboard-arrow-right"

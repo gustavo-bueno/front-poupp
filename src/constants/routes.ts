@@ -17,4 +17,6 @@ export const ROUTES = {
   ADD_GOAL: 'addGoalScreen',
   ADD_INCOME: 'addIncomeScreen',
   ACCOUNT_LIST: 'accountListScreen',
+  SET_MOTIVATION: 'setMotivationScreen',
+  INITIAL_BILLS: 'initialBillsScreen',
 };

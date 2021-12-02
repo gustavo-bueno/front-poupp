@@ -8,7 +8,13 @@ import { IProps } from './IProps';
 
 import { BackButton, TextContainer, TitleContainer } from './styles';
 
-const Header = ({ title, subtitle, backButton = true, ...rest }: IProps) => {
+const Header = ({
+  title,
+  subtitle,
+  backButton = true,
+  titleStyle,
+  ...rest
+}: IProps) => {
   const { goBack } = useNavigation();
 
   return (
@@ -19,10 +25,14 @@ const Header = ({ title, subtitle, backButton = true, ...rest }: IProps) => {
         </BackButton>
       )}
       <TextContainer>
-        <H1 color="white">{title}</H1>
-        <H0 fontWeight="bold" color="white">
-          {subtitle.toUpperCase()}
-        </H0>
+        <H1 style={titleStyle} color="white">
+          {title}
+        </H1>
+        {subtitle && (
+          <H0 fontWeight="bold" color="white">
+            {subtitle.toUpperCase()}
+          </H0>
+        )}
       </TextContainer>
     </TitleContainer>
   );
