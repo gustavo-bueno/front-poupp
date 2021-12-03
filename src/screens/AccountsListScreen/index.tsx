@@ -6,11 +6,13 @@ import InfoCardItem from "../../components/InfoCardItem";
 import { H5 } from "../../components/Text";
 import { metrics } from "../../styles";
 import { ItemImage } from "./styles";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import useUserData from "../../hooks/useUserData";
-import { AccountInterface, TransactionInterface } from "../../@types/types";
 import goalImg from "../../../assets/images/goal.png";
 import walletImg from "../../../assets/images/wallet.png";
+import apiRequest from "../../services/apiRequest";
+import { ITransaction } from "../../models/transaction";
+import { IAccount } from "../../models/account";
 
 interface ListRenderItemInfo<ItemT> {
   item: ItemT;
@@ -24,7 +26,7 @@ interface ListRenderItemInfo<ItemT> {
   };
 }
 
-const getLastTransactionDate = (transactions: TransactionInterface[]) => {
+const getLastTransactionDate = (transactions: ITransaction[]) => {
   const lastTransaction = transactions[transactions.length - 1];
 
   if (!lastTransaction) {
@@ -42,7 +44,7 @@ const getLastTransactionDate = (transactions: TransactionInterface[]) => {
   }
 };
 
-const renderItem = ({ item }: ListRenderItemInfo<AccountInterface>) => (
+const renderItem = ({ item }: ListRenderItemInfo<IAccount>) => (
   <InfoCardItem
     title={item.name}
     value={item.value}
@@ -64,20 +66,18 @@ const renderItem = ({ item }: ListRenderItemInfo<AccountInterface>) => (
 const AccountsListScreen: React.FC = () => {
   const { user } = useUserData();
 
-  const [accounts, setAccounts] = useState<AccountInterface[]>([]);
+  const [accounts, setAccounts] = useState<IAccount[]>([]);
 
   const options = {
     headers: { Authorization: `Bearer ${user.token}` },
   };
 
   useEffect(() => {
-    axios
-      .get("https://eb4a-2804-4ec-10d8-1500-1840-695a-30e6-7c8b.ngrok.io/accounts", options)
-      .then((response: AxiosResponse) => {
-        if (response.status === 200) {
-          setAccounts(response.data);
-        }
-      });
+    apiRequest.get("/accounts", options).then((response: AxiosResponse) => {
+      if (response.status === 200) {
+        setAccounts(response.data);
+      }
+    });
   }, []);
 
   return (

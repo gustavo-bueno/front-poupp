@@ -45,9 +45,10 @@ import { ROUTES } from "../../constants/routes";
 import { useNavigation } from "@react-navigation/native";
 import { H0, H1 } from "../../components/Text";
 import useUserData from "../../hooks/useUserData";
-import { TransactionInterface } from "../../@types/types";
-import axios, { AxiosResponse } from "axios";
+import { ITransaction } from "../../models/transaction";
+import { AxiosResponse } from "axios";
 import LimitedString from "../../functions/LimitedString";
+import apiRequest from "../../services/apiRequest";
 
 interface ChartDataInterface {
   name: string;
@@ -63,9 +64,9 @@ const HomeScreen: React.FC = () => {
   const { navigate } = useNavigation();
   const { user } = useUserData();
 
-  const [monthTransactions, setMonthTransactions] = useState<
-    TransactionInterface[]
-  >([]);
+  const [monthTransactions, setMonthTransactions] = useState<ITransaction[]>(
+    []
+  );
   const [chartData, setChartData] = useState<ChartDataInterface[]>([]);
 
   useEffect(() => {
@@ -74,27 +75,23 @@ const HomeScreen: React.FC = () => {
       params: {
         month: new Date(Date.now()).getMonth(),
         year: new Date(Date.now()).getFullYear(),
-        limit: 10000
+        limit: 10000,
       },
     };
 
-    axios
-      .get(
-        "https://eb4a-2804-4ec-10d8-1500-1840-695a-30e6-7c8b.ngrok.io/transactions/month",
-        options
-      )
+    apiRequest
+      .get("/transactions/month", options)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setMonthTransactions(response.data.transactions);
 
-          const transactions: TransactionInterface[] =
-            response.data.transactions;
+          const transactions: ITransaction[] = response.data.transactions;
 
           const transactionCategories: string[] = [];
 
           const chartCategoriesData: ChartDataInterface[] = [];
 
-          transactions.map((transaction: TransactionInterface) => {
+          transactions.map((transaction: ITransaction) => {
             if (
               transaction.category &&
               transactionCategories.find(

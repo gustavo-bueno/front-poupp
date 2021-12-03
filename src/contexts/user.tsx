@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import apiRequest from "../services/apiRequest";
 
 export interface UserInterface {
   token: string;
@@ -43,10 +44,10 @@ const UserProvider: React.FC<{}> = ({ children }) => {
         };
 
         if (token) {
-          axios
-            .get("https://eb4a-2804-4ec-10d8-1500-1840-695a-30e6-7c8b.ngrok.io/getdata", options)
+          apiRequest
+            .get("/getdata", options)
             .then((response: AxiosResponse) => {
-              if (response.status === 200) {''
+              if (response.status === 200) {
                 setUser(response.data);
               }
             })

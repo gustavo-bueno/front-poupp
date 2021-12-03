@@ -1,4 +1,4 @@
-export interface TransactionInterface {
+export interface ITransaction {
   _id: string;
   title: string;
   value: number;
@@ -16,19 +16,4 @@ export interface TransactionInterface {
   type: string;
   createdAt: Date;
   updatedAt: Date;
-}
-
-export interface AccountInterface {
-  _id: string;
-  name: string;
-  bank?: {
-    _id: string;
-    name: string;
-    picture: string;
-    __v: number;
-  };
-  transactions: TransactionInterface[];
-  value: number;
-  card?: string;
-  type: string;
 }

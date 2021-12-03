@@ -1,49 +1,48 @@
-import React from 'react';
-import { View, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Ripple from 'react-native-material-ripple';
-import * as Animatable from 'react-native-animatable';
+import React, { useEffect, useState } from "react";
+import { View, FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Ripple from "react-native-material-ripple";
+import * as Animatable from "react-native-animatable";
 
-import { IGoal } from '../../models/goal';
-import { ROUTES } from '../../constants/routes';
-import { BorderRadiusContainer } from '../../components/Container';
-import { ProgressBar } from '../../components/ProgressBar';
-import Button from '../../components/Button';
-import MoneyText from '../../components/MoneyText';
-import { H5 } from '../../components/Text';
+import { IGoal } from "../../models/goal";
+import { ROUTES } from "../../constants/routes";
+import { BorderRadiusContainer } from "../../components/Container";
+import Button from "../../components/Button";
+import NumberToMoney from "../../functions/NumberToMoney";
+import { H5 } from "../../components/Text";
 
-import { metrics } from '../../styles';
-import { Container, styles } from './styles';
-import goals from '../../icons/goals';
-import InfoCardItem from '../../components/InfoCardItem';
-import ProgressResume from '../../components/ProgressResume';
+import { metrics } from "../../styles";
+import { Container, styles } from "./styles";
+import goals from "../../icons/goals";
+import InfoCardItem from "../../components/InfoCardItem";
+import ProgressResume from "../../components/ProgressResume";
 
 const data: IGoal[] = [
   {
     id: 1,
-    title: 'Carro novo',
-    type: 'car',
+    title: "Carro novo",
+    type: "car",
     goalValue: 2500000,
     achieved: 1250000,
   },
   {
     id: 2,
-    title: 'Casa nova',
-    type: 'house',
+    title: "Casa nova",
+    type: "house",
     goalValue: 25000000,
     achieved: 1250000,
   },
   {
     id: 3,
-    title: 'Guitarra nova',
-    type: 'other',
+    title: "Guitarra nova",
+    type: "other",
     goalValue: 125000,
     achieved: 32500,
   },
   {
     id: 4,
-    title: 'Viagem para cancun',
-    type: 'travel',
+    title: "Viagem para cancun",
+    type: "travel",
     goalValue: 1000000,
     achieved: 32500,
   },
@@ -71,8 +70,7 @@ const GoalsListScreen = () => {
               progress={percentage}
               leftContent={
                 <H5 color="text">
-                  <MoneyText fontSize="h5" value={item.achieved} />
-                  {' arrecadado'}
+                  {`R$ ${NumberToMoney(item.achieved)} arrecadado`}
                 </H5>
               }
               rightContent={<H5 color="text">{percentage * 100}% concluído</H5>}
@@ -85,7 +83,7 @@ const GoalsListScreen = () => {
   };
 
   return (
-    <Container style={{ position: 'relative' }}>
+    <Container style={{ position: "relative" }}>
       <BorderRadiusContainer
         style={{ paddingTop: metrics.base * 7, paddingHorizontal: 16 }}
       >

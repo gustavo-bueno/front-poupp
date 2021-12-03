@@ -22,7 +22,8 @@ import { ROUTES } from "../../constants/routes";
 import useAnimation from "../../hooks/useAnimation";
 import { ScrollView } from "react-native-gesture-handler";
 import useUserData from "../../hooks/useUserData";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import apiRequest from "../../services/apiRequest";
 
 interface SigninData {
   email: string;
@@ -52,8 +53,8 @@ const LoginScreen: React.FC = () => {
         abortEarly: false,
       });
 
-      axios
-        .post("https://eb4a-2804-4ec-10d8-1500-1840-695a-30e6-7c8b.ngrok.io/signin", data)
+      apiRequest
+        .post("/signin", data)
         .then(async (response: AxiosResponse) => {
           if (response.status === 200) {
             await AsyncStorage.setItem("POUPP_USER_TOKEN", response.data.token);
