@@ -22,13 +22,13 @@ import { colors, metrics } from "../../styles";
 import MovementCard from "../../components/MovementCard";
 import useUserData from "../../hooks/useUserData";
 import { AxiosResponse } from "axios";
-import { TransactionInterface } from "../../@types/types";
+import { ITransaction } from "../../models/transaction";
 import LimitedString from "../../functions/LimitedString";
 import apiRequest from "../../services/apiRequest";
 
 interface DayInterface {
   date: Date;
-  transactions: TransactionInterface[];
+  transactions: ITransaction[];
 }
 
 const TransictionsScreen: React.FC = () => {
@@ -40,7 +40,7 @@ const TransictionsScreen: React.FC = () => {
   const [activeMonth, setActiveMonth] = useState<number>(
     new Date(Date.now()).getMonth()
   );
-  const [transactions, setTransactions] = useState<TransactionInterface[]>([]);
+  const [transactions, setTransactions] = useState<ITransaction[]>([]);
 
   useEffect(() => {
     const options = {
@@ -122,7 +122,7 @@ const TransictionsScreen: React.FC = () => {
       });
 
       dates.map((date) => {
-        let transactionsData: TransactionInterface[] = [];
+        let transactionsData: ITransaction[] = [];
 
         transactions.map((transaction) => {
           if (
@@ -166,7 +166,8 @@ const TransictionsScreen: React.FC = () => {
                   key={index}
                   title={LimitedString(transaction.title, 22)}
                   value={transaction.value}
-                  entries={transaction.type === "income"}
+                  type={transaction.type}
+                  isCard={transaction.isCard}
                 />
               ))}
             </DayTransactions>

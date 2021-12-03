@@ -1,8 +1,8 @@
-import React from 'react';
-import { colors } from '../../styles';
-import { IProps } from './IProps';
+import React from "react";
+import { colors } from "../../styles";
+import { IProps } from "./IProps";
 
-import NumberToMoney from '../../functions/NumberToMoney';
+import NumberToMoney from "../../functions/NumberToMoney";
 
 import {
   CardConatiner,
@@ -11,9 +11,10 @@ import {
   ValueContainer,
   ValueDescription,
   Value,
-} from './styles';
+} from "./styles";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
-const MovementCard = ({ entries = false, title, value }: IProps) => {
+const MovementCard = ({ isCard = false, title, value, type }: IProps) => {
   return (
     <CardConatiner>
       <TitleContainer>
@@ -21,9 +22,24 @@ const MovementCard = ({ entries = false, title, value }: IProps) => {
       </TitleContainer>
       <ValueContainer>
         <ValueDescription
-          theme={{ color: entries ? colors.green : colors.red }}
+          theme={{
+            color:
+              type === "income"
+                ? colors.green
+                : type === "outcome"
+                ? isCard
+                  ? colors.orange
+                  : colors.red
+                : colors.lightBlue,
+          }}
         >
-          {entries ? '+R$' : '-R$'}
+          {type === "income"
+            ? "+R$"
+            : type === "outcome"
+            ? isCard
+              ? "R$"
+              : "-R$"
+            : "R$"}
         </ValueDescription>
         <Value>{NumberToMoney(value)}</Value>
       </ValueContainer>

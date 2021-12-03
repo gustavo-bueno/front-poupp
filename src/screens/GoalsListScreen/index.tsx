@@ -16,64 +16,64 @@ import { Container, styles } from "./styles";
 import goals from "../../icons/goals";
 import InfoCardItem from "../../components/InfoCardItem";
 import ProgressResume from "../../components/ProgressResume";
-
-const data: IGoal[] = [
-  {
-    id: 1,
-    title: "Carro novo",
-    type: "car",
-    goalValue: 2500000,
-    achieved: 1250000,
-  },
-  {
-    id: 2,
-    title: "Casa nova",
-    type: "house",
-    goalValue: 25000000,
-    achieved: 1250000,
-  },
-  {
-    id: 3,
-    title: "Guitarra nova",
-    type: "other",
-    goalValue: 125000,
-    achieved: 32500,
-  },
-  {
-    id: 4,
-    title: "Viagem para cancun",
-    type: "travel",
-    goalValue: 1000000,
-    achieved: 32500,
-  },
-];
+import useUserData from "../../hooks/useUserData";
+import { AxiosResponse } from "axios";
+import apiRequest from "../../services/apiRequest";
 
 const List = Animatable.createAnimatableComponent(FlatList);
 
 const GoalsListScreen = () => {
   const { navigate } = useNavigation();
+  const { user } = useUserData();
+
+  const [goalsList, setGoalsList] = useState<IGoal[]>([]);
+  const [goalAccountValue, setGoalAccountValue] = useState<number>(0);
+
+  useEffect(() => {
+    const options = {
+      headers: { Authorization: `Bearer ${user.token}` },
+    };
+
+    apiRequest
+      .get("/goals", options)
+      .then((response: AxiosResponse) => {
+        if (response.status === 200) {
+          setGoalsList(response.data.goals);
+          setGoalAccountValue(response.data.reservedToGoals);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const renderItem = ({ item }: { item: IGoal }) => {
-    const Image = goals[item.type];
-    const percentage = item.achieved / item.goalValue;
+    const Image = goals[item.category.type];
+    const percentage = goalAccountValue / item.totalValue;
 
     return (
       <Ripple
         rippleContainerBorderRadius={metrics.borderRadius}
-        onPress={() => navigate(ROUTES.GOAL_DETAIL, { goal: item })}
+        onPress={() => navigate(ROUTES.GOAL_DETAIL, { goal: item, goalAccountValue })}
       >
         <InfoCardItem
           title={item.title}
-          value={item.goalValue}
+          value={item.totalValue}
           bottomInfo={
             <ProgressResume
               progress={percentage}
               leftContent={
                 <H5 color="text">
-                  {`R$ ${NumberToMoney(item.achieved)} arrecadado`}
+                  {`Já possui R$ ${NumberToMoney(goalAccountValue)}`}
                 </H5>
               }
-              rightContent={<H5 color="text">{percentage * 100}% concluído</H5>}
+              rightContent={
+                <H5 color="text">
+                  {percentage * 100 === 100
+                    ? "Pode ser concluída"
+                    : `${Math.ceil(percentage * 100)}% completo`}
+                </H5>
+              }
             />
           }
           image={<Image style={styles.svg} />}
@@ -97,7 +97,7 @@ const GoalsListScreen = () => {
           ItemSeparatorComponent={() => (
             <View style={{ marginBottom: metrics.base * 4 }} />
           )}
-          data={data}
+          data={goalsList}
         />
       </BorderRadiusContainer>
       <Button type="rounded" onPress={() => navigate(ROUTES.ADD_GOAL)} />

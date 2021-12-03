@@ -1,5 +1,6 @@
 export interface IProps {
     title: string,
     value: number,
-    entries?: boolean
+    type: "transfer" | "income" | "outcome",
+    isCard?: boolean;
 }

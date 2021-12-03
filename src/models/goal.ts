@@ -1,8 +1,13 @@
 export interface IGoal {
-  id: number;
-  goalValue: number;
-  achieved: number;
-  type: 'car' | 'house' | 'travel' | 'other';
+  _id: number;
+  totalValue: number;
+  category: {
+    _id: string;
+    name: string;
+    type: "car" | "house" | "travel" | "other";
+    __v: number;
+  };
+  expirationDate: Date;
+  user: string;
   title: string;
-  image?: any;
 }

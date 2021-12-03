@@ -251,7 +251,8 @@ const HomeScreen: React.FC = () => {
                       key={transaction._id}
                       title={LimitedString(transaction.title, 22)}
                       value={transaction.value}
-                      entries={transaction.type === "income"}
+                      type={transaction.type}
+                      isCard={transaction.isCard}
                     />
                   ))}
                   <SeeMoreButton onPress={() => navigate(ROUTES.TRANSACTIONS)}>

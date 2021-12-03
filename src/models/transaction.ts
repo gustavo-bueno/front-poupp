@@ -13,7 +13,7 @@ export interface ITransaction {
   user: string;
   transferAccount?: string;
   isCard: boolean;
-  type: string;
+  type: "transfer" | "outcome" | "income";
   createdAt: Date;
   updatedAt: Date;
 }
