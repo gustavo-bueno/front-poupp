@@ -136,7 +136,6 @@ const CardDetailScreen = () => {
               ))}
             </DayTransactions>
           ))}
-          
         </MainContent>
       </ScrollViewContainer>
     </SafeAreaView>

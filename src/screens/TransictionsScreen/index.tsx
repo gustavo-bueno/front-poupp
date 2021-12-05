@@ -25,6 +25,7 @@ import { AxiosResponse } from "axios";
 import { ITransaction } from "../../models/transaction";
 import LimitedString from "../../functions/LimitedString";
 import apiRequest from "../../services/apiRequest";
+import { Loading } from "../../components/Loading";
 
 interface DayInterface {
   date: Date;
@@ -41,8 +42,10 @@ const TransictionsScreen: React.FC = () => {
     new Date(Date.now()).getMonth()
   );
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setLoading(true);
     const options = {
       headers: { Authorization: `Bearer ${user.token}` },
       params: { year: activeYear, month: activeMonth, limit: 10000 },
@@ -53,6 +56,7 @@ const TransictionsScreen: React.FC = () => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setTransactions(response.data.transactions);
+          setLoading(false);
         }
       });
   }, [activeMonth, activeYear]);
@@ -154,7 +158,7 @@ const TransictionsScreen: React.FC = () => {
           <Title>Transações</Title>
         </HeaderContent>
         <MainContent>
-          {splitDays().map((day, index) => (
+          {!loading ? splitDays().map((day, index) => (
             <DayTransactions key={index}>
               <DayTransactionsTitle>{`${new Date(
                 day.date
@@ -171,7 +175,7 @@ const TransictionsScreen: React.FC = () => {
                 />
               ))}
             </DayTransactions>
-          ))}
+          )) : <Loading />}
         </MainContent>
         <Filter>
           <FlatList

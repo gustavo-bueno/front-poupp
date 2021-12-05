@@ -13,6 +13,7 @@ import { ICard } from "../../models/card";
 import useUserData from "../../hooks/useUserData";
 import apiRequest from "../../services/apiRequest";
 import { AxiosResponse } from "axios";
+import { Loading } from "../../components/Loading";
 
 const FlatList = Animatable.createAnimatableComponent(List);
 
@@ -21,8 +22,10 @@ const CardListScreen: React.FC = () => {
   const { user } = useUserData();
 
   const [cards, setCards] = useState<ICard[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setLoading(true);
     const options = {
       headers: { Authorization: `Bearer ${user.token}` },
     };
@@ -32,6 +35,7 @@ const CardListScreen: React.FC = () => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setCards(response.data);
+          setLoading(false);
         }
       })
       .catch((err) => {
@@ -61,18 +65,22 @@ const CardListScreen: React.FC = () => {
       style={{ backgroundColor: colors.green, flex: 1, position: "relative" }}
     >
       <BorderRadiusContainer style={{ paddingTop: metrics.base * 4 }}>
-        <FlatList
-          useNativeDriver
-          animation="bounceInDown"
-          contentInsetAdjustmentBehavior="automatic"
-          duration={1000}
-          renderItem={renderItem as any}
-          data={cards}
-          keyExtractor={(item: any) => item._id.toString()}
-          ItemSeparatorComponent={() => (
-            <View style={{ marginVertical: metrics.base }} />
-          )}
-        />
+        {loading ? (
+          <Loading />
+        ) : (
+          <FlatList
+            useNativeDriver
+            animation="bounceInDown"
+            contentInsetAdjustmentBehavior="automatic"
+            duration={1000}
+            renderItem={renderItem as any}
+            data={cards}
+            keyExtractor={(item: any) => item._id.toString()}
+            ItemSeparatorComponent={() => (
+              <View style={{ marginVertical: metrics.base }} />
+            )}
+          />
+        )}
       </BorderRadiusContainer>
       <Button type="rounded" onPress={() => navigate(ROUTES.ADD_CARD)} />
     </View>

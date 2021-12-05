@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList as List, View } from "react-native";
 
 import { BorderRadiusContainer } from "../../components/Container";
 import InfoCardItem from "../../components/InfoCardItem";
 import { H5 } from "../../components/Text";
+import * as Animatable from "react-native-animatable";
 import { metrics } from "../../styles";
 import { ItemImage } from "./styles";
 import { AxiosResponse } from "axios";
@@ -13,6 +14,7 @@ import walletImg from "../../../assets/images/wallet.png";
 import apiRequest from "../../services/apiRequest";
 import { ITransaction } from "../../models/transaction";
 import { IAccount } from "../../models/account";
+import { Loading } from "../../components/Loading";
 
 interface ListRenderItemInfo<ItemT> {
   item: ItemT;
@@ -25,6 +27,8 @@ interface ListRenderItemInfo<ItemT> {
     updateProps: (select: "leading" | "trailing", newProps: any) => void;
   };
 }
+
+const FlatList = Animatable.createAnimatableComponent(List);
 
 const getLastTransactionDate = (transactions: ITransaction[]) => {
   const lastTransaction = transactions[transactions.length - 1];
@@ -67,29 +71,40 @@ const AccountsListScreen: React.FC = () => {
   const { user } = useUserData();
 
   const [accounts, setAccounts] = useState<IAccount[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const options = {
     headers: { Authorization: `Bearer ${user.token}` },
   };
 
   useEffect(() => {
+    setLoading(true);
     apiRequest.get("/accounts", options).then((response: AxiosResponse) => {
       if (response.status === 200) {
         setAccounts(response.data);
+        setLoading(false);
       }
     });
   }, []);
 
   return (
     <BorderRadiusContainer style={{ paddingTop: metrics.base * 4 }}>
-      <FlatList
-        data={accounts}
-        renderItem={renderItem}
-        ItemSeparatorComponent={() => (
-          <View style={{ marginBottom: metrics.base * 4 }} />
-        )}
-        keyExtractor={(_, idx) => idx.toString()}
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <FlatList
+          useNativeDriver
+          animation="bounceInDown"
+          contentInsetAdjustmentBehavior="automatic"
+          duration={1000}
+          data={accounts}
+          renderItem={renderItem as any}
+          ItemSeparatorComponent={() => (
+            <View style={{ marginBottom: metrics.base * 4 }} />
+          )}
+          keyExtractor={(_, idx) => idx.toString()}
+        />
+      )}
     </BorderRadiusContainer>
   );
 };
