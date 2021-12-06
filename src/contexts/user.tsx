@@ -1,7 +1,7 @@
-import React, { createContext, useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AxiosResponse } from "axios";
-import apiRequest from "../services/apiRequest";
+import React, { createContext, useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AxiosResponse } from 'axios';
+import axiosApi from '../services/apiRequest';
 
 export interface UserInterface {
   token: string;
@@ -20,9 +20,9 @@ interface UserContextInterface {
 }
 
 const initalState: UserInterface = {
-  token: "",
+  token: '',
   user: {
-    name: "",
+    name: '',
     createdAt: new Date(Date.now()),
     admin: false,
     hasInitialData: false,
@@ -37,15 +37,15 @@ const UserProvider: React.FC<{}> = ({ children }) => {
   useEffect(() => {
     const getData = async () => {
       if (!user.token) {
-        const token = await AsyncStorage.getItem("POUPP_USER_TOKEN");
+        const token = await AsyncStorage.getItem('POUPP_USER_TOKEN');
 
         const options = {
           headers: { Authorization: `Bearer ${token}` },
         };
 
         if (token) {
-          apiRequest
-            .get("/getdata", options)
+          axiosApi
+            .get('/getdata', options)
             .then((response: AxiosResponse) => {
               if (response.status === 200) {
                 setUser(response.data);
@@ -62,7 +62,7 @@ const UserProvider: React.FC<{}> = ({ children }) => {
   }, [user]);
 
   const logout = async () => {
-    await AsyncStorage.removeItem("POUPP_USER_TOKEN");
+    await AsyncStorage.removeItem('POUPP_USER_TOKEN');
     setUser(initalState);
   };
 

@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { Animated, View } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { Animated, FlatList, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
 
@@ -12,6 +12,8 @@ import { BorderRadiusContainer } from '../../components/Container';
 
 import { colors, metrics } from '../../styles';
 import { CardsContainer, CardContainer, Title } from './styles';
+import { getYoutubers, IYoutuber } from '../../services/poupp-teach';
+import useUserData from '../../hooks/useUserData';
 
 const data = [
   {
@@ -44,6 +46,8 @@ const ITEM_SIZE = metrics.wp(80);
 
 const PouppTeachScreen: React.FC = () => {
   const { navigate } = useNavigation();
+  const { user } = useUserData();
+  const [youtubersList, setYoutubersList] = useState<IYoutuber[]>([]);
 
   const scrollX = useRef(new Animated.Value(0)).current;
 
@@ -73,6 +77,14 @@ const PouppTeachScreen: React.FC = () => {
       </CardContainer>
     );
   };
+
+  useEffect(() => {
+    const getAllYoutubers = async () => {
+      const youtubers = await getYoutubers(user.token);
+      setYoutubersList(youtubers);
+    };
+    getAllYoutubers();
+  }, [user.token]);
 
   return (
     <View style={{ backgroundColor: colors.green }}>
@@ -111,15 +123,16 @@ const PouppTeachScreen: React.FC = () => {
           >
             Alguns canais de finanças que ajudam muito!
           </H1>
-          <MiniCard
-            channelId="UCT4nDeU5pv1XIGySbSK-GgA"
-            title="Canal Primo Rico"
-            image="https://yt3.ggpht.com/ytc/AAUvwniJHOXNmMgd3jZGuuu3GvIARyE1HFEVVhRcX_BxCw=s900-c-k-c0x00ffffff-no-rj"
-          />
-          <MiniCard
-            channelId="UC8mDF5mWNGE-Kpfcvnn0bUg"
-            title="Me poupe"
-            image="https://yt3.ggpht.com/ytc/AAUvwngNoWKOTh_VCS89ORIZb9gdAQMZvyocgjXhGQx91Q=s900-c-k-c0x00ffffff-no-rj"
+          <FlatList
+            data={youtubersList}
+            keyExtractor={(item) => item.channelId}
+            renderItem={({ item }) => (
+              <MiniCard
+                channelId={item.channelId}
+                title={item.title}
+                image={item.picture}
+              />
+            )}
           />
         </PaddingContainer>
       </BorderRadiusContainer>

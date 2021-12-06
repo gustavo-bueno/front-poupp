@@ -7,29 +7,24 @@ import { Feather } from '@expo/vector-icons';
 
 import Button from '../../components/Button';
 import { BorderRadiusContainer } from '../../components/Container';
-import MoneyText from '../../components/MoneyText';
-import ProgressResume from '../../components/ProgressResume';
-import { H3, H5 } from '../../components/Text';
+import { H3, H4, H5 } from '../../components/Text';
 import { colors, metrics } from '../../styles';
 import { BillsImage } from '../BillsListSCreen/styles';
 import Ripple from 'react-native-material-ripple';
 import InfoCardItem from '../../components/InfoCardItem';
 import { ROUTES } from '../../constants/routes';
-import AddBillsModal from './AddBillsModal';
 import { IBill } from '../../models/bill';
-import { getAllBills } from '../../services/bills';
 import useUserData from '../../hooks/useUserData';
+import { getTransactionsCategories } from '../../services/transactions';
 
 const List = createAnimatableComponent(FlatList);
 
-const AddInitialBillsScreen: React.FC = () => {
+const SetExpensesScreen: React.FC = () => {
   const { navigate } = useNavigation();
   const { user } = useUserData();
-  const [openModal, setOpenModal] = useState(false);
   const [data, setData] = useState<IBill[]>([]);
 
   const renderItem = ({ item }: { item: IBill }) => {
-    const percentage = item.paidValue / item.remainingValue;
     return (
       <Ripple
         style={{ marginTop: metrics.base * 2 }}
@@ -38,18 +33,7 @@ const AddInitialBillsScreen: React.FC = () => {
         <InfoCardItem
           title={item.title}
           value={item.remainingValue}
-          bottomInfo={
-            <ProgressResume
-              progress={percentage}
-              leftContent={
-                <H5 color="text">
-                  <MoneyText fontSize="h5" value={item.paidValue} />
-                  {' arrecadado'}
-                </H5>
-              }
-              rightContent={<H5 color="text">{percentage * 100}% concluído</H5>}
-            />
-          }
+          bottomInfo={<H4>clique para editar</H4>}
           image={
             <BillsImage>
               <Feather name="percent" size={48} color={colors.white} />
@@ -61,21 +45,15 @@ const AddInitialBillsScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    const getUserBills = async () => {
-      const bills = await getAllBills(user.token);
-      setData(bills);
+    const getCategories = async () => {
+      const categories = await getTransactionsCategories(user.token);
+      setData(categories);
     };
-    if (!openModal) {
-      getUserBills();
-    }
-  }, [openModal]);
+    getCategories();
+  }, []);
 
   return (
     <>
-      <AddBillsModal
-        onRequestClose={() => setOpenModal(false)}
-        visible={openModal}
-      />
       <BorderRadiusContainer style={{ justifyContent: 'space-between' }}>
         <View>
           <H3>
@@ -95,15 +73,6 @@ const AddInitialBillsScreen: React.FC = () => {
           />
         </View>
         <View style={{ marginBottom: 44 }}>
-          <Button
-            type="outline"
-            title="Adicionar dívida"
-            onPress={() => setOpenModal(true)}
-            style={{
-              backgroundColor: colors.background,
-              marginBottom: metrics.base * 2,
-            }}
-          />
           <Button title="Pronto!" onPress={() => navigate(ROUTES.ADD_INCOME)} />
         </View>
       </BorderRadiusContainer>
@@ -111,4 +80,4 @@ const AddInitialBillsScreen: React.FC = () => {
   );
 };
 
-export default AddInitialBillsScreen;
+export default SetExpensesScreen;

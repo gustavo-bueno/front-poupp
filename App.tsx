@@ -7,6 +7,7 @@ import {
 } from '@expo-google-fonts/ubuntu';
 import AppLoading from 'expo-app-loading';
 import { UserProvider } from './src/contexts/user';
+import { RegisterUserProvider } from './src/contexts/registerUser';
 import Routes from './src/routes';
 
 const App: React.FC = () => {
@@ -22,7 +23,9 @@ const App: React.FC = () => {
 
   return (
     <UserProvider>
-      <Routes />
+      <RegisterUserProvider>
+        <Routes />
+      </RegisterUserProvider>
     </UserProvider>
   );
 };

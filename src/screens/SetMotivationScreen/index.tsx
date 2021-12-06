@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useState } from 'react';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 
 import Button from '../../components/Button';
 import { BorderRadiusContainer } from '../../components/Container';
@@ -17,24 +17,29 @@ const SetMotivationScreen: React.FC = () => {
     <BorderRadiusContainer
       style={{ justifyContent: 'space-between', position: 'relative' }}
     >
-      <H3>
-        Para continuarmos, fala pra gente aí, qual seu objetivo com o app? 😄
-      </H3>
-
-      <OptionContainer
-        onPress={() => setNavigateRoute(ROUTES.ADD_INCOME)}
-        isSelected={navigateRoute === ROUTES.ADD_INCOME}
-      >
-        <OptionText>Gerenciar e poupar dinheiro</OptionText>
-        <Image source={require('../../images/wallet.png')} />
-      </OptionContainer>
-      <OptionContainer
-        onPress={() => setNavigateRoute(ROUTES.INITIAL_BILLS)}
-        isSelected={navigateRoute === ROUTES.INITIAL_BILLS}
-      >
-        <OptionText>Pagar dívidas e começar a me organizar!</OptionText>
-        <Image source={require('../../images/credit-card.png')} />
-      </OptionContainer>
+      <View>
+        <H3>
+          Para continuarmos, fala pra gente aí, qual seu objetivo com o app? 😄
+        </H3>
+        <OptionContainer
+          onPress={() => setNavigateRoute(ROUTES.ADD_INCOME)}
+          isSelected={navigateRoute === ROUTES.ADD_INCOME}
+        >
+          <OptionText fontWeight="medium">
+            Gerenciar e poupar dinheiro
+          </OptionText>
+          <Image source={require('../../images/wallet.png')} />
+        </OptionContainer>
+        <OptionContainer
+          onPress={() => setNavigateRoute(ROUTES.INITIAL_BILLS)}
+          isSelected={navigateRoute === ROUTES.INITIAL_BILLS}
+        >
+          <OptionText fontWeight="medium">
+            Pagar dívidas e começar a me organizar!
+          </OptionText>
+          <Image source={require('../../images/credit-card.png')} />
+        </OptionContainer>
+      </View>
       <Button
         style={{
           position: 'absolute',

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { FlatList, View } from 'react-native';
 
-import { BorderRadiusContainer } from "../../components/Container";
-import InfoCardItem from "../../components/InfoCardItem";
-import { H5 } from "../../components/Text";
-import { metrics } from "../../styles";
-import { ItemImage } from "./styles";
-import { AxiosResponse } from "axios";
-import useUserData from "../../hooks/useUserData";
-import goalImg from "../../../assets/images/goal.png";
-import walletImg from "../../../assets/images/wallet.png";
-import apiRequest from "../../services/apiRequest";
-import { ITransaction } from "../../models/transaction";
-import { IAccount } from "../../models/account";
+import { BorderRadiusContainer } from '../../components/Container';
+import InfoCardItem from '../../components/InfoCardItem';
+import { H5 } from '../../components/Text';
+import { metrics } from '../../styles';
+import { ItemImage } from './styles';
+import { AxiosResponse } from 'axios';
+import useUserData from '../../hooks/useUserData';
+import goalImg from '../../../assets/images/goal.png';
+import walletImg from '../../../assets/images/wallet.png';
+import axiosApi from '../../services/apiRequest';
+import { ITransaction } from '../../models/transaction';
+import { IAccount } from '../../models/account';
 
 interface ListRenderItemInfo<ItemT> {
   item: ItemT;
@@ -22,7 +22,7 @@ interface ListRenderItemInfo<ItemT> {
   separators: {
     highlight: () => void;
     unhighlight: () => void;
-    updateProps: (select: "leading" | "trailing", newProps: any) => void;
+    updateProps: (select: 'leading' | 'trailing', newProps: any) => void;
   };
 }
 
@@ -30,7 +30,7 @@ const getLastTransactionDate = (transactions: ITransaction[]) => {
   const lastTransaction = transactions[transactions.length - 1];
 
   if (!lastTransaction) {
-    return "Ainda não possui nenhuma movimentação.";
+    return 'Ainda não possui nenhuma movimentação.';
   } else {
     const date = new Date(lastTransaction.createdAt);
 
@@ -54,7 +54,7 @@ const renderItem = ({ item }: ListRenderItemInfo<IAccount>) => (
         source={
           item.bank
             ? { uri: item.bank.picture }
-            : item.type === "wallet"
+            : item.type === 'wallet'
             ? walletImg
             : goalImg
         }
@@ -73,7 +73,7 @@ const AccountsListScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    apiRequest.get("/accounts", options).then((response: AxiosResponse) => {
+    axiosApi.get('/accounts', options).then((response: AxiosResponse) => {
       if (response.status === 200) {
         setAccounts(response.data);
       }

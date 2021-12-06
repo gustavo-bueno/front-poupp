@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   TransactionsContainer,
   MainContent,
@@ -13,18 +13,18 @@ import {
   ChangeButton,
   DayTransactions,
   DayTransactionsTitle,
-} from "./styles";
+} from './styles';
 
-import { FlatList, SafeAreaView } from "react-native";
+import { FlatList, SafeAreaView } from 'react-native';
 
-import { MaterialIcons } from "@expo/vector-icons";
-import { colors, metrics } from "../../styles";
-import MovementCard from "../../components/MovementCard";
-import useUserData from "../../hooks/useUserData";
-import { AxiosResponse } from "axios";
-import { ITransaction } from "../../models/transaction";
-import LimitedString from "../../functions/LimitedString";
-import apiRequest from "../../services/apiRequest";
+import { MaterialIcons } from '@expo/vector-icons';
+import { colors, metrics } from '../../styles';
+import MovementCard from '../../components/MovementCard';
+import useUserData from '../../hooks/useUserData';
+import { AxiosResponse } from 'axios';
+import { ITransaction } from '../../models/transaction';
+import LimitedString from '../../functions/LimitedString';
+import axiosApi from '../../services/apiRequest';
 
 interface DayInterface {
   date: Date;
@@ -48,8 +48,8 @@ const TransictionsScreen: React.FC = () => {
       params: { year: activeYear, month: activeMonth, limit: 10000 },
     };
 
-    apiRequest
-      .get("/transactions/month", options)
+    axiosApi
+      .get('/transactions/month', options)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setTransactions(response.data.transactions);
@@ -73,29 +73,29 @@ const TransictionsScreen: React.FC = () => {
   const getMonthName = (month: number) => {
     switch (month) {
       case 0:
-        return "Janeiro";
+        return 'Janeiro';
       case 1:
-        return "Fevereiro";
+        return 'Fevereiro';
       case 2:
-        return "Março";
+        return 'Março';
       case 3:
-        return "Abril";
+        return 'Abril';
       case 4:
-        return "Maio";
+        return 'Maio';
       case 5:
-        return "Junho";
+        return 'Junho';
       case 6:
-        return "Julho";
+        return 'Julho';
       case 7:
-        return "Agosto";
+        return 'Agosto';
       case 8:
-        return "Setembro";
+        return 'Setembro';
       case 9:
-        return "Outubro";
+        return 'Outubro';
       case 10:
-        return "Novembro";
+        return 'Novembro';
       case 11:
-        return "Dezembro";
+        return 'Dezembro';
     }
   };
 

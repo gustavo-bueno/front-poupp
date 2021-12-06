@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import { View } from 'react-native';
 import { Form } from '@unform/mobile';
 import * as Yup from 'yup';
@@ -12,9 +12,11 @@ import { BorderRadiusContainer } from '../../components/Container';
 import { metrics } from '../../styles';
 import { ROUTES } from '../../constants/routes';
 import { useNavigation } from '@react-navigation/core';
+import { RegisterUserContext } from '../../contexts/registerUser';
 
 const SetIncomeScreen: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const { setIncomeValue } = useContext(RegisterUserContext);
   const { navigate } = useNavigation();
 
   const handleSubmit = async (data: { income: number }) => {
@@ -26,7 +28,7 @@ const SetIncomeScreen: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
-      console.log('chegou aqui');
+      setIncomeValue(data.income);
       navigate(ROUTES.SET_MOTIVATION);
     } catch (error) {
       const validationErrors: Record<string, any> = {};

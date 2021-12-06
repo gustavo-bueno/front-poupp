@@ -1,18 +1,18 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
-import { FlatList as List, View } from "react-native";
-import * as Animatable from "react-native-animatable";
-import Ripple from "react-native-material-ripple";
-import Button from "../../components/Button";
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { FlatList as List, View } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import Ripple from 'react-native-material-ripple';
+import Button from '../../components/Button';
 
-import { BorderRadiusContainer } from "../../components/Container";
-import CreditCard from "../../components/CreditCard";
-import { ROUTES } from "../../constants/routes";
-import { colors, metrics } from "../../styles";
-import { ICard } from "../../models/card";
-import useUserData from "../../hooks/useUserData";
-import apiRequest from "../../services/apiRequest";
-import { AxiosResponse } from "axios";
+import { BorderRadiusContainer } from '../../components/Container';
+import CreditCard from '../../components/CreditCard';
+import { ROUTES } from '../../constants/routes';
+import { colors, metrics } from '../../styles';
+import { ICard } from '../../models/card';
+import useUserData from '../../hooks/useUserData';
+import axiosApi from '../../services/apiRequest';
+import { AxiosResponse } from 'axios';
 
 const FlatList = Animatable.createAnimatableComponent(List);
 
@@ -27,8 +27,8 @@ const CardListScreen: React.FC = () => {
       headers: { Authorization: `Bearer ${user.token}` },
     };
 
-    apiRequest
-      .get("/cards", options)
+    axiosApi
+      .get('/cards', options)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setCards(response.data);
@@ -58,7 +58,7 @@ const CardListScreen: React.FC = () => {
 
   return (
     <View
-      style={{ backgroundColor: colors.green, flex: 1, position: "relative" }}
+      style={{ backgroundColor: colors.green, flex: 1, position: 'relative' }}
     >
       <BorderRadiusContainer style={{ paddingTop: metrics.base * 4 }}>
         <FlatList

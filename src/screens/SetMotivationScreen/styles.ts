@@ -7,12 +7,18 @@ export const OptionContainer = styled(Ripple).attrs({
   rippleBorderRadius: metrics.borderRadius,
 })<{ isSelected: boolean }>`
   width: 100%;
-  height: ${metrics.hp(15)}px;
+  height: ${metrics.hp(25)}px;
+
+  border-radius: ${metrics.borderRadius}px;
 
   position: relative;
 
   background-color: ${({ isSelected }) =>
-    isSelected ? colors.gray : 'EBE1E1'};
+    isSelected ? colors.gray : '#EBE1E1'};
+
+  margin-top: ${metrics.base * 3}px;
+
+  align-items: flex-end;
 `;
 
 export const OptionText = styled(H2)`

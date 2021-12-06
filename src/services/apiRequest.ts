@@ -1,9 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 
-const apiRequest = axios.create()
+const axiosApi = axios.create({
+  baseURL: 'https://4d07-2804-4ec-108e-9000-7cad-e92c-6659-860d.ngrok.io',
+});
 
-apiRequest.defaults.baseURL = "http://192.168.1.3:3333"
-
-apiRequest.defaults.timeout = 2000
-
-export default apiRequest
+export default axiosApi;

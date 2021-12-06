@@ -4,6 +4,7 @@ import { KeyboardAvoidingView } from 'react-native';
 import Animated from 'react-native-reanimated';
 import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { metrics } from '../../styles';
 import { Container as FormContainer } from '../../components/Container';
@@ -16,6 +17,7 @@ import { Wave } from '../../components/Wave';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../constants/routes';
 import useAnimation from '../../hooks/useAnimation';
+import { signUp } from '../../services/user';
 
 const SignUpScreen: React.FC = () => {
   const { setUser } = useContext(UserContext);
@@ -27,7 +29,9 @@ const SignUpScreen: React.FC = () => {
     try {
       const schema = Yup.object().shape({
         name: Yup.string().required('O campo e-mail é obrigatório.'),
-        email: Yup.string().email().required('O campo e-mail é obrigatório.'),
+        email: Yup.string()
+          .email('Digite um e-mail válido.')
+          .required('O campo e-mail é obrigatório.'),
         password: Yup.string()
           .min(8, 'A senha deve ter 8 caracteres')
           .required('O campo senha é obrigatório.'),
@@ -35,8 +39,11 @@ const SignUpScreen: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
-      navigate(ROUTES.ADD_INCOME);
+      const userData = await signUp(data);
+      await AsyncStorage.setItem('POUPP_USER_TOKEN', userData.token);
+      setUser(userData);
     } catch (error) {
+      console.log(error);
       const validationErrors: Record<string, any> = {};
       if (error instanceof Yup.ValidationError) {
         error.inner.forEach((error) => {
@@ -72,7 +79,7 @@ const SignUpScreen: React.FC = () => {
                 <Form ref={formRef} onSubmit={handleSubmit}>
                   <Input name="name" placeholder="Nome" />
                   <Input name="email" placeholder="Email" />
-                  <Input name="password" placeholder="Senha" />
+                  <Input name="password" secureTextEntry placeholder="Senha" />
                   <Button
                     style={{ marginTop: metrics.base * 4 }}
                     title="Criar conta"

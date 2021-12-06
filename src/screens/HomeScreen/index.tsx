@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { colors, metrics } from "../../styles";
+import React, { useState, useEffect } from 'react';
+import { colors, metrics } from '../../styles';
 import {
   HomeContainer,
   HeaderContent,
@@ -26,29 +26,29 @@ import {
   Label,
   Marker,
   LabelText,
-} from "./styles";
+} from './styles';
 
-import NumberToMoney from "../../functions/NumberToMoney";
+import NumberToMoney from '../../functions/NumberToMoney';
 
-import { PieChart } from "react-native-svg-charts";
-import "react-native-svg";
+import { PieChart } from 'react-native-svg-charts';
+import 'react-native-svg';
 
-import { MaterialIcons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
+import { MaterialIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
-import MovementCard from "../../components/MovementCard";
-import OptionCard from "../../components/OptionCard";
-import { SafeAreaView, View } from "react-native";
-import { ROUTES } from "../../constants/routes";
-import { useNavigation } from "@react-navigation/native";
-import { H0, H1 } from "../../components/Text";
-import useUserData from "../../hooks/useUserData";
-import { ITransaction } from "../../models/transaction";
-import { AxiosResponse } from "axios";
-import LimitedString from "../../functions/LimitedString";
-import apiRequest from "../../services/apiRequest";
+import MovementCard from '../../components/MovementCard';
+import OptionCard from '../../components/OptionCard';
+import { SafeAreaView, View } from 'react-native';
+import { ROUTES } from '../../constants/routes';
+import { useNavigation } from '@react-navigation/native';
+import { H0, H1 } from '../../components/Text';
+import useUserData from '../../hooks/useUserData';
+import { ITransaction } from '../../models/transaction';
+import { AxiosResponse } from 'axios';
+import LimitedString from '../../functions/LimitedString';
+import axiosApi from '../../services/apiRequest';
 
 interface ChartDataInterface {
   name: string;
@@ -79,8 +79,8 @@ const HomeScreen: React.FC = () => {
       },
     };
 
-    apiRequest
-      .get("/transactions/month", options)
+    axiosApi
+      .get('/transactions/month', options)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setMonthTransactions(response.data.transactions);
@@ -97,7 +97,7 @@ const HomeScreen: React.FC = () => {
               transactionCategories.find(
                 (category) => transaction.category?.name === category
               ) === undefined &&
-              transaction.type === "outcome"
+              transaction.type === 'outcome'
             ) {
               transactionCategories.push(transaction.category?.name);
             }
@@ -121,7 +121,7 @@ const HomeScreen: React.FC = () => {
               value: categoryTotal,
               svg: {
                 fill:
-                  "#" +
+                  '#' +
                   (Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6),
               },
               arc: { cornerRadius: 4 },
@@ -140,7 +140,7 @@ const HomeScreen: React.FC = () => {
 
     monthTransactions.forEach((transaction) => {
       if (!transaction.isCard) {
-        if (transaction.type === "outcome") {
+        if (transaction.type === 'outcome') {
           total += transaction.value;
         }
       }
@@ -154,7 +154,7 @@ const HomeScreen: React.FC = () => {
 
     monthTransactions.forEach((transaction) => {
       if (!transaction.isCard) {
-        if (transaction.type === "income") {
+        if (transaction.type === 'income') {
           total += transaction.value;
         }
       }
@@ -169,9 +169,9 @@ const HomeScreen: React.FC = () => {
 
   return (
     <SafeAreaView
-      style={{ backgroundColor: colors.background, height: "100%" }}
+      style={{ backgroundColor: colors.background, height: '100%' }}
     >
-      <View style={{ backgroundColor: "transparent" }}>
+      <View style={{ backgroundColor: 'transparent' }}>
         <HomeContainer showsVerticalScrollIndicator={false}>
           <HeaderContent>
             <View>
@@ -231,7 +231,7 @@ const HomeScreen: React.FC = () => {
                       height: metrics.base * 50,
                       width: metrics.base * 50,
                     }}
-                    outerRadius={"70%"}
+                    outerRadius={'70%'}
                     innerRadius={30}
                     data={chartData}
                   />

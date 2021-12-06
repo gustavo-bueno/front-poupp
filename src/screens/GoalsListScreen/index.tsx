@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { View, FlatList } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import Ripple from "react-native-material-ripple";
-import * as Animatable from "react-native-animatable";
+import React, { useEffect, useState } from 'react';
+import { View, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Ripple from 'react-native-material-ripple';
+import * as Animatable from 'react-native-animatable';
 
-import { IGoal } from "../../models/goal";
-import { ROUTES } from "../../constants/routes";
-import { BorderRadiusContainer } from "../../components/Container";
-import Button from "../../components/Button";
-import NumberToMoney from "../../functions/NumberToMoney";
-import { H5 } from "../../components/Text";
+import { IGoal } from '../../models/goal';
+import { ROUTES } from '../../constants/routes';
+import { BorderRadiusContainer } from '../../components/Container';
+import Button from '../../components/Button';
+import NumberToMoney from '../../functions/NumberToMoney';
+import { H5 } from '../../components/Text';
 
-import { metrics } from "../../styles";
-import { Container, styles } from "./styles";
-import goals from "../../icons/goals";
-import InfoCardItem from "../../components/InfoCardItem";
-import ProgressResume from "../../components/ProgressResume";
-import useUserData from "../../hooks/useUserData";
-import { AxiosResponse } from "axios";
-import apiRequest from "../../services/apiRequest";
+import { metrics } from '../../styles';
+import { Container, styles } from './styles';
+import goals from '../../icons/goals';
+import InfoCardItem from '../../components/InfoCardItem';
+import ProgressResume from '../../components/ProgressResume';
+import useUserData from '../../hooks/useUserData';
+import { AxiosResponse } from 'axios';
+import axiosApi from '../../services/apiRequest';
 
 const List = Animatable.createAnimatableComponent(FlatList);
 
@@ -34,8 +34,8 @@ const GoalsListScreen = () => {
       headers: { Authorization: `Bearer ${user.token}` },
     };
 
-    apiRequest
-      .get("/goals", options)
+    axiosApi
+      .get('/goals', options)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setGoalsList(response.data.goals);
@@ -54,7 +54,9 @@ const GoalsListScreen = () => {
     return (
       <Ripple
         rippleContainerBorderRadius={metrics.borderRadius}
-        onPress={() => navigate(ROUTES.GOAL_DETAIL, { goal: item, goalAccountValue })}
+        onPress={() =>
+          navigate(ROUTES.GOAL_DETAIL, { goal: item, goalAccountValue })
+        }
       >
         <InfoCardItem
           title={item.title}
@@ -70,7 +72,7 @@ const GoalsListScreen = () => {
               rightContent={
                 <H5 color="text">
                   {percentage * 100 === 100
-                    ? "Pode ser concluída"
+                    ? 'Pode ser concluída'
                     : `${Math.ceil(percentage * 100)}% completo`}
                 </H5>
               }
@@ -83,7 +85,7 @@ const GoalsListScreen = () => {
   };
 
   return (
-    <Container style={{ position: "relative" }}>
+    <Container style={{ position: 'relative' }}>
       <BorderRadiusContainer
         style={{ paddingTop: metrics.base * 7, paddingHorizontal: 16 }}
       >
