@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
 import CategoriesList from '../../../components/CategoriesList';
 import CollapsibleList from '../../../components/CollapsibleList';
 import { CenteredContainer } from '../../../components/Container';
 import { H1 } from '../../../components/Text';
-import { metrics } from '../../../styles';
 
 import {
   FrequencyButton,
@@ -29,7 +27,7 @@ const Income: React.FC = () => {
     paymentMethodData[0].name
   );
   return (
-    <TransactionTypeContainer>
+    <TransactionTypeContainer showsVerticalScrollIndicator={false}>
       <SecondaryTitle>Selecione uma categoria:</SecondaryTitle>
       <CategoriesList />
       <SecondaryTitle>Descrição:</SecondaryTitle>

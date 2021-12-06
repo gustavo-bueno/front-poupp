@@ -7,7 +7,7 @@ import { AntDesign, FontAwesome, Feather } from '@expo/vector-icons';
 
 import { colors, metrics } from '../../styles';
 import HomeScreen from '../../screens/HomeScreen';
-import TransictionsScreen from '../../screens/TransictionsScrenn';
+import TransictionsScreen from '../../screens/TransictionsScreen';
 import UserScreen from '../../screens/UserScreen';
 import AddMovimentationScreen from '../../screens/AddMovimentationScreen';
 import { ROUTES } from '../../constants/routes';

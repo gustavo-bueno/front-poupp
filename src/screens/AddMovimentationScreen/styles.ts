@@ -61,7 +61,7 @@ export const Container = styled.SafeAreaView`
   width: 100%;
   position: relative;
 
-  background: ${colors.background};
+  background: ${colors.green};
 `;
 
 export const FrequencyButton = styled(Ripple).attrs({
@@ -94,6 +94,6 @@ export const FrequencyContainer = styled.View`
   background-color: ${colors.white};
 `;
 
-export const TransactionTypeContainer = styled.View`
+export const TransactionTypeContainer = styled.ScrollView`
   background-color: ${colors.background};
 `;

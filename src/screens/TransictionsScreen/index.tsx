@@ -24,6 +24,7 @@ import useUserData from '../../hooks/useUserData';
 import { AxiosResponse } from 'axios';
 import { ITransaction } from '../../models/transaction';
 import LimitedString from '../../functions/LimitedString';
+import { Loading } from '../../components/Loading';
 import axiosApi from '../../services/apiRequest';
 
 interface DayInterface {
@@ -41,8 +42,10 @@ const TransictionsScreen: React.FC = () => {
     new Date(Date.now()).getMonth()
   );
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setLoading(true);
     const options = {
       headers: { Authorization: `Bearer ${user.token}` },
       params: { year: activeYear, month: activeMonth, limit: 10000 },
@@ -53,6 +56,7 @@ const TransictionsScreen: React.FC = () => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setTransactions(response.data.transactions);
+          setLoading(false);
         }
       });
   }, [activeMonth, activeYear]);
@@ -154,24 +158,28 @@ const TransictionsScreen: React.FC = () => {
           <Title>Transações</Title>
         </HeaderContent>
         <MainContent>
-          {splitDays().map((day, index) => (
-            <DayTransactions key={index}>
-              <DayTransactionsTitle>{`${new Date(
-                day.date
-              ).getDate()} de ${getMonthName(
-                new Date(day.date).getMonth()
-              )}`}</DayTransactionsTitle>
-              {day.transactions.map((transaction, index) => (
-                <MovementCard
-                  key={index}
-                  title={LimitedString(transaction.title, 22)}
-                  value={transaction.value}
-                  type={transaction.type}
-                  isCard={transaction.isCard}
-                />
-              ))}
-            </DayTransactions>
-          ))}
+          {!loading ? (
+            splitDays().map((day, index) => (
+              <DayTransactions key={index}>
+                <DayTransactionsTitle>{`${new Date(
+                  day.date
+                ).getDate()} de ${getMonthName(
+                  new Date(day.date).getMonth()
+                )}`}</DayTransactionsTitle>
+                {day.transactions.map((transaction, index) => (
+                  <MovementCard
+                    key={index}
+                    title={LimitedString(transaction.title, 22)}
+                    value={transaction.value}
+                    type={transaction.type}
+                    isCard={transaction.isCard}
+                  />
+                ))}
+              </DayTransactions>
+            ))
+          ) : (
+            <Loading />
+          )}
         </MainContent>
         <Filter>
           <FlatList

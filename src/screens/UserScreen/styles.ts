@@ -1,16 +1,16 @@
-import Ripple from 'react-native-material-ripple';
-import styled from 'styled-components/native';
-import { colors, fontFamily, metrics } from '../../styles';
+import Ripple from "react-native-material-ripple";
+import styled from "styled-components/native";
+import { colors, fontFamily, metrics } from "../../styles";
 
 interface Props {
   theme: {
-    type: 'top' | 'bottom' | 'normal';
+    type: "top" | "bottom" | "normal";
   };
 }
 
 export const UserContainer = styled.SafeAreaView`
   width: 100%;
-  flex-grow: 1;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -46,12 +46,12 @@ export const Username = styled.Text`
 
 export const MainContent = styled.View`
   display: flex;
+  flex: 1;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   background-color: ${colors.background};
-  height: ${metrics.hp(67)}px;
-  width: 100%;
   border-top-right-radius: ${metrics.base * 12.5}px;
   border-top-left-radius: ${metrics.base * 12.5}px;
 `;
@@ -77,7 +77,7 @@ export const Button = styled(Ripple)`
         border-top-color: ${colors.gray}; 
         border-bottom-width: 0px;
         height: ${metrics.base * 15}px;`
-      : ''};
+      : ""};
   display: flex;
   justify-content: center;
 `;

@@ -43,11 +43,12 @@ import OptionCard from '../../components/OptionCard';
 import { SafeAreaView, View } from 'react-native';
 import { ROUTES } from '../../constants/routes';
 import { useNavigation } from '@react-navigation/native';
-import { H0, H1 } from '../../components/Text';
+import { H1 } from '../../components/Text';
 import useUserData from '../../hooks/useUserData';
 import { ITransaction } from '../../models/transaction';
 import { AxiosResponse } from 'axios';
 import LimitedString from '../../functions/LimitedString';
+import apiRequest from '../../services/apiRequest';
 import axiosApi from '../../services/apiRequest';
 
 interface ChartDataInterface {
