@@ -1,29 +1,13 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
-
-import { BorderRadiusContainer } from '../../components/Container';
-import InfoCardItem from '../../components/InfoCardItem';
-import { H5 } from '../../components/Text';
-import { metrics } from '../../styles';
-import { ItemImage } from './styles';
-import { AxiosResponse } from 'axios';
-import useUserData from '../../hooks/useUserData';
-import goalImg from '../../../assets/images/goal.png';
-import walletImg from '../../../assets/images/wallet.png';
-import axiosApi from '../../services/apiRequest';
-import { ITransaction } from '../../models/transaction';
-import { IAccount } from '../../models/account';
-=======
 import React, { useEffect, useState } from "react";
 import { FlatList as List, View } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
 import { BorderRadiusContainer } from "../../components/Container";
 import InfoCardItem from "../../components/InfoCardItem";
 import { H5 } from "../../components/Text";
 import * as Animatable from "react-native-animatable";
 import { metrics } from "../../styles";
-import { ItemImage } from "./styles";
+import { Container, ItemImage } from "./styles";
 import { AxiosResponse } from "axios";
 import useUserData from "../../hooks/useUserData";
 import goalImg from "../../../assets/images/goal.png";
@@ -32,7 +16,9 @@ import apiRequest from "../../services/apiRequest";
 import { ITransaction } from "../../models/transaction";
 import { IAccount } from "../../models/account";
 import { Loading } from "../../components/Loading";
->>>>>>> ddf20aaa6eef399de29e235f60f8b1ded6d0675a
+import Button from "../../components/Button";
+import { ROUTES } from "../../constants/routes";
+import Ripple from "react-native-material-ripple";
 
 interface ListRenderItemInfo<ItemT> {
   item: ItemT;
@@ -42,7 +28,7 @@ interface ListRenderItemInfo<ItemT> {
   separators: {
     highlight: () => void;
     unhighlight: () => void;
-    updateProps: (select: 'leading' | 'trailing', newProps: any) => void;
+    updateProps: (select: "leading" | "trailing", newProps: any) => void;
   };
 }
 
@@ -52,7 +38,7 @@ const getLastTransactionDate = (transactions: ITransaction[]) => {
   const lastTransaction = transactions[transactions.length - 1];
 
   if (!lastTransaction) {
-    return 'Ainda não possui nenhuma movimentação.';
+    return "Ainda não possui nenhuma movimentação.";
   } else {
     const date = new Date(lastTransaction.createdAt);
 
@@ -66,27 +52,10 @@ const getLastTransactionDate = (transactions: ITransaction[]) => {
   }
 };
 
-const renderItem = ({ item }: ListRenderItemInfo<IAccount>) => (
-  <InfoCardItem
-    title={item.name}
-    value={item.value}
-    bottomInfo={<H5>{getLastTransactionDate(item.transactions)}</H5>}
-    image={
-      <ItemImage
-        source={
-          item.bank
-            ? { uri: item.bank.picture }
-            : item.type === 'wallet'
-            ? walletImg
-            : goalImg
-        }
-      />
-    }
-  />
-);
-
 const AccountsListScreen: React.FC = () => {
-  const { user } = useUserData();
+  const { user, refresh } = useUserData();
+
+  const { navigate } = useNavigation();
 
   const [accounts, setAccounts] = useState<IAccount[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -96,38 +65,63 @@ const AccountsListScreen: React.FC = () => {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-    axiosApi.get('/accounts', options).then((response: AxiosResponse) => {
-=======
     setLoading(true);
     apiRequest.get("/accounts", options).then((response: AxiosResponse) => {
->>>>>>> ddf20aaa6eef399de29e235f60f8b1ded6d0675a
       if (response.status === 200) {
         setAccounts(response.data);
         setLoading(false);
       }
     });
-  }, []);
+  }, [refresh]);
+
+  const renderItem = ({ item }: ListRenderItemInfo<IAccount>) => (
+    <Ripple
+          rippleContainerBorderRadius={metrics.borderRadius}
+          onPress={() =>
+            navigate(ROUTES.ACCOUNT_DETAIL, { account: item })
+          }
+        >
+    <InfoCardItem
+      title={item.name}
+      value={item.value}
+      bottomInfo={<H5>{getLastTransactionDate(item.transactions)}</H5>}
+      image={
+        <ItemImage
+          source={
+            item.bank
+              ? { uri: item.bank.picture }
+              : item.type === "wallet"
+              ? walletImg
+              : goalImg
+          }
+        />
+      }
+    />
+    </Ripple>
+  );
 
   return (
-    <BorderRadiusContainer style={{ paddingTop: metrics.base * 4 }}>
-      {loading ? (
-        <Loading />
-      ) : (
-        <FlatList
-          useNativeDriver
-          animation="bounceInDown"
-          contentInsetAdjustmentBehavior="automatic"
-          duration={1000}
-          data={accounts}
-          renderItem={renderItem as any}
-          ItemSeparatorComponent={() => (
-            <View style={{ marginBottom: metrics.base * 4 }} />
-          )}
-          keyExtractor={(_, idx) => idx.toString()}
-        />
-      )}
-    </BorderRadiusContainer>
+    <Container style={{ position: "relative" }}>
+      <BorderRadiusContainer style={{ paddingTop: metrics.base * 4 }}>
+        {loading ? (
+          <Loading />
+        ) : (
+          <FlatList
+            useNativeDriver
+            animation="bounceInDown"
+            contentInsetAdjustmentBehavior="automatic"
+            duration={1000}
+            data={accounts}
+            renderItem={renderItem as any}
+            ItemSeparatorComponent={() => (
+              <View style={{ marginBottom: metrics.base * 4 }} />
+            )}
+            keyExtractor={(_, idx) => idx.toString()}
+          />
+        )}
+      </BorderRadiusContainer>
+      <Button type="rounded" onPress={() => navigate(ROUTES.ADD_ACCOUNT)} />
+    </Container>
   );
 };
 

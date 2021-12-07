@@ -1,31 +1,45 @@
 import React from "react";
 import {
-  CardContainer,
   DayTransactions,
   DayTransactionsTitle,
   ScrollViewContainer,
-  MainContent
+  MainContent,
+  AccountsInfos,
+  ItemImage,
+  AccountName,
+  AccountValue,
+  Description,
+  ImageContainer,
+  Informations,
+  HorizontalContainer,
+  SeeMoreButton,
+  SeeMoreText,
+  DescriptionContainer,
+  ImageContent,
 } from "./styles";
 
 import MovementCard from "../../components/MovementCard";
-import CreditCard from "../../components/CreditCard";
-import { useRoute } from "@react-navigation/native";
-import useAnimation from "../../hooks/useAnimation";
-import { ICard } from "../../models/card";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import { ITransaction } from "../../models/transaction";
 import LimitedString from "../../functions/LimitedString";
 import { SafeAreaView } from "react-native";
+import { IAccount } from "../../models/account";
+import goalImg from "../../../assets/images/goal.png";
+import walletImg from "../../../assets/images/wallet.png";
+import { ROUTES } from "../../constants/routes";
+import NumberToMoney from "../../functions/NumberToMoney";
 
 interface DayInterface {
   date: Date;
   transactions: ITransaction[];
 }
 
-const CardDetailScreen = () => {
-  const { card } = useRoute()?.params as {
-    card: ICard;
+const AccountDetailScreen = () => {
+  const { account } = useRoute()?.params as {
+    account: IAccount;
   };
-  const { opacityStyle } = useAnimation();
+
+  const { navigate } = useNavigation();
 
   const getMonthName = (month: number) => {
     switch (month) {
@@ -59,7 +73,7 @@ const CardDetailScreen = () => {
   const splitDays = () => {
     const days: DayInterface[] = [];
 
-    const reverseTransactions: ITransaction[] = card.transactions.reverse()
+    const reverseTransactions: ITransaction[] = account.transactions.reverse();
 
     if (reverseTransactions.length > 0) {
       const dates: Date[] = [];
@@ -109,15 +123,45 @@ const CardDetailScreen = () => {
   return (
     <SafeAreaView>
       <ScrollViewContainer showsVerticalScrollIndicator={false}>
-        <CardContainer style={opacityStyle}>
-          <CreditCard
-            username={card.username}
-            bank={card.bank.name}
-            day={card.closeDay}
-            balance={card.value}
-            limit={card.limit}
-          />
-        </CardContainer>
+        <AccountsInfos>
+          <HorizontalContainer>
+            <Informations>
+              <AccountName>{account.name}</AccountName>
+              <AccountValue>R$ {NumberToMoney(account.value)}</AccountValue>
+            </Informations>
+            <ImageContainer>
+              <ImageContent>
+                <ItemImage
+                  source={
+                    account.bank
+                      ? { uri: account.bank.picture }
+                      : account.type === "wallet"
+                      ? walletImg
+                      : goalImg
+                  }
+                />
+              </ImageContent>
+            </ImageContainer>
+          </HorizontalContainer>
+
+          {account.type === "normal" && account.card && (
+            <DescriptionContainer>
+              <Description>Essa conta já possui um cartão.</Description>
+              <SeeMoreButton onPress={() => navigate(ROUTES.CARD_LIST)}>
+                <SeeMoreText>Ver cartões +</SeeMoreText>
+              </SeeMoreButton>
+            </DescriptionContainer>
+          )}
+
+          {account.type === "normal" && !account.card && (
+            <DescriptionContainer>
+              <Description>Essa conta ainda não possui um cartão..</Description>
+              <SeeMoreButton onPress={() => navigate(ROUTES.ADD_CARD)}>
+                <SeeMoreText>Criar cartão +</SeeMoreText>
+              </SeeMoreButton>
+            </DescriptionContainer>
+          )}
+        </AccountsInfos>
         <MainContent>
           {splitDays().map((day, index) => (
             <DayTransactions key={index}>
@@ -143,4 +187,4 @@ const CardDetailScreen = () => {
   );
 };
 
-export default CardDetailScreen;
+export default AccountDetailScreen;

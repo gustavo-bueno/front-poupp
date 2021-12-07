@@ -1,31 +1,65 @@
-import React, { useRef } from 'react';
-import { Modal, ModalProps, View } from 'react-native';
-import { Form } from '@unform/mobile';
-import Ripple from 'react-native-material-ripple';
-import { FormHandles } from '@unform/core';
+import React, { useRef } from "react";
+import { Modal, ModalProps, View } from "react-native";
+import { Form } from "@unform/mobile";
+import Ripple from "react-native-material-ripple";
+import { FormHandles } from "@unform/core";
 
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 
-import { H1, H2, H3 } from '../../../components/Text';
+import { H1, H2, H3 } from "../../../components/Text";
 import {
   ModalContainer,
   ModalContent,
   TitleContainer,
-} from '../AddExtraIncomeGoalModal/styles';
-import Input from '../../../components/Input';
-import Button from '../../../components/Button';
-import { metrics } from '../../../styles';
-import MoneyText from '../../../components/MoneyText';
-import { ProgressBar } from '../../../components/ProgressBar';
+} from "../AddExtraIncomeGoalModal/styles";
+import Input from "../../../components/Input";
+import Button from "../../../components/Button";
+import { metrics } from "../../../styles";
+import { ProgressBar } from "../../../components/ProgressBar";
+import { IExtraIncomeGoal } from "../../../models/extraIncomeGoal";
+import NumberToMoney from "../../../functions/NumberToMoney";
+import useUserData from "../../../hooks/useUserData";
+import apiRequest from "../../../services/apiRequest";
+import { AxiosResponse } from "axios";
 
-const AddValueGoalModal: React.FC<ModalProps> = ({
+interface AddValueGoalModalProps extends ModalProps {
+  extraIncome: IExtraIncomeGoal;
+}
+
+const AddValueGoalModal: React.FC<AddValueGoalModalProps> = ({
   onRequestClose,
   visible,
+  extraIncome,
   ...rest
 }) => {
   const formRef = useRef<FormHandles>(null);
+  const { user, refreshData } = useUserData();
 
-  const handleSubmit = async (data: any) => {};
+  const handleSubmit = async ({ value }: { value: number }) => {
+    if (value !== 0 || value !== undefined) {
+      const options = {
+        headers: { authorization: `Bearer ${user.token}` },
+        params: { extraIncomeGoalId: extraIncome._id },
+      };
+
+      const data = {
+        value,
+      };
+
+      apiRequest
+        .put("/extraincomegoals/income", data, options)
+        .then((response: AxiosResponse) => {
+          if (response.status === 200) {
+            refreshData();
+            if(onRequestClose) {
+              onRequestClose()
+            }
+          }
+        });
+    }
+  };
+
+  const percentage = extraIncome.reachedValue / extraIncome.totalValue;
 
   return (
     <Modal animationType="fade" transparent visible={visible} {...rest}>
@@ -40,26 +74,25 @@ const AddValueGoalModal: React.FC<ModalProps> = ({
           <H2 style={{ marginVertical: metrics.base }} fontWeight="medium">
             Informações sobre a meta
           </H2>
-          <MoneyText fontSize="h1" value={200000} />
-          <ProgressBar progress={0.7} />
+          <H1>R$ {NumberToMoney(extraIncome.totalValue)}</H1>
+          <ProgressBar progress={percentage} />
           <View
             style={{
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexDirection: 'row',
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexDirection: "row",
               marginBottom: metrics.base * 2,
             }}
           >
             <H3 color="text">
-              <MoneyText fontSize="h2" value={2700} />
-              {' arrecadado'}
+              <H2>R$ {NumberToMoney(extraIncome.reachedValue)}</H2>
+              {" arrecadado"}
             </H3>
-            <H2 color="text">{20}% concluído</H2>
+            <H2 color="text">{Math.ceil(percentage * 100)}% concluído</H2>
           </View>
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <Input placeholder="Título da meta" name="title" />
             <H3>Novo valor</H3>
-            <Input mask name="totalValue" type="money" />
+            <Input mask name="value" type="money" />
             <Button
               style={{ marginTop: metrics.base * 4 }}
               title="Adicionar"

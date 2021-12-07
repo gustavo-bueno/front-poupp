@@ -1,24 +1,26 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import CardDetailScreen from '../screens/CardDetailScreen';
-import NavBar from '../components/NavBar';
-import AddMovimentationScreen from '../screens/AddMovimentationScreen';
-import PouppTeachScreen from '../screens/PouppTeachScreen';
-import ExtraIncomeScreen from '../screens/ExtraIncomeScreen';
-import PostDetailScreen from '../screens/PostDetailScreen';
-import { ROUTES } from '../constants/routes';
+import CardDetailScreen from "../screens/CardDetailScreen";
+import NavBar from "../components/NavBar";
+import AddMovimentationScreen from "../screens/AddMovimentationScreen";
+import PouppTeachScreen from "../screens/PouppTeachScreen";
+import ExtraIncomeScreen from "../screens/ExtraIncomeScreen";
+import PostDetailScreen from "../screens/PostDetailScreen";
+import { ROUTES } from "../constants/routes";
 
-import Header from '../components/Header';
-import { colors } from '../styles';
-import GoalsListScreen from '../screens/GoalsListScreen';
-import GoalDetailScreen from '../screens/GoalDetailScreen';
-import CardListScreen from '../screens/CardListScreen';
-import AddCreditCardScreen from '../screens/AddCreditCardScreen';
-import AddGoalScreen from '../screens/AddGoalScreen';
-import SetIncomeScreen from '../screens/SetIncomeScreen';
-import AccountsListScreen from '../screens/AccountsListScreen';
+import Header from "../components/Header";
+import { colors } from "../styles";
+import GoalsListScreen from "../screens/GoalsListScreen";
+import GoalDetailScreen from "../screens/GoalDetailScreen";
+import CardListScreen from "../screens/CardListScreen";
+import AddCreditCardScreen from "../screens/AddCreditCardScreen";
+import AddGoalScreen from "../screens/AddGoalScreen";
+import SetIncomeScreen from "../screens/SetIncomeScreen";
+import AccountsListScreen from "../screens/AccountsListScreen";
+import AddAccountScreen from "../screens/AddAccountScreen";
+import AccountDetailScreen from "../screens/AccountDetailScreen";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -36,7 +38,26 @@ export default function Home() {
           name={ROUTES.ADD_TRANSACTION}
           component={AddMovimentationScreen}
         />
-        <Screen name={ROUTES.CARD_DETAIL} component={CardDetailScreen} />
+        <Screen 
+          options={{
+            headerShown: true,
+            header: (props) => (
+              <Header title="Detalhes do" subtitle="cartão" {...props} />
+            ),
+          }}
+          name={ROUTES.CARD_DETAIL} 
+          component={CardDetailScreen} 
+        />
+        <Screen 
+          options={{
+            headerShown: true,
+            header: (props) => (
+              <Header title="Detalhes da" subtitle="conta" {...props} />
+            ),
+          }}
+          name={ROUTES.ACCOUNT_DETAIL} 
+          component={AccountDetailScreen} 
+        />
         <Screen
           options={{
             headerShown: true,
@@ -126,6 +147,16 @@ export default function Home() {
           }}
           name={ROUTES.ACCOUNT_LIST}
           component={AccountsListScreen}
+        />
+        <Screen
+          options={{
+            headerShown: true,
+            header: (props) => (
+              <Header title="Adicionar" subtitle="conta" {...props} />
+            ),
+          }}
+          name={ROUTES.ADD_ACCOUNT}
+          component={AddAccountScreen}
         />
       </Navigator>
     </NavigationContainer>

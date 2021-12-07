@@ -21,7 +21,7 @@ const PostDetailScreen: React.FC = () => {
           {post.title}
         </H1>
         <PostImage source={{ uri: post.image }} />
-        <ProducedByText>Por Gustavo Carvalho</ProducedByText>
+        <ProducedByText>Por {post.author.name}</ProducedByText>
         <PostContent>{post.content}</PostContent>
       </BorderRadiusContainer>
     </View>

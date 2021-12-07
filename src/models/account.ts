@@ -1,16 +1,13 @@
 import { ITransaction } from "./transaction";
+import { ICard } from "./card";
+import { IBank } from "./bank";
 
 export interface IAccount {
   _id: string;
   name: string;
-  bank?: {
-    _id: string;
-    name: string;
-    picture: string;
-    __v: number;
-  };
+  bank?: IBank;
   transactions: ITransaction[];
   value: number;
-  card?: string;
+  card?: ICard;
   type: string;
 }

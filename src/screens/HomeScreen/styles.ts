@@ -23,12 +23,6 @@ export const HeaderContent = styled.View`
   justify-content: space-evenly;
 `;
 
-export const Username = styled.Text`
-  font-size: ${metrics.base * 6}px;
-  font-family: ${fontFamily.medium};
-  color: white;
-`;
-
 export const TotalContent = styled.View`
   width: 100%;
   display: flex;
@@ -121,6 +115,24 @@ export const RecentsContainer = styled.View`
   justify-content: center;
 `;
 
+export const ChartContainer = styled.View`
+  margin-top: ${metrics.base * 5}px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ChartTitle = styled.Text`
+  margin-left: 18%;
+  width: 100%;
+  text-align: left;
+  font-size: ${metrics.base * 5.5}px;
+  font-family: ${fontFamily.medium};
+  margin-bottom: ${metrics.base * 3}px;
+  color: ${colors.text};
+`;
+
 export const RecentsTitle = styled.Text`
   margin-left: 8%;
   width: 100%;
@@ -175,7 +187,6 @@ export const OptionsList = styled.View`
 `;
 
 export const Chart = styled.View`
-  margin-top: ${metrics.base * 5}px;
   width: 100%;
   display: flex;
   align-items: center;

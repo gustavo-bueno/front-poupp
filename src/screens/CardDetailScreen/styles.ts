@@ -8,7 +8,6 @@ export const CardContainer = styled(Animated.View)`
   justify-content: center;
   align-items: center;
 
-  padding-top: ${metrics.base * 13}px;
   padding-bottom: ${metrics.base * 6}px;
 `;
 
@@ -25,7 +24,7 @@ export const MainContent = styled.View`
   align-items: center;
   background-color: ${colors.background};
   width: 100%;
-  min-height: ${metrics.hp(90)}px;
+  min-height: ${metrics.hp(80)}px;
   border-top-right-radius: ${metrics.base * 12.5}px;
   border-top-left-radius: ${metrics.base * 12.5}px;
   padding-top: ${metrics.base * 5}px;

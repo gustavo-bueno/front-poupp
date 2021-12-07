@@ -33,7 +33,7 @@ interface DayInterface {
 }
 
 const TransictionsScreen: React.FC = () => {
-  const { user } = useUserData();
+  const { user, refresh } = useUserData();
 
   const [activeYear, setActiveYear] = useState<number>(
     new Date(Date.now()).getFullYear()
@@ -59,7 +59,7 @@ const TransictionsScreen: React.FC = () => {
           setLoading(false);
         }
       });
-  }, [activeMonth, activeYear]);
+  }, [activeMonth, activeYear, refresh]);
 
   const getAllYears = () => {
     const userSigninYear = new Date(user.user.createdAt).getFullYear();

@@ -1,7 +1,7 @@
-import React, { createContext, useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AxiosResponse } from 'axios';
-import axiosApi from '../services/apiRequest';
+import React, { createContext, useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AxiosResponse } from "axios";
+import axiosApi from "../services/apiRequest";
 
 export interface UserInterface {
   token: string;
@@ -16,13 +16,15 @@ export interface UserInterface {
 interface UserContextInterface {
   user: UserInterface;
   setUser: React.Dispatch<React.SetStateAction<UserInterface>>;
+  refresh: boolean;
   logout: () => void;
+  refreshData: () => void;
 }
 
 const initalState: UserInterface = {
-  token: '',
+  token: "",
   user: {
-    name: '',
+    name: "",
     createdAt: new Date(Date.now()),
     admin: false,
     hasInitialData: false,
@@ -33,11 +35,12 @@ const UserContext = createContext({} as UserContextInterface);
 
 const UserProvider: React.FC<{}> = ({ children }) => {
   const [user, setUser] = useState<UserInterface>(initalState);
+  const [refresh, setRefresh] = useState<boolean>(false);
 
   useEffect(() => {
     const getData = async () => {
       if (!user.token) {
-        const token = await AsyncStorage.getItem('POUPP_USER_TOKEN');
+        const token = await AsyncStorage.getItem("POUPP_USER_TOKEN");
 
         const options = {
           headers: { Authorization: `Bearer ${token}` },
@@ -45,7 +48,7 @@ const UserProvider: React.FC<{}> = ({ children }) => {
 
         if (token) {
           axiosApi
-            .get('/getdata', options)
+            .get("/getdata", options)
             .then((response: AxiosResponse) => {
               if (response.status === 200) {
                 setUser(response.data);
@@ -62,12 +65,16 @@ const UserProvider: React.FC<{}> = ({ children }) => {
   }, [user]);
 
   const logout = async () => {
-    await AsyncStorage.removeItem('POUPP_USER_TOKEN');
+    await AsyncStorage.removeItem("POUPP_USER_TOKEN");
     setUser(initalState);
   };
 
+  const refreshData = () => {
+    setRefresh(!refresh);
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, logout }}>
+    <UserContext.Provider value={{ user, setUser, logout, refresh, refreshData }}>
       {children}
     </UserContext.Provider>
   );

@@ -19,7 +19,7 @@ const FlatList = Animatable.createAnimatableComponent(List);
 
 const CardListScreen: React.FC = () => {
   const { navigate } = useNavigation();
-  const { user } = useUserData();
+  const { user, refresh } = useUserData();
 
   const [cards, setCards] = useState<ICard[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,7 +41,7 @@ const CardListScreen: React.FC = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [refresh]);
 
   const renderItem = ({ item }: { item: ICard }) => {
     return (
@@ -55,6 +55,7 @@ const CardListScreen: React.FC = () => {
           username={item.username}
           day={item.closeDay}
           balance={item.value}
+          limit={item.limit}
         />
       </Ripple>
     );

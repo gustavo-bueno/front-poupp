@@ -15,6 +15,7 @@ const CreditCard: React.FC<IProps> = ({
   balance,
   day,
   bank,
+  limit
 }: IProps) => {
   const stringDay = String(day).padStart(2, "0");
   return (
@@ -39,6 +40,10 @@ const CreditCard: React.FC<IProps> = ({
           <View>
             <H5 color="white">NOME DO TITULAR</H5>
             <H4 color="white">{username}</H4>
+          </View>
+          <View>
+            <H5 color="white">LIMITE</H5>
+            <H4 color="white">R$ {NumberToMoney(limit)}</H4>
           </View>
           <View>
             <H5 color="white">FECHAMENTO DA FATURA</H5>

@@ -1,23 +1,23 @@
-import React from 'react';
-import { FlatList, View } from 'react-native';
-import Ripple from 'react-native-material-ripple';
+import React from "react";
+import { FlatList, View } from "react-native";
+import Ripple from "react-native-material-ripple";
 
-import { Entypo } from '@expo/vector-icons';
+import { Entypo } from "@expo/vector-icons";
 
 import {
   CollapsibleHeader,
   ItemContainer,
   CollapsibleContainer,
-} from './styles';
-import { H2 } from '../Text';
-import { useState } from 'react';
-import { IProps } from './IProps';
+} from "./styles";
+import { H2 } from "../Text";
+import { useState } from "react";
+import { IProps } from "./IProps";
 
 export const CollapsibleList: React.FC<IProps> = ({
   collapsibleTitle,
   data,
   style,
-  itemProp = 'name',
+  itemProp = "name",
   onPressItem,
 }: IProps) => {
   const [collapsibled, setCollapsed] = useState(true);
@@ -36,11 +36,11 @@ export const CollapsibleList: React.FC<IProps> = ({
   );
 
   return (
-    <View style={[{ borderRadius: 16, backgroundColor: '#FFF' }, style]}>
+    <View style={[{ borderRadius: 16, backgroundColor: "#FFF" }, style]}>
       <CollapsibleHeader onPress={() => setCollapsed((state) => !state)}>
         <H2>{collapsibleTitle}</H2>
         <Entypo
-          name={collapsibled ? 'chevron-down' : 'chevron-up'}
+          name={collapsibled ? "chevron-down" : "chevron-up"}
           size={24}
           color="grey"
         />
@@ -49,7 +49,7 @@ export const CollapsibleList: React.FC<IProps> = ({
         <FlatList
           data={data}
           renderItem={renderItem}
-          keyExtractor={(item: { id: string; name: string }) => item.id}
+          keyExtractor={(item: { _id: string; name: string }) => item._id}
         />
       </CollapsibleContainer>
     </View>
