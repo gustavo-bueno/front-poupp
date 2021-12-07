@@ -14,7 +14,8 @@ export const signUp = async (userData: SignUp) => {
 };
 
 export const postInitialConfig = async (data: UserData, userToken: string) => {
-  await axiosApi.post('/initialconfig', data, {
+  const { status } = await axiosApi.post('/initialconfig', data, {
     headers: { Authorization: `Bearer ${userToken}` },
   });
+  return status;
 };

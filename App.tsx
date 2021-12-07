@@ -9,6 +9,8 @@ import AppLoading from 'expo-app-loading';
 import { UserProvider } from './src/contexts/user';
 import { RegisterUserProvider } from './src/contexts/registerUser';
 import Routes from './src/routes';
+import { TransactionProvider } from './src/contexts/transaction';
+import FlashMessage from 'react-native-flash-message';
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -22,11 +24,14 @@ const App: React.FC = () => {
   }
 
   return (
-    <UserProvider>
-      <RegisterUserProvider>
-        <Routes />
-      </RegisterUserProvider>
-    </UserProvider>
+    <TransactionProvider>
+      <UserProvider>
+        <RegisterUserProvider>
+          <Routes />
+          <FlashMessage position="top" />
+        </RegisterUserProvider>
+      </UserProvider>
+    </TransactionProvider>
   );
 };
 

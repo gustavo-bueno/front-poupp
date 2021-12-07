@@ -37,6 +37,7 @@ const ExpensesListScreen = () => {
     axiosApi
       .get('/expenses', options)
       .then((response: AxiosResponse) => {
+        console.log(response.data);
         if (response.status === 200) {
           setExpensesList(response.data.expenses);
           setLoading(false);

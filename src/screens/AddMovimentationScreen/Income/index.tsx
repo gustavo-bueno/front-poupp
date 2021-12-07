@@ -19,9 +19,9 @@ import {
 const Income: React.FC = () => {
   const [frequency, setFrequency] = useState(0);
   const [categories, setCategories] = useState([]);
-  const [paymentMethod, setPaymentMethod] = useState<IAccount>({} as IAccount);
   const { accounts, user } = useUserData();
   const { setTransaction } = useContext(TransactionContext);
+  const [paymentMethod, setPaymentMethod] = useState<IAccount>({} as IAccount);
 
   useEffect(() => {
     const getCategories = async () => {
@@ -31,13 +31,6 @@ const Income: React.FC = () => {
       setCategories(transactionsCategories);
     };
     getCategories();
-  }, []);
-
-  useEffect(() => {
-    setTransaction((currentTransaction) => ({
-      ...currentTransaction,
-      type: 'income',
-    }));
   }, []);
 
   return (
@@ -68,11 +61,11 @@ const Income: React.FC = () => {
           setPaymentMethod(account);
           setTransaction((currentTransaction) => ({
             ...currentTransaction,
-            account: account.id,
+            accountId: account._id,
           }));
         }}
         data={accounts}
-        collapsibleTitle={paymentMethod.name}
+        collapsibleTitle={paymentMethod?.name ?? 'Selecione uma conta'}
       />
       <SecondaryTitle>Quantas parcelas mensais?</SecondaryTitle>
       <CenteredContainer style={{ flexDirection: 'row' }}>

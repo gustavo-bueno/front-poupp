@@ -14,9 +14,10 @@ export const createTransaction = async (
   data: Partial<ITransaction>,
   token: string
 ) => {
-  await axiosApi.post('/transactions', data, {
+  const { status } = await axiosApi.post('/transactions/create', data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+  return status;
 };

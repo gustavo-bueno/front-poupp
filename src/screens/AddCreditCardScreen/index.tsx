@@ -1,29 +1,29 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Form } from "@unform/mobile";
-import { FormHandles } from "@unform/core";
-import * as Yup from "yup";
+import React, { useRef, useState, useEffect } from 'react';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
 
-import Input from "../../components/Input";
-import Button from "../../components/Button";
-import { BorderRadiusContainer } from "../../components/Container";
-import CollapsibleList from "../../components/CollapsibleList";
-import axiosApi from "../../services/apiRequest";
-import axios, { AxiosResponse } from "axios";
-import { useNavigation } from "@react-navigation/native";
-import { ROUTES } from "../../constants/routes";
-import { IAccount } from "../../models/account";
-import useUserData from "../../hooks/useUserData";
-import { SmallInputContainer, SmallInputsContainer } from "./styles";
-import { H3 } from "../../components/Text";
-import { metrics } from "../../styles";
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+import { BorderRadiusContainer } from '../../components/Container';
+import CollapsibleList from '../../components/CollapsibleList';
+import axiosApi from '../../services/apiRequest';
+import axios, { AxiosResponse } from 'axios';
+import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../../constants/routes';
+import { IAccount } from '../../models/account';
+import useUserData from '../../hooks/useUserData';
+import { SmallInputContainer, SmallInputsContainer } from './styles';
+import { H3 } from '../../components/Text';
+import { metrics } from '../../styles';
 
 const schema = Yup.object().shape({
-  username: Yup.string().required("O campo nome do titular é obrigatório"),
+  username: Yup.string().required('O campo nome do titular é obrigatório'),
   closeDay: Yup.number()
-    .min(1, "Digite um valor entre 1 e 31")
-    .max(31, "Digite um valor entre 1 e 31")
-    .required("O campo dia de vencimento é obrigatório."),
-  limit: Yup.number().required("O campo limite do cartão é obrigatório."),
+    .min(1, 'Digite um valor entre 1 e 31')
+    .max(31, 'Digite um valor entre 1 e 31')
+    .required('O campo dia de vencimento é obrigatório.'),
+  limit: Yup.number().required('O campo limite do cartão é obrigatório.'),
 });
 
 const AddCreditCardScreen: React.FC = () => {
@@ -41,14 +41,14 @@ const AddCreditCardScreen: React.FC = () => {
     };
 
     axiosApi
-      .get("/accounts", options)
+      .get('/accounts', options)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           const accountsList = response.data;
 
           setAccounts(
             accountsList.filter(
-              (account: IAccount) => account.type === "normal" && !account.card
+              (account: IAccount) => account.type === 'normal' && !account.card
             )
           );
         }
@@ -84,12 +84,15 @@ const AddCreditCardScreen: React.FC = () => {
           headers: { authorization: `Bearer ${user.token}` },
         };
 
-        axiosApi.post("/cards/create", cardData, options).then((response: AxiosResponse) => {
-          if(response.status === 201) {
-            refreshData()
-            navigate(ROUTES.CARD_LIST)
-          }
-        }).catch((err) => console.log(err.message))
+        axiosApi
+          .post('/cards/create', cardData, options)
+          .then((response: AxiosResponse) => {
+            if (response.status === 201) {
+              refreshData();
+              navigate(ROUTES.CARD_LIST);
+            }
+          })
+          .catch((err) => console.log(err.message));
       }
     } catch (error) {
       const validationErrors: Record<string, any> = {};
@@ -111,7 +114,7 @@ const AddCreditCardScreen: React.FC = () => {
         </H3>
         <CollapsibleList
           data={accounts}
-          collapsibleTitle={account ? account.name : ""}
+          collapsibleTitle={account ? account.name : 'Selecione uma conta'}
           onPressItem={(accountSelected) => setAccount(accountSelected)}
         />
         <SmallInputsContainer>

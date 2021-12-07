@@ -1,70 +1,54 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
-import CategoriesList from '../../../components/CategoriesList';
+import React, { useState, useContext } from 'react';
 import CollapsibleList from '../../../components/CollapsibleList';
-import { CenteredContainer } from '../../../components/Container';
-import { H1 } from '../../../components/Text';
+import { TransactionContext } from '../../../contexts/transaction';
+import useUserData from '../../../hooks/useUserData';
 import {
-  FrequencyButton,
-  FrequencyContainer,
   SecondaryTitle,
   TextAreaInput,
   TransactionTypeContainer,
 } from '../styles';
 
-const paymentMethodData = [
-  {
-    name: 'Carteira',
-  },
-  {
-    name: 'Conta itáu',
-  },
-];
-
 const Transference: React.FC = () => {
-  const [frequency, setFrequency] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState<any>();
+  const [receiveMethod, setReceiveMethod] = useState<any>();
+  const { accounts } = useUserData();
+  const { setTransaction } = useContext(TransactionContext);
+
   return (
     <TransactionTypeContainer>
       <SecondaryTitle>Descrição:</SecondaryTitle>
-      <TextAreaInput />
+      <TextAreaInput
+        onChangeText={(text) =>
+          setTransaction((currentTransaction) => ({
+            ...currentTransaction,
+            description: text,
+          }))
+        }
+      />
       <SecondaryTitle>Transferir de:</SecondaryTitle>
       <CollapsibleList
-        onPressItem={(selectedPaymentMethod) =>
-          setPaymentMethod(selectedPaymentMethod.name)
-        }
-        data={paymentMethodData}
-        collapsibleTitle={paymentMethod}
+        onPressItem={(selectedPaymentMethod) => {
+          setPaymentMethod(selectedPaymentMethod);
+          setTransaction((currentTransaction) => ({
+            ...currentTransaction,
+            accountId: selectedPaymentMethod._id,
+          }));
+        }}
+        data={accounts}
+        collapsibleTitle={paymentMethod?.name ?? 'Selecione uma conta'}
       />
       <SecondaryTitle>Para:</SecondaryTitle>
       <CollapsibleList
-        onPressItem={(selectedPaymentMethod) =>
-          setPaymentMethod(selectedPaymentMethod.name)
-        }
-        data={paymentMethodData}
-        collapsibleTitle={paymentMethod}
+        onPressItem={(selectedPaymentMethod) => {
+          setReceiveMethod(selectedPaymentMethod);
+          setTransaction((currentTransaction) => ({
+            ...currentTransaction,
+            transferAccountId: selectedPaymentMethod._id,
+          }));
+        }}
+        data={accounts}
+        collapsibleTitle={receiveMethod?.name ?? 'Selecione uma conta'}
       />
-      {/* <SecondaryTitle>Quantas parcelas mensais?</SecondaryTitle>
-      <CenteredContainer style={{ flexDirection: 'row' }}>
-        <FrequencyButton
-          onPress={() =>
-            setFrequency((currentFrequency) => currentFrequency + 1)
-          }
-        >
-          <H1 fontWeight="bold">+</H1>
-        </FrequencyButton>
-        <FrequencyContainer>
-          <H1 fontWeight="bold">{frequency}</H1>
-        </FrequencyContainer>
-        <FrequencyButton
-          disabled={frequency === 1}
-          onPress={() =>
-            setFrequency((currentFrequency) => currentFrequency - 1)
-          }
-        >
-          <H1 fontWeight="bold">-</H1>
-        </FrequencyButton>
-      </CenteredContainer> */}
     </TransactionTypeContainer>
   );
 };

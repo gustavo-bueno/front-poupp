@@ -1,24 +1,24 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Form } from "@unform/mobile";
-import * as Yup from "yup";
+import React, { useRef, useState, useEffect } from 'react';
+import { Form } from '@unform/mobile';
+import * as Yup from 'yup';
 
-import { FormHandles } from "@unform/core";
+import { FormHandles } from '@unform/core';
 
-import { BorderRadiusContainer } from "../../components/Container";
-import Input from "../../components/Input";
-import CollapsibleList from "../../components/CollapsibleList";
-import Button from "../../components/Button";
-import axiosApi from "../../services/apiRequest";
-import { AxiosResponse } from "axios";
-import { useNavigation } from "@react-navigation/native";
-import { ROUTES } from "../../constants/routes";
-import { metrics } from "../../styles";
-import { AddAccountLabel } from "./styles";
-import { IBank } from "../../models/bank";
-import useUserData from "../../hooks/useUserData";
+import { BorderRadiusContainer } from '../../components/Container';
+import Input from '../../components/Input';
+import CollapsibleList from '../../components/CollapsibleList';
+import Button from '../../components/Button';
+import axiosApi from '../../services/apiRequest';
+import { AxiosResponse } from 'axios';
+import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../../constants/routes';
+import { metrics } from '../../styles';
+import { AddAccountLabel } from './styles';
+import { IBank } from '../../models/bank';
+import useUserData from '../../hooks/useUserData';
 
 const schema = Yup.object().shape({
-  name: Yup.string().required("O nome da conta é obrigatório."),
+  name: Yup.string().required('O nome da conta é obrigatório.'),
   number: Yup.number(),
 });
 
@@ -36,7 +36,7 @@ const AddAccountScreen: React.FC = () => {
     };
 
     axiosApi
-      .get("/banks", options)
+      .get('/banks', options)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setBanks(response.data);
@@ -73,7 +73,7 @@ const AddAccountScreen: React.FC = () => {
         };
 
         axiosApi
-          .post("/accounts/create", accountData, options)
+          .post('/accounts/create', accountData, options)
           .then((response: AxiosResponse) => {
             if (response.status === 201) {
               refreshData();
@@ -100,7 +100,7 @@ const AddAccountScreen: React.FC = () => {
         <AddAccountLabel>Banco da conta</AddAccountLabel>
         <CollapsibleList
           data={banks}
-          collapsibleTitle={bank ? bank.name : ""}
+          collapsibleTitle={bank?.name ?? 'Selecione um banco'}
           onPressItem={(item) => setBank(item)}
         />
         <Input

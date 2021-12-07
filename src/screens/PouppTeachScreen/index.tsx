@@ -76,8 +76,10 @@ const PouppTeachScreen: React.FC = () => {
 
   useEffect(() => {
     const getAllYoutubers = async () => {
+      setYoutubersLoading(true);
       const youtubers = await getYoutubers(user.token);
       setYoutubersList(youtubers);
+      setYoutubersLoading(false);
     };
     getAllYoutubers();
   }, [user.token]);

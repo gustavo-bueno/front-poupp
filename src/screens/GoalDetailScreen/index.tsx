@@ -1,30 +1,31 @@
-import React from "react";
-import { useRoute } from "@react-navigation/native";
-import { View } from "react-native";
+import React from 'react';
+import { useRoute } from '@react-navigation/native';
+import { View } from 'react-native';
 
-import { Fontisto } from "@expo/vector-icons";
+import { Fontisto } from '@expo/vector-icons';
 
-import { BorderRadiusContainer } from "../../components/Container";
-import { ProgressBar } from "../../components/ProgressBar";
-import { H1, H2, H3, H4 } from "../../components/Text";
-import { colors, metrics } from "../../styles";
-import Button from "../../components/Button";
-import NumberToMoney from "../../functions/NumberToMoney";
-import { useNavigation } from "@react-navigation/native";
-import { ROUTES } from "../../constants/routes";
-import useUserData from "../../hooks/useUserData";
+import { BorderRadiusContainer } from '../../components/Container';
+import { ProgressBar } from '../../components/ProgressBar';
+import { H1, H2, H3, H4 } from '../../components/Text';
+import { colors, metrics } from '../../styles';
+import Button from '../../components/Button';
+import NumberToMoney from '../../functions/NumberToMoney';
+import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../../constants/routes';
+import useUserData from '../../hooks/useUserData';
+import dayjs from 'dayjs';
 
 import {
   Container,
   FirstInfoContainer,
   RemainingInfoContainer,
   styles,
-} from "./styles";
-import { SpaceBetweenContainer } from "../../components/Container";
-import goals from "../../icons/goals";
-import { IGoal } from "../../models/goal";
-import axiosApi from "../../services/apiRequest";
-import { AxiosResponse } from "axios";
+} from './styles';
+import { SpaceBetweenContainer } from '../../components/Container';
+import goals from '../../icons/goals';
+import { IGoal } from '../../models/goal';
+import axiosApi from '../../services/apiRequest';
+import { AxiosResponse } from 'axios';
 
 const GoalDetailScreen = () => {
   const { goal, goalAccountValue } = useRoute()?.params as {
@@ -46,7 +47,7 @@ const GoalDetailScreen = () => {
   const conclude = () => {
     if (goalAccountValue / goal.totalValue > 1) {
       axiosApi
-        .put("/goals/complete", {}, options)
+        .put('/goals/complete', {}, options)
         .then((response: AxiosResponse) => {
           if (response.status === 200) {
             refreshData();
@@ -59,13 +60,18 @@ const GoalDetailScreen = () => {
 
   const exclude = () => {
     axiosApi
-      .delete("/goals/delete", options)
+      .delete('/goals/delete', options)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           refreshData();
           navigate(ROUTES.GOALS_LIST);
         }
       });
+  };
+
+  const valuePerMonth = () => {
+    const timeRemaining = Date.now() - dayjs(goal.expirationDate).millisecond();
+    return remainigValue / dayjs(timeRemaining).month();
   };
 
   return (
@@ -90,39 +96,39 @@ const GoalDetailScreen = () => {
         <ProgressBar progress={goalAccountValue / goal.totalValue} />
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
+            flexDirection: 'row',
+            alignItems: 'center',
             marginVertical: metrics.base * 4,
           }}
         >
           <Fontisto name="clock" size={30} color={colors.green} />
           <View
-            style={{ flexDirection: "column", marginLeft: metrics.base * 2 }}
+            style={{ flexDirection: 'column', marginLeft: metrics.base * 2 }}
           >
             <H2 fontWeight="medium">Data estipulada</H2>
-            <H3>27 de julho de 2022</H3>
+            <H3>{dayjs(goal.expirationDate).format('DD/MM/YYYY')}</H3>
           </View>
         </View>
         <RemainingInfoContainer>
           {remainigValue > 0 ? (
             <>
-              <View style={{ alignItems: "center" }}>
+              <View style={{ alignItems: 'center' }}>
                 <H2 fontWeight="bold">Valor necessário</H2>
                 <H2>R$ {NumberToMoney(remainigValue)}</H2>
               </View>
-              <H4 style={{ textAlign: "center" }}>
-                Você precisa economizar R$2.400,00 por mês para concluir dentro
-                do tempo estipulado.
+              <H4 style={{ textAlign: 'center' }}>
+                Você precisa economizar R$ {NumberToMoney(valuePerMonth())} por
+                mês para concluir dentro do tempo estipulado.
               </H4>
             </>
           ) : (
-            <H4 style={{ textAlign: "center" }}>
+            <H4 style={{ textAlign: 'center' }}>
               Parabéns! você ja pode concluir essa meta.
             </H4>
           )}
         </RemainingInfoContainer>
         {goalAccountValue / goal.totalValue > 1 && (
-          <Button title="Concluír" onPress={conclude} />
+          <Button title="Conclur" onPress={conclude} />
         )}
         <Button
           title="Excluir"

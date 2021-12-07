@@ -46,10 +46,10 @@ const UserScreen: React.FC = () => {
             <ButtonText>Renda extra</ButtonText>
           </Button>
           <Button
-            onPress={() => navigate(ROUTES.EXPENSES_LIST)}
+            onPress={() => navigate(ROUTES.BILLS_LIST)}
             theme={{ type: 'normal' }}
           >
-            <ButtonText>Minhas despesas</ButtonText>
+            <ButtonText>Minhas dívidas</ButtonText>
           </Button>
         </ButtonsContainer>
         <ButtonsContainer>

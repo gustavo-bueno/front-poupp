@@ -104,7 +104,10 @@ const AddInitialBillsScreen: React.FC = () => {
               marginBottom: metrics.base * 2,
             }}
           />
-          <Button title="Pronto!" onPress={() => navigate(ROUTES.ADD_INCOME)} />
+          <Button
+            title="Pronto!"
+            onPress={() => navigate(ROUTES.SET_EXPENSE)}
+          />
         </View>
       </BorderRadiusContainer>
     </>

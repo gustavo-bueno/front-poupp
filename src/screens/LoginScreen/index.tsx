@@ -63,6 +63,10 @@ const LoginScreen: React.FC = () => {
           }
         })
         .catch((err) => {
+          formRef.current?.setFieldError(
+            'password',
+            'O email ou a senha estão incorretos.'
+          );
           console.log(err.response.data);
         });
     } catch (error) {

@@ -21,6 +21,7 @@ interface UserContextInterface {
   logout: () => void;
   accounts: IAccount[];
   refreshData: () => void;
+  loading: boolean;
 }
 
 const initalState: UserInterface = {
@@ -37,11 +38,13 @@ const UserContext = createContext({} as UserContextInterface);
 
 const UserProvider: React.FC<{}> = ({ children }) => {
   const [user, setUser] = useState<UserInterface>(initalState);
+  const [loading, setLoading] = useState(false);
   const [accounts, setAccounts] = useState<IAccount[]>([]);
   const [refresh, setRefresh] = useState<boolean>(false);
 
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
       if (!user.token) {
         const token = await AsyncStorage.getItem('POUPP_USER_TOKEN');
 
@@ -68,6 +71,7 @@ const UserProvider: React.FC<{}> = ({ children }) => {
           });
         }
       }
+      setLoading(false);
     };
 
     getData();
@@ -84,7 +88,7 @@ const UserProvider: React.FC<{}> = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, accounts, logout, refresh, refreshData }}
+      value={{ user, setUser, accounts, logout, refresh, refreshData, loading }}
     >
       {children}
     </UserContext.Provider>

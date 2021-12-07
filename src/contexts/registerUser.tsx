@@ -24,14 +24,19 @@ const RegisterUserProvider: React.FC<{}> = ({ children }) => {
   const sendInitialData = async (
     categories: { id: string; maxValue: number }[]
   ) => {
-    await postInitialConfig({ incomeValue, categories }, user.token);
-    setUser((userData) => ({
-      token: userData.token,
-      user: {
-        ...userData.user,
-        hasInitialData: true,
-      },
-    }));
+    const status = await postInitialConfig(
+      { incomeValue, categories },
+      user.token
+    );
+    if (status === 201) {
+      setUser((userData) => ({
+        token: userData.token,
+        user: {
+          ...userData.user,
+          hasInitialData: true,
+        },
+      }));
+    }
   };
 
   return (

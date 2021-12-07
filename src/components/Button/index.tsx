@@ -45,7 +45,7 @@ const Button: React.FC<IProps> = ({
 
   if (type == 'rounded') {
     return (
-      <RoundedButton {...rest}>
+      <RoundedButton style={style} {...rest}>
         {children ?? (
           <Entypo name="plus" size={metrics.base * 12} color="white" />
         )}

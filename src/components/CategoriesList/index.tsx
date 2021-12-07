@@ -16,10 +16,8 @@ const CategoriesList: React.FC<IProps> = ({
 }: IProps) => {
   const [selected, setSelected] = useState<ICategory>();
   const renderItem = ({ item }: { item: ICategory }) => {
-    if (income) {
-      if (!item.income) {
-        return <></>;
-      }
+    if ((income && !item.income) || (!income && item.income)) {
+      return <></>;
     }
 
     return (
