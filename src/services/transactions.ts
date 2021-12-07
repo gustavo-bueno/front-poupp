@@ -1,3 +1,4 @@
+import { ITransaction } from '../models/transaction';
 import axiosApi from './apiRequest';
 
 export const getTransactionsCategories = async (token: string) => {
@@ -7,4 +8,15 @@ export const getTransactionsCategories = async (token: string) => {
     },
   });
   return data;
+};
+
+export const createTransaction = async (
+  data: Partial<ITransaction>,
+  token: string
+) => {
+  await axiosApi.post('/transactions', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };

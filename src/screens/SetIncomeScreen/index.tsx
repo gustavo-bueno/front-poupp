@@ -42,9 +42,7 @@ const SetIncomeScreen: React.FC = () => {
   };
 
   return (
-    <BorderRadiusContainer
-      style={{ justifyContent: 'space-between', position: 'relative' }}
-    >
+    <BorderRadiusContainer style={{ justifyContent: 'space-between' }}>
       <View>
         <H3>
           Para começarmos nos planejar, diz aí pra gente, qual é a média do
@@ -58,11 +56,7 @@ const SetIncomeScreen: React.FC = () => {
         </Form>
       </View>
       <Button
-        style={{
-          position: 'absolute',
-          bottom: metrics.hp(11),
-          left: metrics.wp(5),
-        }}
+        style={{ marginBottom: metrics.base * 12 }}
         title="Pronto!"
         onPress={() => formRef.current?.submitForm()}
       />

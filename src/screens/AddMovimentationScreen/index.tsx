@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TextInputMask } from 'react-native-masked-text';
 
 import { Entypo } from '@expo/vector-icons';
@@ -20,27 +20,13 @@ import TopTabs from './TopTabs';
 import Income from './Income';
 import Outcome from './Outcome';
 import Transference from './Transference';
-
-const options = [
-  {
-    id: '1',
-    name: 'Entradas',
-  },
-  {
-    id: '2',
-    name: 'Saídas',
-  },
-  {
-    id: '3',
-    name: 'Transferências',
-  },
-];
+import { TransactionContext } from '../../contexts/transaction';
 
 const Tab = createMaterialTopTabNavigator();
 
 const AddMovimentationScreen: React.FC = () => {
-  const [value, setValue] = useState<string | undefined>('0000');
   const [maskedValue, setMaskedValue] = useState<string | undefined>('000');
+  const { addTransaction, setTransaction } = useContext(TransactionContext);
 
   return (
     <Container>
@@ -61,8 +47,11 @@ const AddMovimentationScreen: React.FC = () => {
           }}
           includeRawValueInChangeText
           onChangeText={(text, rawValue) => {
-            setValue(rawValue);
-            setMaskedValue(text);
+            setTransaction((currentTransaction) => ({
+              ...currentTransaction,
+              value: Number(rawValue) ?? 0,
+            })),
+              setMaskedValue(text);
           }}
         />
       </InputContainer>
@@ -76,13 +65,43 @@ const AddMovimentationScreen: React.FC = () => {
           style={{ flex: 1 }}
           tabBar={(props: MaterialTopTabBarProps) => <TopTabs {...props} />}
         >
-          <Tab.Screen name="Entradas" component={Income} />
-          <Tab.Screen name="Saídas" component={Outcome} />
-          <Tab.Screen name="Transferências" component={Transference} />
+          <Tab.Screen
+            listeners={{
+              focus: () =>
+                setTransaction((currentTransaction) => ({
+                  ...currentTransaction,
+                  type: 'income',
+                })),
+            }}
+            name="Entradas"
+            component={Income}
+          />
+          <Tab.Screen
+            listeners={{
+              focus: () =>
+                setTransaction((currentTransaction) => ({
+                  ...currentTransaction,
+                  type: 'outcome',
+                })),
+            }}
+            name="Saídas"
+            component={Outcome}
+          />
+          <Tab.Screen
+            listeners={{
+              focus: () =>
+                setTransaction((currentTransaction) => ({
+                  ...currentTransaction,
+                  type: 'transfer',
+                })),
+            }}
+            name="Transferências"
+            component={Transference}
+          />
         </Tab.Navigator>
       </MovimentationInfosContainer>
       {/* </CustomScrollView> */}
-      <Button type="rounded">
+      <Button onPress={addTransaction} type="rounded">
         <Entypo name="check" size={metrics.base * 12} color="white" />
       </Button>
     </Container>

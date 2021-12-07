@@ -10,6 +10,7 @@ import SetIncomeScreen from '../screens/SetIncomeScreen';
 import Header from '../components/Header';
 import SetMotivationScreen from '../screens/SetMotivationScreen';
 import AddInitialBillsScreen from '../screens/AddInitialBillsScreen';
+import SetExpensesScreen from '../screens/SetExpensesScreen';
 
 const InitialData = () => {
   return (
@@ -66,6 +67,23 @@ const InitialData = () => {
           }}
           name={ROUTES.INITIAL_BILLS}
           component={AddInitialBillsScreen}
+        />
+        <Screen
+          options={{
+            cardStyle: {
+              backgroundColor: colors.green,
+            },
+            headerShown: true,
+            header: (props) => (
+              <Header
+                backButton={false}
+                title="Ok, vamos para as despesas!"
+                {...props}
+              />
+            ),
+          }}
+          name={ROUTES.SET_EXPENSE}
+          component={SetExpensesScreen}
         />
       </Navigator>
     </NavigationContainer>

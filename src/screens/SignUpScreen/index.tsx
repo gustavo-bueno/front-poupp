@@ -43,13 +43,17 @@ const SignUpScreen: React.FC = () => {
       await AsyncStorage.setItem('POUPP_USER_TOKEN', userData.token);
       setUser(userData);
     } catch (error) {
-      console.log(error);
       const validationErrors: Record<string, any> = {};
       if (error instanceof Yup.ValidationError) {
         error.inner.forEach((error) => {
           validationErrors[error.path!] = error.message;
         });
         formRef.current?.setErrors(validationErrors);
+      } else {
+        formRef.current?.setFieldError(
+          'password',
+          'Ocorreu um erro. Por favor tente mais tarde.'
+        );
       }
     }
   };

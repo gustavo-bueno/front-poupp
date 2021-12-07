@@ -1,6 +1,8 @@
 export interface ICategory {
-  id: string;
+  _id: string;
   name: string;
-  icon: JSX.Element;
-  color: string;
+  necessary: number;
+  income: boolean;
+  type: string;
+  __v: number;
 }

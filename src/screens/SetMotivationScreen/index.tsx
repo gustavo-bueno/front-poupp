@@ -22,8 +22,8 @@ const SetMotivationScreen: React.FC = () => {
           Para continuarmos, fala pra gente aí, qual seu objetivo com o app? 😄
         </H3>
         <OptionContainer
-          onPress={() => setNavigateRoute(ROUTES.ADD_INCOME)}
-          isSelected={navigateRoute === ROUTES.ADD_INCOME}
+          onPress={() => setNavigateRoute(ROUTES.SET_EXPENSE)}
+          isSelected={navigateRoute === ROUTES.SET_EXPENSE}
         >
           <OptionText fontWeight="medium">
             Gerenciar e poupar dinheiro
@@ -43,7 +43,7 @@ const SetMotivationScreen: React.FC = () => {
       <Button
         style={{
           position: 'absolute',
-          bottom: metrics.hp(11),
+          bottom: metrics.hp(6),
           left: metrics.wp(5),
         }}
         title="Pronto!"

@@ -18,7 +18,7 @@ export const OptionContainer = styled(Ripple).attrs({
 
   margin-top: ${metrics.base * 3}px;
 
-  align-items: flex-end;
+  align-items: center;
 `;
 
 export const OptionText = styled(H2)`

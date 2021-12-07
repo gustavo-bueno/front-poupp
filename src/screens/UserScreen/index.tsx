@@ -17,7 +17,7 @@ import { ROUTES } from '../../constants/routes';
 import useUserData from '../../hooks/useUserData';
 
 const UserScreen: React.FC = () => {
-  const { logout, user } = useUserData()
+  const { logout, user } = useUserData();
   const { navigate } = useNavigation();
   return (
     <UserContainer>
@@ -33,15 +33,9 @@ const UserScreen: React.FC = () => {
       </HeaderContainer>
       <MainContent>
         <ButtonsContainer>
-          <Button theme={{ type: 'top' }}>
-            <ButtonText>Meus dados</ButtonText>
-          </Button>
-          <Button theme={{ type: 'normal' }}>
-            <ButtonText>Configurações</ButtonText>
-          </Button>
           <Button
             onPress={() => navigate(ROUTES.POUPP_TEACH)}
-            theme={{ type: 'normal' }}
+            theme={{ type: 'top' }}
           >
             <ButtonText>Poupp Educa</ButtonText>
           </Button>
@@ -50,6 +44,12 @@ const UserScreen: React.FC = () => {
             theme={{ type: 'normal' }}
           >
             <ButtonText>Renda extra</ButtonText>
+          </Button>
+          <Button
+            onPress={() => navigate(ROUTES.EXPENSES_LIST)}
+            theme={{ type: 'normal' }}
+          >
+            <ButtonText>Minhas despesas</ButtonText>
           </Button>
         </ButtonsContainer>
         <ButtonsContainer>

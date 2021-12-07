@@ -1,38 +1,20 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList as List, View } from 'react-native';
 
 import { BorderRadiusContainer } from '../../components/Container';
 import InfoCardItem from '../../components/InfoCardItem';
 import { H5 } from '../../components/Text';
+import * as Animatable from 'react-native-animatable';
 import { metrics } from '../../styles';
 import { ItemImage } from './styles';
 import { AxiosResponse } from 'axios';
 import useUserData from '../../hooks/useUserData';
 import goalImg from '../../../assets/images/goal.png';
 import walletImg from '../../../assets/images/wallet.png';
-import axiosApi from '../../services/apiRequest';
+import apiRequest from '../../services/apiRequest';
 import { ITransaction } from '../../models/transaction';
 import { IAccount } from '../../models/account';
-=======
-import React, { useEffect, useState } from "react";
-import { FlatList as List, View } from "react-native";
-
-import { BorderRadiusContainer } from "../../components/Container";
-import InfoCardItem from "../../components/InfoCardItem";
-import { H5 } from "../../components/Text";
-import * as Animatable from "react-native-animatable";
-import { metrics } from "../../styles";
-import { ItemImage } from "./styles";
-import { AxiosResponse } from "axios";
-import useUserData from "../../hooks/useUserData";
-import goalImg from "../../../assets/images/goal.png";
-import walletImg from "../../../assets/images/wallet.png";
-import apiRequest from "../../services/apiRequest";
-import { ITransaction } from "../../models/transaction";
-import { IAccount } from "../../models/account";
-import { Loading } from "../../components/Loading";
->>>>>>> ddf20aaa6eef399de29e235f60f8b1ded6d0675a
+import { Loading } from '../../components/Loading';
 
 interface ListRenderItemInfo<ItemT> {
   item: ItemT;
@@ -96,12 +78,8 @@ const AccountsListScreen: React.FC = () => {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-    axiosApi.get('/accounts', options).then((response: AxiosResponse) => {
-=======
     setLoading(true);
-    apiRequest.get("/accounts", options).then((response: AxiosResponse) => {
->>>>>>> ddf20aaa6eef399de29e235f60f8b1ded6d0675a
+    apiRequest.get('/accounts', options).then((response: AxiosResponse) => {
       if (response.status === 200) {
         setAccounts(response.data);
         setLoading(false);

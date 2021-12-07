@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AxiosResponse } from 'axios';
 import axiosApi from '../services/apiRequest';
+import { IAccount } from '../models/account';
 
 export interface UserInterface {
   token: string;
@@ -17,6 +18,7 @@ interface UserContextInterface {
   user: UserInterface;
   setUser: React.Dispatch<React.SetStateAction<UserInterface>>;
   logout: () => void;
+  accounts: IAccount[];
 }
 
 const initalState: UserInterface = {
@@ -33,6 +35,7 @@ const UserContext = createContext({} as UserContextInterface);
 
 const UserProvider: React.FC<{}> = ({ children }) => {
   const [user, setUser] = useState<UserInterface>(initalState);
+  const [accounts, setAccounts] = useState<IAccount[]>([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -54,6 +57,12 @@ const UserProvider: React.FC<{}> = ({ children }) => {
             .catch((err) => {
               console.log(err);
             });
+
+          axiosApi.get('/accounts', options).then((response: AxiosResponse) => {
+            if (response.status === 200) {
+              setAccounts(response.data);
+            }
+          });
         }
       }
     };
@@ -67,7 +76,7 @@ const UserProvider: React.FC<{}> = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, logout }}>
+    <UserContext.Provider value={{ user, accounts, setUser, logout }}>
       {children}
     </UserContext.Provider>
   );
