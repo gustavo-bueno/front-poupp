@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../../constants/routes';
 import Ripple from 'react-native-material-ripple';
 import * as Animatable from 'react-native-animatable';
 
 import { IGoal } from '../../models/goal';
-import { ROUTES } from '../../constants/routes';
 import { BorderRadiusContainer } from '../../components/Container';
 import Button from '../../components/Button';
 import NumberToMoney from '../../functions/NumberToMoney';
@@ -25,7 +25,7 @@ const List = Animatable.createAnimatableComponent(FlatList);
 
 const GoalsListScreen = () => {
   const { navigate } = useNavigation();
-  const { user } = useUserData();
+  const { user, refresh } = useUserData();
 
   const [goalsList, setGoalsList] = useState<IGoal[]>([]);
   const [goalAccountValue, setGoalAccountValue] = useState<number>(0);
@@ -49,7 +49,7 @@ const GoalsListScreen = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [refresh]);
 
   const renderItem = ({ item }: { item: IGoal }) => {
     const Image = goals[item.category.type];

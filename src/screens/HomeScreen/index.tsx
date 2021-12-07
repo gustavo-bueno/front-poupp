@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { colors, metrics } from '../../styles';
+import React, { useState, useEffect } from "react";
+import { colors, metrics } from "../../styles";
 import {
   HomeContainer,
   HeaderContent,
@@ -26,30 +26,31 @@ import {
   Label,
   Marker,
   LabelText,
-} from './styles';
+  ChartContainer,
+  ChartTitle
+} from "./styles";
 
-import NumberToMoney from '../../functions/NumberToMoney';
+import NumberToMoney from "../../functions/NumberToMoney";
 
-import { PieChart } from 'react-native-svg-charts';
-import 'react-native-svg';
+import { PieChart } from "react-native-svg-charts";
+import "react-native-svg";
 
-import { MaterialIcons } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
-import MovementCard from '../../components/MovementCard';
-import OptionCard from '../../components/OptionCard';
-import { SafeAreaView, View } from 'react-native';
-import { ROUTES } from '../../constants/routes';
-import { useNavigation } from '@react-navigation/native';
-import { H1 } from '../../components/Text';
-import useUserData from '../../hooks/useUserData';
-import { ITransaction } from '../../models/transaction';
-import { AxiosResponse } from 'axios';
-import LimitedString from '../../functions/LimitedString';
-import apiRequest from '../../services/apiRequest';
-import axiosApi from '../../services/apiRequest';
+import MovementCard from "../../components/MovementCard";
+import OptionCard from "../../components/OptionCard";
+import { SafeAreaView, View } from "react-native";
+import { ROUTES } from "../../constants/routes";
+import { useNavigation } from "@react-navigation/native";
+import { H1 } from "../../components/Text";
+import useUserData from "../../hooks/useUserData";
+import { ITransaction } from "../../models/transaction";
+import { AxiosResponse } from "axios";
+import LimitedString from "../../functions/LimitedString";
+import axiosApi from "../../services/apiRequest";
 
 interface ChartDataInterface {
   name: string;
@@ -63,7 +64,7 @@ interface ChartDataInterface {
 
 const HomeScreen: React.FC = () => {
   const { navigate } = useNavigation();
-  const { user } = useUserData();
+  const { user, refresh } = useUserData();
 
   const [monthTransactions, setMonthTransactions] = useState<ITransaction[]>(
     []
@@ -81,7 +82,7 @@ const HomeScreen: React.FC = () => {
     };
 
     axiosApi
-      .get('/transactions/month', options)
+      .get("/transactions/month", options)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setMonthTransactions(response.data.transactions);
@@ -98,7 +99,7 @@ const HomeScreen: React.FC = () => {
               transactionCategories.find(
                 (category) => transaction.category?.name === category
               ) === undefined &&
-              transaction.type === 'outcome'
+              transaction.type === "outcome" && !transaction.isCard
             ) {
               transactionCategories.push(transaction.category?.name);
             }
@@ -122,7 +123,7 @@ const HomeScreen: React.FC = () => {
               value: categoryTotal,
               svg: {
                 fill:
-                  '#' +
+                  "#" +
                   (Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6),
               },
               arc: { cornerRadius: 4 },
@@ -134,14 +135,14 @@ const HomeScreen: React.FC = () => {
           setChartData(chartCategoriesData);
         }
       });
-  }, []);
+  }, [refresh]);
 
   const getMonthOutcome = () => {
     let total = 0;
 
     monthTransactions.forEach((transaction) => {
       if (!transaction.isCard) {
-        if (transaction.type === 'outcome') {
+        if (transaction.type === "outcome") {
           total += transaction.value;
         }
       }
@@ -155,7 +156,7 @@ const HomeScreen: React.FC = () => {
 
     monthTransactions.forEach((transaction) => {
       if (!transaction.isCard) {
-        if (transaction.type === 'income') {
+        if (transaction.type === "income") {
           total += transaction.value;
         }
       }
@@ -170,9 +171,9 @@ const HomeScreen: React.FC = () => {
 
   return (
     <SafeAreaView
-      style={{ backgroundColor: colors.background, height: '100%' }}
+      style={{ backgroundColor: colors.background, height: "100%" }}
     >
-      <View style={{ backgroundColor: 'transparent' }}>
+      <View style={{ backgroundColor: "transparent" }}>
         <HomeContainer showsVerticalScrollIndicator={false}>
           <HeaderContent>
             <View>
@@ -224,15 +225,16 @@ const HomeScreen: React.FC = () => {
                 </ResumeContent>
               </Resume>
             </ResumeContainer>
-            {monthTransactions.length !== 0 && (
-              <>
+            {chartData.length > 0 && (
+              <ChartContainer>
+                <ChartTitle>Gráfico das saídas</ChartTitle>
                 <Chart>
                   <PieChart
                     style={{
                       height: metrics.base * 50,
                       width: metrics.base * 50,
                     }}
-                    outerRadius={'70%'}
+                    outerRadius={"70%"}
                     innerRadius={30}
                     data={chartData}
                   />
@@ -245,22 +247,24 @@ const HomeScreen: React.FC = () => {
                     ))}
                   </Labels>
                 </Chart>
-                <RecentsContainer>
-                  <RecentsTitle>Recentes</RecentsTitle>
-                  {getLastsTransactions().map((transaction) => (
-                    <MovementCard
-                      key={transaction._id}
-                      title={LimitedString(transaction.title, 22)}
-                      value={transaction.value}
-                      type={transaction.type}
-                      isCard={transaction.isCard}
-                    />
-                  ))}
-                  <SeeMoreButton onPress={() => navigate(ROUTES.TRANSACTIONS)}>
-                    <SeeMoreText>Ver mais +</SeeMoreText>
-                  </SeeMoreButton>
-                </RecentsContainer>
-              </>
+              </ChartContainer>
+            )}
+            {monthTransactions.length > 0 && (
+              <RecentsContainer>
+                <RecentsTitle>Recentes</RecentsTitle>
+                {getLastsTransactions().map((transaction) => (
+                  <MovementCard
+                    key={transaction._id}
+                    title={LimitedString(transaction.title, 22)}
+                    value={transaction.value}
+                    type={transaction.type}
+                    isCard={transaction.isCard}
+                  />
+                ))}
+                <SeeMoreButton onPress={() => navigate(ROUTES.TRANSACTIONS)}>
+                  <SeeMoreText>Ver mais +</SeeMoreText>
+                </SeeMoreButton>
+              </RecentsContainer>
             )}
             <OptionsContainer>
               <OptionsTitle>Gerenciar</OptionsTitle>

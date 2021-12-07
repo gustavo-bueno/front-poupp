@@ -9,26 +9,26 @@ import PostCard from '../../components/PostCard';
 import { H1 } from '../../components/Text';
 import { Container as PaddingContainer } from '../../components/Container';
 import { BorderRadiusContainer } from '../../components/Container';
-
+import axiosApi from '../../services/apiRequest';
+import { AxiosResponse } from 'axios';
 import { colors, metrics } from '../../styles';
 import { CardsContainer, CardContainer, Title } from './styles';
-import {
-  getPouppTeachPosts,
-  getYoutubers,
-  IYoutuber,
-} from '../../services/poupp-teach';
+import { getYoutubers, IYoutuber } from '../../services/poupp-teach';
 import useUserData from '../../hooks/useUserData';
 import { IPost } from '../../models/post';
+import { Loading } from '../../components/Loading';
 
 const ITEM_SIZE = metrics.wp(80);
 
 const PouppTeachScreen: React.FC = () => {
   const { navigate } = useNavigation();
   const { user } = useUserData();
+
   const [youtubersList, setYoutubersList] = useState<IYoutuber[]>([]);
   const [posts, setPosts] = useState<IPost[]>([]);
-
   const scrollX = useRef(new Animated.Value(0)).current;
+  const [postsLoading, setPostsLoading] = useState<boolean>(true);
+  const [youtubersLoading, setYoutubersLoading] = useState<boolean>(true);
 
   const renderItem = ({ item, index }: any) => {
     const inputRange = [
@@ -58,13 +58,28 @@ const PouppTeachScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    const getPouppTeachData = async () => {
-      const youtubers = await getYoutubers(user.token);
-      const teachPosts = await getPouppTeachPosts(user.token);
-      setYoutubersList(youtubers);
-      setPosts(teachPosts);
+    const options = {
+      headers: { authorization: `Bearer ${user.token}` },
+      params: { topic: 'pouppeducate' },
     };
-    getPouppTeachData();
+
+    axiosApi
+      .get('/posts', options)
+      .then((response: AxiosResponse) => {
+        if (response.status === 200) {
+          setPosts(response.data);
+          setPostsLoading(false);
+        }
+      })
+      .catch((err) => console.log(err.message));
+  }, []);
+
+  useEffect(() => {
+    const getAllYoutubers = async () => {
+      const youtubers = await getYoutubers(user.token);
+      setYoutubersList(youtubers);
+    };
+    getAllYoutubers();
   }, [user.token]);
 
   return (
@@ -73,27 +88,31 @@ const PouppTeachScreen: React.FC = () => {
         <Title fontWeight="bold" color="text">
           Segue aí umas informações bem importantes! :)
         </Title>
-        <CardsContainer>
-          <Animated.FlatList
-            keyExtractor={(_, idx) => idx.toString()}
-            renderItem={renderItem}
-            data={posts}
-            decelerationRate={0}
-            snapToInterval={ITEM_SIZE}
-            bounces={false}
-            contentContainerStyle={{
-              alignSelf: 'center',
-            }}
-            onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-              {
-                useNativeDriver: true,
-              }
-            )}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          />
-        </CardsContainer>
+        {postsLoading ? (
+          <Loading />
+        ) : (
+          <CardsContainer>
+            <Animated.FlatList
+              keyExtractor={(_, idx) => idx.toString()}
+              renderItem={renderItem}
+              data={posts}
+              decelerationRate={0}
+              snapToInterval={ITEM_SIZE}
+              bounces={false}
+              contentContainerStyle={{
+                alignSelf: 'center',
+              }}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+                {
+                  useNativeDriver: true,
+                }
+              )}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            />
+          </CardsContainer>
+        )}
 
         <PaddingContainer>
           <H1
@@ -104,17 +123,21 @@ const PouppTeachScreen: React.FC = () => {
           >
             Alguns canais de finanças que ajudam muito!
           </H1>
-          <FlatList
-            data={youtubersList}
-            keyExtractor={(item) => item.channelId}
-            renderItem={({ item }) => (
-              <MiniCard
-                channelId={item.channelId}
-                title={item.title}
-                image={item.picture}
-              />
-            )}
-          />
+          {youtubersLoading ? (
+            <Loading />
+          ) : (
+            <FlatList
+              data={youtubersList}
+              keyExtractor={(item) => item.channelId}
+              renderItem={({ item }) => (
+                <MiniCard
+                  channelId={item.channelId}
+                  title={item.title}
+                  image={item.picture}
+                />
+              )}
+            />
+          )}
         </PaddingContainer>
       </BorderRadiusContainer>
     </View>

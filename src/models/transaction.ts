@@ -1,14 +1,11 @@
+import { ITransactionCategory } from "./transactionCategory";
+
 export interface ITransaction {
   _id: string;
   title: string;
   value: number;
   description: string;
-  category?: {
-    _id: string;
-    name: string;
-    necessary?: number;
-    __v: number;
-  };
+  category?: ITransactionCategory;
   account: string;
   user: string;
   transferAccount?: string;

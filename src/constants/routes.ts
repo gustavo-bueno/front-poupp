@@ -21,4 +21,6 @@ export const ROUTES = {
   INITIAL_BILLS: 'initialBillsScreen',
   SET_EXPENSE: 'setExpenseScreen',
   EXPENSES_LIST: 'expensesListScreen',
+  ADD_ACCOUNT: 'addAccountScreen',
+  ACCOUNT_DETAIL: 'accountDetailScreen',
 };

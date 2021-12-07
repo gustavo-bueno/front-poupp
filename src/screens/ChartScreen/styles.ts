@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { colors, fontFamily, metrics } from '../../styles';
 import Ripple from 'react-native-material-ripple';
+import { Rect } from 'react-native-svg';
 
 interface props {
   theme: {
@@ -54,7 +55,6 @@ export const MainContent = styled.View`
 
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 
   background-color: ${colors.background};
 
@@ -64,6 +64,7 @@ export const MainContent = styled.View`
   border-top-right-radius: ${metrics.base * 12.5}px;
   border-top-left-radius: ${metrics.base * 12.5}px;
   padding-bottom: ${metrics.base * 5}px;
+  padding-top: ${metrics.base * 5}px;
 
   position: relative;
 `;

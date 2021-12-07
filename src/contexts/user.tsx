@@ -17,8 +17,10 @@ export interface UserInterface {
 interface UserContextInterface {
   user: UserInterface;
   setUser: React.Dispatch<React.SetStateAction<UserInterface>>;
+  refresh: boolean;
   logout: () => void;
   accounts: IAccount[];
+  refreshData: () => void;
 }
 
 const initalState: UserInterface = {
@@ -36,6 +38,7 @@ const UserContext = createContext({} as UserContextInterface);
 const UserProvider: React.FC<{}> = ({ children }) => {
   const [user, setUser] = useState<UserInterface>(initalState);
   const [accounts, setAccounts] = useState<IAccount[]>([]);
+  const [refresh, setRefresh] = useState<boolean>(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -75,8 +78,14 @@ const UserProvider: React.FC<{}> = ({ children }) => {
     setUser(initalState);
   };
 
+  const refreshData = () => {
+    setRefresh(!refresh);
+  };
+
   return (
-    <UserContext.Provider value={{ user, accounts, setUser, logout }}>
+    <UserContext.Provider
+      value={{ user, setUser, accounts, logout, refresh, refreshData }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList as List, View } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
 import { BorderRadiusContainer } from '../../components/Container';
 import InfoCardItem from '../../components/InfoCardItem';
 import { H5 } from '../../components/Text';
 import * as Animatable from 'react-native-animatable';
 import { metrics } from '../../styles';
-import { ItemImage } from './styles';
+import { Container, ItemImage } from './styles';
 import { AxiosResponse } from 'axios';
 import useUserData from '../../hooks/useUserData';
 import goalImg from '../../../assets/images/goal.png';
@@ -15,6 +16,9 @@ import apiRequest from '../../services/apiRequest';
 import { ITransaction } from '../../models/transaction';
 import { IAccount } from '../../models/account';
 import { Loading } from '../../components/Loading';
+import Button from '../../components/Button';
+import { ROUTES } from '../../constants/routes';
+import Ripple from 'react-native-material-ripple';
 
 interface ListRenderItemInfo<ItemT> {
   item: ItemT;
@@ -48,27 +52,10 @@ const getLastTransactionDate = (transactions: ITransaction[]) => {
   }
 };
 
-const renderItem = ({ item }: ListRenderItemInfo<IAccount>) => (
-  <InfoCardItem
-    title={item.name}
-    value={item.value}
-    bottomInfo={<H5>{getLastTransactionDate(item.transactions)}</H5>}
-    image={
-      <ItemImage
-        source={
-          item.bank
-            ? { uri: item.bank.picture }
-            : item.type === 'wallet'
-            ? walletImg
-            : goalImg
-        }
-      />
-    }
-  />
-);
-
 const AccountsListScreen: React.FC = () => {
-  const { user } = useUserData();
+  const { user, refresh } = useUserData();
+
+  const { navigate } = useNavigation();
 
   const [accounts, setAccounts] = useState<IAccount[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -85,27 +72,54 @@ const AccountsListScreen: React.FC = () => {
         setLoading(false);
       }
     });
-  }, []);
+  }, [refresh]);
+
+  const renderItem = ({ item }: ListRenderItemInfo<IAccount>) => (
+    <Ripple
+      rippleContainerBorderRadius={metrics.borderRadius}
+      onPress={() => navigate(ROUTES.ACCOUNT_DETAIL, { account: item })}
+    >
+      <InfoCardItem
+        title={item.name}
+        value={item.value}
+        bottomInfo={<H5>{getLastTransactionDate(item.transactions)}</H5>}
+        image={
+          <ItemImage
+            source={
+              item.bank
+                ? { uri: item.bank.picture }
+                : item.type === 'wallet'
+                ? walletImg
+                : goalImg
+            }
+          />
+        }
+      />
+    </Ripple>
+  );
 
   return (
-    <BorderRadiusContainer style={{ paddingTop: metrics.base * 4 }}>
-      {loading ? (
-        <Loading />
-      ) : (
-        <FlatList
-          useNativeDriver
-          animation="bounceInDown"
-          contentInsetAdjustmentBehavior="automatic"
-          duration={1000}
-          data={accounts}
-          renderItem={renderItem as any}
-          ItemSeparatorComponent={() => (
-            <View style={{ marginBottom: metrics.base * 4 }} />
-          )}
-          keyExtractor={(_, idx) => idx.toString()}
-        />
-      )}
-    </BorderRadiusContainer>
+    <Container style={{ position: 'relative' }}>
+      <BorderRadiusContainer style={{ paddingTop: metrics.base * 4 }}>
+        {loading ? (
+          <Loading />
+        ) : (
+          <FlatList
+            useNativeDriver
+            animation="bounceInDown"
+            contentInsetAdjustmentBehavior="automatic"
+            duration={1000}
+            data={accounts}
+            renderItem={renderItem as any}
+            ItemSeparatorComponent={() => (
+              <View style={{ marginBottom: metrics.base * 4 }} />
+            )}
+            keyExtractor={(_, idx) => idx.toString()}
+          />
+        )}
+      </BorderRadiusContainer>
+      <Button type="rounded" onPress={() => navigate(ROUTES.ADD_ACCOUNT)} />
+    </Container>
   );
 };
 

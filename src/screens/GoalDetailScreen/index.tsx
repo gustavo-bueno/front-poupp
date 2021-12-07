@@ -5,12 +5,14 @@ import { View } from "react-native";
 import { Fontisto } from "@expo/vector-icons";
 
 import { BorderRadiusContainer } from "../../components/Container";
-import MoneyText from "../../components/MoneyText";
 import { ProgressBar } from "../../components/ProgressBar";
 import { H1, H2, H3, H4 } from "../../components/Text";
 import { colors, metrics } from "../../styles";
 import Button from "../../components/Button";
 import NumberToMoney from "../../functions/NumberToMoney";
+import { useNavigation } from "@react-navigation/native";
+import { ROUTES } from "../../constants/routes";
+import useUserData from "../../hooks/useUserData";
 
 import {
   Container,
@@ -21,14 +23,51 @@ import {
 import { SpaceBetweenContainer } from "../../components/Container";
 import goals from "../../icons/goals";
 import { IGoal } from "../../models/goal";
+import axiosApi from "../../services/apiRequest";
+import { AxiosResponse } from "axios";
 
 const GoalDetailScreen = () => {
   const { goal, goalAccountValue } = useRoute()?.params as {
     goal: IGoal;
     goalAccountValue: number;
   };
+
+  const { navigate } = useNavigation();
+  const { user, refreshData } = useUserData();
+
   const GoalImage = goals[goal.category.type];
   const remainigValue = goal.totalValue - goalAccountValue;
+
+  const options = {
+    headers: { authorization: `Bearer ${user.token}` },
+    params: { goalId: goal._id },
+  };
+
+  const conclude = () => {
+    if (goalAccountValue / goal.totalValue > 1) {
+      axiosApi
+        .put("/goals/complete", {}, options)
+        .then((response: AxiosResponse) => {
+          if (response.status === 200) {
+            refreshData();
+            navigate(ROUTES.GOALS_LIST);
+          }
+        })
+        .catch((err) => console.log(err.message));
+    }
+  };
+
+  const exclude = () => {
+    axiosApi
+      .delete("/goals/delete", options)
+      .then((response: AxiosResponse) => {
+        if (response.status === 200) {
+          refreshData();
+          navigate(ROUTES.GOALS_LIST);
+        }
+      });
+  };
+
   return (
     <Container>
       <FirstInfoContainer>
@@ -65,16 +104,31 @@ const GoalDetailScreen = () => {
           </View>
         </View>
         <RemainingInfoContainer>
-          <View style={{ alignItems: "center" }}>
-            <H2 fontWeight="bold">Valor necessário</H2>
-            <H2>R$ {NumberToMoney(remainigValue)}</H2>
-          </View>
-          <H4 style={{ textAlign: "center" }}>
-            Você precisa economizar R$2.400,00 por mês para concluir dentro do
-            tempo estipulado.
-          </H4>
+          {remainigValue > 0 ? (
+            <>
+              <View style={{ alignItems: "center" }}>
+                <H2 fontWeight="bold">Valor necessário</H2>
+                <H2>R$ {NumberToMoney(remainigValue)}</H2>
+              </View>
+              <H4 style={{ textAlign: "center" }}>
+                Você precisa economizar R$2.400,00 por mês para concluir dentro
+                do tempo estipulado.
+              </H4>
+            </>
+          ) : (
+            <H4 style={{ textAlign: "center" }}>
+              Parabéns! você ja pode concluir essa meta.
+            </H4>
+          )}
         </RemainingInfoContainer>
-        <Button title="Concluír" onPress={() => console.log("boa")} />
+        {goalAccountValue / goal.totalValue > 1 && (
+          <Button title="Concluír" onPress={conclude} />
+        )}
+        <Button
+          title="Excluir"
+          onPress={exclude}
+          style={{ marginTop: metrics.base * 2 }}
+        />
       </BorderRadiusContainer>
     </Container>
   );

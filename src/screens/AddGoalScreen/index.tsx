@@ -1,49 +1,95 @@
-import React, { useRef, useState } from 'react';
-import { Form } from '@unform/mobile';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import dayjs from 'dayjs';
-import * as Yup from 'yup';
+import React, { useRef, useState, useEffect } from "react";
+import { Form } from "@unform/mobile";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import dayjs from "dayjs";
+import * as Yup from "yup";
 
-import { FormHandles } from '@unform/core';
-import { MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { FormHandles } from "@unform/core";
+import { MaterialCommunityIcons, SimpleLineIcons } from "@expo/vector-icons";
 
-import { BorderRadiusContainer } from '../../components/Container';
-import { IGoal } from '../../models/goal';
-import Input from '../../components/Input';
-import CollapsibleList from '../../components/CollapsibleList';
-import { H3 } from '../../components/Text';
-import Button from '../../components/Button';
-
-import { colors, metrics } from '../../styles';
-import { AddCardLabel, DateContainer } from './styles';
-import Ripple from 'react-native-material-ripple';
-
-const categories = [
-  { name: 'car', pt: 'Carro' },
-  { name: 'house', pt: 'Casa' },
-  { name: 'travel', pt: 'Viagem' },
-  { name: 'other', pt: 'Outro' },
-];
+import { BorderRadiusContainer } from "../../components/Container";
+import Input from "../../components/Input";
+import CollapsibleList from "../../components/CollapsibleList";
+import { H3 } from "../../components/Text";
+import Button from "../../components/Button";
+import axiosApi from "../../services/apiRequest";
+import { AxiosResponse } from "axios";
+import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../../constants/routes';
+import { colors, metrics } from "../../styles";
+import { AddCardLabel, DateContainer } from "./styles";
+import Ripple from "react-native-material-ripple";
+import { IGoalCategory } from "../../models/goalCategory";
+import useUserData from "../../hooks/useUserData";
 
 const schema = Yup.object().shape({
-  title: Yup.string().required('O título da meta é obrigatório.'),
-  totalValue: Yup.number().required('O valor da meta é obrigatório.'),
+  title: Yup.string().required("O título da meta é obrigatório."),
+  totalValue: Yup.number().required("O valor da meta é obrigatório."),
 });
 
 const AddGoalScreen: React.FC = () => {
-  const [categoryType, setCategoryType] = useState({
-    name: 'car',
-    pt: 'Carro',
-  });
+  const [goalCategories, setGoalCategories] = useState<IGoalCategory[]>([]);
+  const [category, setCategory] = useState<IGoalCategory>();
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = async (data: IGoal) => {
-    try {
-      await schema.validate(data, {
-        abortEarly: false,
+  const { navigate } = useNavigation()
+  const { user, refreshData } = useUserData();
+
+  useEffect(() => {
+    const options = {
+      headers: { authorization: `Bearer ${user.token}` },
+    };
+
+    axiosApi
+      .get("/goalscategories", options)
+      .then((response: AxiosResponse) => {
+        if (response.status === 200) {
+          setGoalCategories(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
       });
+  }, []);
+
+  const handleSubmit = async ({
+    totalValue,
+    title,
+  }: {
+    title: string;
+    totalValue: number;
+  }) => {
+    try {
+      await schema.validate(
+        { totalValue, title },
+        {
+          abortEarly: false,
+        }
+      );
+      if (category && date) {
+        const goalData = {
+          totalValue,
+          title,
+          goalCategoryId: category._id,
+          expirationDate: date.getTime(),
+        };
+
+        const options = {
+          headers: { authorization: `Bearer ${user.token}` },
+        };
+
+        axiosApi
+          .post("/goals/create", goalData, options)
+          .then((response: AxiosResponse) => {
+            if (response.status === 201) {
+              refreshData()
+              navigate(ROUTES.GOALS_LIST)
+            }
+          })
+          .catch((err) => console.log(err.message));
+      }
     } catch (error) {
       const validationErrors: Record<string, any> = {};
       if (error instanceof Yup.ValidationError) {
@@ -61,10 +107,9 @@ const AddGoalScreen: React.FC = () => {
         <Input name="title" placeholder="Título da meta" />
         <AddCardLabel>Tipo da meta</AddCardLabel>
         <CollapsibleList
-          data={categories}
-          itemProp="pt"
-          collapsibleTitle={categoryType.pt}
-          onPressItem={(item) => setCategoryType(item)}
+          data={goalCategories}
+          collapsibleTitle={category ? category.name : ""}
+          onPressItem={(item) => setCategory(item)}
         />
         <Input
           keyboardType="numeric"
@@ -81,7 +126,7 @@ const AddGoalScreen: React.FC = () => {
             color={colors.darkBlue}
           />
           <H3 style={{ marginHorizontal: metrics.base * 2 }}>
-            {dayjs(date).format('DD/MM/YYYY')}
+            {dayjs(date).format("DD/MM/YYYY")}
           </H3>
           <Ripple onPress={() => setShow(true)}>
             <SimpleLineIcons name="pencil" size={18} color={colors.lightBlue} />

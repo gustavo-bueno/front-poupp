@@ -1,35 +1,96 @@
-import React, { useRef, useState } from 'react';
-import { Form } from '@unform/mobile';
-import { FormHandles } from '@unform/core';
-import * as Yup from 'yup';
+import React, { useRef, useState, useEffect } from "react";
+import { Form } from "@unform/mobile";
+import { FormHandles } from "@unform/core";
+import * as Yup from "yup";
 
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import { BorderRadiusContainer } from '../../components/Container';
-import CollapsibleList from '../../components/CollapsibleList';
-
-import { SmallInputContainer, SmallInputsContainer } from './styles';
-import { H3 } from '../../components/Text';
-import { metrics } from '../../styles';
-import { ICard } from '../../models/credit-card';
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import { BorderRadiusContainer } from "../../components/Container";
+import CollapsibleList from "../../components/CollapsibleList";
+import axiosApi from "../../services/apiRequest";
+import axios, { AxiosResponse } from "axios";
+import { useNavigation } from "@react-navigation/native";
+import { ROUTES } from "../../constants/routes";
+import { IAccount } from "../../models/account";
+import useUserData from "../../hooks/useUserData";
+import { SmallInputContainer, SmallInputsContainer } from "./styles";
+import { H3 } from "../../components/Text";
+import { metrics } from "../../styles";
 
 const schema = Yup.object().shape({
-  ownerName: Yup.string().required('O campo nome do titular é obrigatório'),
-  expirationDay: Yup.string().required(
-    'O campo dia de vencimento é obrigatório.'
-  ),
-  cardLimit: Yup.number().required('O campo limite do cartão é obrigatório.'),
+  username: Yup.string().required("O campo nome do titular é obrigatório"),
+  closeDay: Yup.number()
+    .min(1, "Digite um valor entre 1 e 31")
+    .max(31, "Digite um valor entre 1 e 31")
+    .required("O campo dia de vencimento é obrigatório."),
+  limit: Yup.number().required("O campo limite do cartão é obrigatório."),
 });
 
 const AddCreditCardScreen: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const [account, setAccount] = useState({ name: 'Carteira' });
+  const [accounts, setAccounts] = useState<IAccount[]>([]);
+  const [account, setAccount] = useState<IAccount>();
 
-  const handleSubmit = async (data: ICard) => {
+  const { user, refreshData } = useUserData();
+
+  const { navigate } = useNavigation();
+
+  useEffect(() => {
+    const options = {
+      headers: { authorization: `Bearer ${user.token}` },
+    };
+
+    axiosApi
+      .get("/accounts", options)
+      .then((response: AxiosResponse) => {
+        if (response.status === 200) {
+          const accountsList = response.data;
+
+          setAccounts(
+            accountsList.filter(
+              (account: IAccount) => account.type === "normal" && !account.card
+            )
+          );
+        }
+      })
+      .catch((err) => console.log(err.message));
+  }, []);
+
+  const handleSubmit = async ({
+    closeDay,
+    username,
+    limit,
+  }: {
+    closeDay: number;
+    username: string;
+    limit: number;
+  }) => {
     try {
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+      await schema.validate(
+        { closeDay, username, limit },
+        {
+          abortEarly: false,
+        }
+      );
+      if (account) {
+        const cardData = {
+          username,
+          limit,
+          closeDay,
+          accountId: account._id,
+        };
+
+        const options = {
+          headers: { authorization: `Bearer ${user.token}` },
+        };
+
+        axiosApi.post("/cards/create", cardData, options).then((response: AxiosResponse) => {
+          if(response.status === 201) {
+            refreshData()
+            navigate(ROUTES.CARD_LIST)
+          }
+        }).catch((err) => console.log(err.message))
+      }
     } catch (error) {
       const validationErrors: Record<string, any> = {};
       if (error instanceof Yup.ValidationError) {
@@ -41,18 +102,16 @@ const AddCreditCardScreen: React.FC = () => {
     }
   };
 
-  const accounts = [{ name: 'Carteira' }, { name: 'Banco do brasil' }];
-
   return (
     <BorderRadiusContainer>
       <Form ref={formRef} onSubmit={handleSubmit}>
-        <Input name="ownerName" placeholder="Nome do titular" />
+        <Input name="username" placeholder="Nome do titular" />
         <H3 style={{ marginBottom: metrics.base * 2 }} fontWeight="medium">
           Conta relacionada:
         </H3>
         <CollapsibleList
           data={accounts}
-          collapsibleTitle={account.name}
+          collapsibleTitle={account ? account.name : ""}
           onPressItem={(accountSelected) => setAccount(accountSelected)}
         />
         <SmallInputsContainer>
@@ -60,7 +119,7 @@ const AddCreditCardScreen: React.FC = () => {
             <Input
               placeholder="Dia do vencimento"
               keyboardType="numeric"
-              name="expirationDay"
+              name="closeDay"
             />
           </SmallInputContainer>
           <SmallInputContainer>
