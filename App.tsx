@@ -1,21 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  useFonts,
+  Ubuntu_400Regular,
+  Ubuntu_500Medium,
+  Ubuntu_700Bold,
+} from '@expo-google-fonts/ubuntu';
+import AppLoading from 'expo-app-loading';
+import { UserProvider } from './src/contexts/user';
+import { RegisterUserProvider } from './src/contexts/registerUser';
+import Routes from './src/routes';
+import { TransactionProvider } from './src/contexts/transaction';
+import FlashMessage from 'react-native-flash-message';
 
-export default function App() {
+const App: React.FC = () => {
+  const [fontsLoaded] = useFonts({
+    Ubuntu_400Regular,
+    Ubuntu_500Medium,
+    Ubuntu_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <TransactionProvider>
+      <UserProvider>
+        <RegisterUserProvider>
+          <Routes />
+          <FlashMessage position="top" />
+        </RegisterUserProvider>
+      </UserProvider>
+    </TransactionProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
